@@ -269,10 +269,13 @@ function showTop(rowId){
 	 		    		    		        			 var tableBoTxtX = tableBoxX + 50;
 	 		    		    		        			 var tableBoTxtY = tableBoxY + 35;
 	 		    		    		        			 //x_json["epuName"]
-	 		    		    		        			splitRemarks(layerSnap,"idTxt" + x_rowId,x_json["epuName"],tableBoTxtX,tableBoTxtY,"fText",12);
+	 		    		    		        			 var txtKey = (z_epuParentId +"_" + x_rowId);
+	 		    		    		        			splitRemarks(layerSnap,"idTxt" + txtKey,x_json["epuName"],tableBoTxtX,tableBoTxtY,"fText",12);
 	 		    		    		        			//给表箱绑定单击事件
-	 		    		    		        			$("#idTxt" + x_rowId).bind("click",function(){
+	 		    		    		        			$("#idTxt" + txtKey).bind("click",function(){
 	 		    	    	    							  var txtID = $(this).attr("id");//展示的文字ID
+	 		    	    	    							  txtID = txtID.replace("idTxt","");
+	 		    	    	    							  txtID = txtID.split("_")[1];//获取表箱ID
 	 		    	    	    							  parent.$("#tableBoxId").val(txtID.replace("idTxt",""));//当前表箱ID
 	 		    	    	    							  var textValue = $(this).text();//展示的文字内容
 	 		    	    	    							  parent.$("#tableBoxName").html(textValue + "单线图");//TAB

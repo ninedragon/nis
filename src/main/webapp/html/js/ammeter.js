@@ -194,7 +194,8 @@ function getRootPath_web() {
  * @param tableBoxId 表箱ID
  */
 function showTop(rowId,tableBoxId){
-	var layerSnap = svgSnap.html("g").attr("id","ammeter_Layer");
+	svgSnap.select("g[id='ammeter_Layer']").remove();
+	var layerSnap = svgSnap.append("g").attr("id","ammeter_Layer");
 //	 eupType ： 
 //	 M0001 箱变
 //	 M0002 出线柜
@@ -219,13 +220,13 @@ function showTop(rowId,tableBoxId){
  	        	   	var gird = 100;
  		        	var tempXAll = null;
  		        	var ammeterX = 100;//电表X绝对位置
-	     		    var ammeterY = 1000;//电表Y绝对位置	
+	     		    var ammeterY = 500;//电表Y绝对位置	
 	     			var branchBoxX = ammeterX;//分支箱X绝对位置
  	        		var branchBoxY = ammeterY;//分支箱Y绝对位置    
 	     		         
  	        		var cabinetsX = branchBoxX;//出线柜X绝对位置
  	        		var cabinetsY = branchBoxY;//出现柜Y绝对位置
- 	        		var cabinetsDifference = 600;
+ 	        		var cabinetsDifference = 300;
  	        		
  	        		
         		   var tempCount = 0;//获取分线箱的组中位数
@@ -317,7 +318,7 @@ function showTop(rowId,tableBoxId){
 	    		         //table
 	    		         setCabinetsXTable(layerSnap,i_epuParentId,tempBranchBoxX+30,cabinetsY + 150);
 	    		        	//出线柜分割备注
-	    		        	splitRemarks(layerSnap,"cabinetsID","表箱",65,(cabinetsY+40),"fText",20);
+	    		        	splitRemarks(layerSnap,"cabinetsID","表箱",45,(cabinetsY+40),"fText",20);
 //	    		        		出线柜往下画线
 	    		        	var lowerCabinetsLineX = tempBranchBoxX;//下宽度（出线柜下处宽度）
 	    		        	var lowerCabinetsLineY = cabinetsY + 100;//下高（分线柜下处高度）
@@ -567,8 +568,8 @@ function setammeterTable(layerSnap,id,cabinetsX,cabinetsY){
 	var idTableUb_X = cabinetsX + 58;
 	var idTableUb_Y = cabinetsY - UbTemp_Y;
 	setCreateUseEl(layerSnap,"idTableU" + id, "tableList1",idTableUb_X,idTableUb_Y);//u框
-	splitRemarks(layerSnap,"idTableUtxt" + id,"Ub",idTableUb_X + 22,idTableUb_Y + 22,"fText",18);//Ub文字
-	var idTableUb1_X = idTableUb_X + 22;
+	splitRemarks(layerSnap,"idTableUtxt" + id,"Ub",idTableUb_X + 25,idTableUb_Y + 22,"fText",18);//Ub文字
+	var idTableUb1_X = idTableUb_X + 26;
 	var idTableUb1_Y = cabinetsY - UbTemp_Y;
 	setCreateUseEl(layerSnap,"idTableU" + id, "tableList",idTableUb1_X,idTableUb1_Y);//i框
 	splitRemarks(layerSnap,"idTableUtxt" + id,"220.1",idTableUb1_X + 60,idTableUb1_Y+22,"fText",14);//I文字
@@ -577,8 +578,8 @@ function setammeterTable(layerSnap,id,cabinetsX,cabinetsY){
 	var idTableIb_X = cabinetsX + 58;
 	var idTableIb_Y = cabinetsY - IbTemp_Y;
 	setCreateUseEl(layerSnap,"idTableU" + id, "tableList1",idTableIb_X,idTableIb_Y);//u框
-	splitRemarks(layerSnap,"idTableUtxt" + id,"Ib",idTableIb_X + 22,idTableIb_Y + 22,"fText",18);//Ib文字
-	var idTableIb1_X = idTableIb_X + 22;
+	splitRemarks(layerSnap,"idTableUtxt" + id,"Ib",idTableIb_X + 25,idTableIb_Y + 22,"fText",18);//Ib文字
+	var idTableIb1_X = idTableIb_X + 26;
 	var idTableIb1_Y = cabinetsY - IbTemp_Y;
 	setCreateUseEl(layerSnap,"idTableU" + id, "tableList",idTableIb1_X,idTableIb1_Y);//i框
 	splitRemarks(layerSnap,"idTableUtxt" + id,"3.2",idTableIb1_X + 60,idTableIb1_Y+22,"fText",14);
@@ -588,8 +589,8 @@ function setammeterTable(layerSnap,id,cabinetsX,cabinetsY){
 	var idTableP_X = cabinetsX + 58;
 	var idTableP_Y = cabinetsY - pTemp_Y;
 	setCreateUseEl(layerSnap,"idTableU" + id, "tableList1",idTableP_X,idTableP_Y);//u框
-	splitRemarks(layerSnap,"idTableUtxt" + id,"P",idTableP_X + 22,idTableP_Y + 22,"fText",18);//P文字
-	var idTableP1_X = idTableP_X + 22;
+	splitRemarks(layerSnap,"idTableUtxt" + id,"P",idTableP_X + 25,idTableP_Y + 22,"fText",18);//P文字
+	var idTableP1_X = idTableP_X + 26;
 	var idTableP1_Y = cabinetsY - pTemp_Y;
 	setCreateUseEl(layerSnap,"idTableU" + id, "tableList",idTableP1_X,idTableP1_Y);//i框
 	splitRemarks(layerSnap,"idTableUtxt" + id,"5.2",idTableP1_X + 60,idTableP1_Y+22,"fText",14);
