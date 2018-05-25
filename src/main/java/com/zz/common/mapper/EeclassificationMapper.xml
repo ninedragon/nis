@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://www.mybatis.org/dtd/mybatis-3-config.dtd" >
+<mapper namespace="com.zz.common.dao.EeclassificationMapper" >
+  <resultMap id="BaseResultMap" type="com.zz.common.model.Eeclassification" >
+    <id column="C_EEHexId" property="cEehexid" jdbcType="VARCHAR" />
+    <result column="C_EEClassificationName" property="cEeclassificationname" jdbcType="VARCHAR" />
+    <result column="C_EEGrpId" property="cEegrpid" jdbcType="INTEGER" />
+    <result column="C_Desp" property="cDesp" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <select id="selectAllEE" resultMap="BaseResultMap">
+    select
+    C_EEHexId, C_EEClassificationName,C_EEGrpId,C_Desp
+    from t_eeclassification
+  </select> 
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    C_EEHexId, C_EEClassificationName, C_EEGrpId, C_Desp
+  </sql>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_eeclassification
+    where C_EEHexId = #{cEehexid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_eeclassification
+    where C_EEHexId = #{cEehexid,jdbcType=VARCHAR}
+  </delete>
+
+  <insert id="insert" parameterType="com.zz.common.model.Eeclassification" >
+    insert into t_eeclassification (C_EEHexId, C_EEClassificationName, 
+      C_EEGrpId, C_Desp)
+    values (#{cEehexid,jdbcType=VARCHAR}, #{cEeclassificationname,jdbcType=VARCHAR}, 
+      #{cEegrpid,jdbcType=INTEGER}, #{cDesp,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zz.common.model.Eeclassification" >
+    insert into t_eeclassification
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cEehexid != null" >
+        C_EEHexId,
+      </if>
+      <if test="cEeclassificationname != null" >
+        C_EEClassificationName,
+      </if>
+      <if test="cEegrpid != null" >
+        C_EEGrpId,
+      </if>
+      <if test="cDesp != null" >
+        C_Desp,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cEehexid != null" >
+        #{cEehexid,jdbcType=VARCHAR},
+      </if>
+      <if test="cEeclassificationname != null" >
+        #{cEeclassificationname,jdbcType=VARCHAR},
+      </if>
+      <if test="cEegrpid != null" >
+        #{cEegrpid,jdbcType=INTEGER},
+      </if>
+      <if test="cDesp != null" >
+        #{cDesp,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_eeclassification
+    <set >
+      <if test="record.cEehexid != null" >
+        C_EEHexId = #{record.cEehexid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cEeclassificationname != null" >
+        C_EEClassificationName = #{record.cEeclassificationname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cEegrpid != null" >
+        C_EEGrpId = #{record.cEegrpid,jdbcType=INTEGER},
+      </if>
+      <if test="record.cDesp != null" >
+        C_Desp = #{record.cDesp,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_eeclassification
+    set C_EEHexId = #{record.cEehexid,jdbcType=VARCHAR},
+      C_EEClassificationName = #{record.cEeclassificationname,jdbcType=VARCHAR},
+      C_EEGrpId = #{record.cEegrpid,jdbcType=INTEGER},
+      C_Desp = #{record.cDesp,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zz.common.model.Eeclassification" >
+    update t_eeclassification
+    <set >
+      <if test="cEeclassificationname != null" >
+        C_EEClassificationName = #{cEeclassificationname,jdbcType=VARCHAR},
+      </if>
+      <if test="cEegrpid != null" >
+        C_EEGrpId = #{cEegrpid,jdbcType=INTEGER},
+      </if>
+      <if test="cDesp != null" >
+        C_Desp = #{cDesp,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where C_EEHexId = #{cEehexid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zz.common.model.Eeclassification" >
+    update t_eeclassification
+    set C_EEClassificationName = #{cEeclassificationname,jdbcType=VARCHAR},
+      C_EEGrpId = #{cEegrpid,jdbcType=INTEGER},
+      C_Desp = #{cDesp,jdbcType=VARCHAR}
+    where C_EEHexId = #{cEehexid,jdbcType=VARCHAR}
+  </update>
+</mapper>

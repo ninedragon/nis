@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://www.mybatis.org/dtd/mybatis-3-config.dtd" >
+<mapper namespace="com.zz.common.dao.OpalarmdataMapper" >
+  <resultMap id="BaseResultMap" type="com.zz.common.model.Opalarmdata" >
+    <result column="C_DistrictBCDId" property="cDistrictbcdid" jdbcType="VARCHAR" />
+    <result column="C_AddressId" property="cAddressid" jdbcType="INTEGER" />
+    <result column="C_RecordDateBCD" property="cRecorddatebcd" jdbcType="INTEGER" />
+    <result column="C_RTCErrTimes" property="cRtcerrtimes" jdbcType="INTEGER" />
+    <result column="C_NorFlashErrTimes" property="cNorflasherrtimes" jdbcType="INTEGER" />
+    <result column="C_SensorVarErrBits" property="cSensorvarerrbits" jdbcType="INTEGER" />
+    <result column="C_ReStartTimes" property="cRestarttimes" jdbcType="INTEGER" />
+    <result column="C_TotalAuthTimes" property="cTotalauthtimes" jdbcType="INTEGER" />
+    <result column="C_RecordInsertTime" property="cRecordinserttime" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    C_DistrictBCDId, C_AddressId, C_RecordDateBCD, C_RTCErrTimes, C_NorFlashErrTimes, 
+    C_SensorVarErrBits, C_ReStartTimes, C_TotalAuthTimes, C_RecordInsertTime
+  </sql>
+
+ 
+  <insert id="insert" parameterType="com.zz.common.model.Opalarmdata" >
+    insert into t_opalarmdata (C_DistrictBCDId, C_AddressId, C_RecordDateBCD, 
+      C_RTCErrTimes, C_NorFlashErrTimes, C_SensorVarErrBits, 
+      C_ReStartTimes, C_TotalAuthTimes, C_RecordInsertTime
+      )
+    values (#{cDistrictbcdid,jdbcType=VARCHAR}, #{cAddressid,jdbcType=INTEGER}, #{cRecorddatebcd,jdbcType=INTEGER}, 
+      #{cRtcerrtimes,jdbcType=INTEGER}, #{cNorflasherrtimes,jdbcType=INTEGER}, #{cSensorvarerrbits,jdbcType=INTEGER}, 
+      #{cRestarttimes,jdbcType=INTEGER}, #{cTotalauthtimes,jdbcType=INTEGER}, #{cRecordinserttime,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zz.common.model.Opalarmdata" >
+    insert into t_opalarmdata
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cDistrictbcdid != null" >
+        C_DistrictBCDId,
+      </if>
+      <if test="cAddressid != null" >
+        C_AddressId,
+      </if>
+      <if test="cRecorddatebcd != null" >
+        C_RecordDateBCD,
+      </if>
+      <if test="cRtcerrtimes != null" >
+        C_RTCErrTimes,
+      </if>
+      <if test="cNorflasherrtimes != null" >
+        C_NorFlashErrTimes,
+      </if>
+      <if test="cSensorvarerrbits != null" >
+        C_SensorVarErrBits,
+      </if>
+      <if test="cRestarttimes != null" >
+        C_ReStartTimes,
+      </if>
+      <if test="cTotalauthtimes != null" >
+        C_TotalAuthTimes,
+      </if>
+      <if test="cRecordinserttime != null" >
+        C_RecordInsertTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cDistrictbcdid != null" >
+        #{cDistrictbcdid,jdbcType=VARCHAR},
+      </if>
+      <if test="cAddressid != null" >
+        #{cAddressid,jdbcType=INTEGER},
+      </if>
+      <if test="cRecorddatebcd != null" >
+        #{cRecorddatebcd,jdbcType=INTEGER},
+      </if>
+      <if test="cRtcerrtimes != null" >
+        #{cRtcerrtimes,jdbcType=INTEGER},
+      </if>
+      <if test="cNorflasherrtimes != null" >
+        #{cNorflasherrtimes,jdbcType=INTEGER},
+      </if>
+      <if test="cSensorvarerrbits != null" >
+        #{cSensorvarerrbits,jdbcType=INTEGER},
+      </if>
+      <if test="cRestarttimes != null" >
+        #{cRestarttimes,jdbcType=INTEGER},
+      </if>
+      <if test="cTotalauthtimes != null" >
+        #{cTotalauthtimes,jdbcType=INTEGER},
+      </if>
+      <if test="cRecordinserttime != null" >
+        #{cRecordinserttime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_opalarmdata
+    <set >
+      <if test="record.cDistrictbcdid != null" >
+        C_DistrictBCDId = #{record.cDistrictbcdid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cAddressid != null" >
+        C_AddressId = #{record.cAddressid,jdbcType=INTEGER},
+      </if>
+      <if test="record.cRecorddatebcd != null" >
+        C_RecordDateBCD = #{record.cRecorddatebcd,jdbcType=INTEGER},
+      </if>
+      <if test="record.cRtcerrtimes != null" >
+        C_RTCErrTimes = #{record.cRtcerrtimes,jdbcType=INTEGER},
+      </if>
+      <if test="record.cNorflasherrtimes != null" >
+        C_NorFlashErrTimes = #{record.cNorflasherrtimes,jdbcType=INTEGER},
+      </if>
+      <if test="record.cSensorvarerrbits != null" >
+        C_SensorVarErrBits = #{record.cSensorvarerrbits,jdbcType=INTEGER},
+      </if>
+      <if test="record.cRestarttimes != null" >
+        C_ReStartTimes = #{record.cRestarttimes,jdbcType=INTEGER},
+      </if>
+      <if test="record.cTotalauthtimes != null" >
+        C_TotalAuthTimes = #{record.cTotalauthtimes,jdbcType=INTEGER},
+      </if>
+      <if test="record.cRecordinserttime != null" >
+        C_RecordInsertTime = #{record.cRecordinserttime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_opalarmdata
+    set C_DistrictBCDId = #{record.cDistrictbcdid,jdbcType=VARCHAR},
+      C_AddressId = #{record.cAddressid,jdbcType=INTEGER},
+      C_RecordDateBCD = #{record.cRecorddatebcd,jdbcType=INTEGER},
+      C_RTCErrTimes = #{record.cRtcerrtimes,jdbcType=INTEGER},
+      C_NorFlashErrTimes = #{record.cNorflasherrtimes,jdbcType=INTEGER},
+      C_SensorVarErrBits = #{record.cSensorvarerrbits,jdbcType=INTEGER},
+      C_ReStartTimes = #{record.cRestarttimes,jdbcType=INTEGER},
+      C_TotalAuthTimes = #{record.cTotalauthtimes,jdbcType=INTEGER},
+      C_RecordInsertTime = #{record.cRecordinserttime,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

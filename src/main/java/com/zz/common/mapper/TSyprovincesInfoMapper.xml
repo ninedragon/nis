@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://www.mybatis.org/dtd/mybatis-3-config.dtd" >
+<mapper namespace="com.zz.common.dao.TSyprovincesInfoMapper">
+	<resultMap id="BaseResultMap"
+		type="com.zz.common.model.TSyprovincesInfoBean">
+		<id column="PROVINCE_ID" property="provinceId" jdbcType="VARCHAR" />
+		<result column="PROVINCE_NAME_CN" property="provinceNameCn"
+			jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		PROVINCE_ID, PROVINCE_NAME_CN
+	</sql>
+	<select id="getProvinces" resultMap="BaseResultMap"
+		parameterType="Map">
+		select
+		<include refid="Base_Column_List" />
+		from T_SY_PROVINCES_INFO where  1=1
+		order by PROVINCE_NAME_CN 
+	</select>
+	
+	<select id="getProvincesByEp" resultMap="BaseResultMap"
+		parameterType="Map">
+		SELECT DISTINCT
+		<include refid="Base_Column_List" />
+		FROM
+			T_SY_PROVINCES_INFO a
+		INNER JOIN t_epu_info b ON a.PROVINCE_ID = b.epu_province
+		WHERE
+			1 = 1  and b.DEL_FLAG='0'
+		ORDER BY
+	PROVINCE_NAME_CN
+	</select>
+	
+	<select id="getAllProvinces" resultMap="BaseResultMap"
+		parameterType="Map">
+		select
+		<include refid="Base_Column_List" />
+		from T_SY_PROVINCES_INFO where  REGION_ID=#{regionId}
+		order by PROVINCE_NAME_CN 
+	</select>
+	<select id="getPrvinceCode" resultType="String" parameterType="String">
+	
+   		select PROVINCECODE from T_SY_PROVINCES_INFO where PROVINCE_ID=#{provinceId}
+	</select>
+
+	<!-- <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" 
+		> select <include refid="Base_Column_List" /> from T_SY_PROVINCES_INFO where 
+		PROVINCE_ID = #{provinceId,jdbcType=VARCHAR} </select> <delete id="deleteByPrimaryKey" 
+		parameterType="java.lang.String" > delete from T_SY_PROVINCES_INFO where 
+		PROVINCE_ID = #{provinceId,jdbcType=VARCHAR} </delete> <insert id="insert" 
+		parameterType="com.woodare.sds.service.core.dao.entity.TSyprovincesInfo" 
+		> insert into T_SY_PROVINCES_INFO (PROVINCE_ID, PROVINCE_NAME_CN, REGION_ID, 
+		PROVINCECODE, JOINPROVINCE_FLAG) values (#{provinceId,jdbcType=VARCHAR}, 
+		#{provinceNameCn,jdbcType=VARCHAR}, #{regionId,jdbcType=VARCHAR}, #{provincecode,jdbcType=CHAR}, 
+		#{joinprovinceFlag,jdbcType=CHAR}) </insert> <insert id="insertSelective" 
+		parameterType="com.woodare.sds.service.core.dao.entity.TSyprovincesInfo" 
+		> insert into T_SY_PROVINCES_INFO <trim prefix="(" suffix=")" suffixOverrides="," 
+		> <if test="provinceId != null" > PROVINCE_ID, </if> <if test="provinceNameCn 
+		!= null" > PROVINCE_NAME_CN, </if> <if test="regionId != null" > REGION_ID, 
+		</if> <if test="provincecode != null" > PROVINCECODE, </if> <if test="joinprovinceFlag 
+		!= null" > JOINPROVINCE_FLAG, </if> </trim> <trim prefix="values (" suffix=")" 
+		suffixOverrides="," > <if test="provinceId != null" > #{provinceId,jdbcType=VARCHAR}, 
+		</if> <if test="provinceNameCn != null" > #{provinceNameCn,jdbcType=VARCHAR}, 
+		</if> <if test="regionId != null" > #{regionId,jdbcType=VARCHAR}, </if> <if 
+		test="provincecode != null" > #{provincecode,jdbcType=CHAR}, </if> <if test="joinprovinceFlag 
+		!= null" > #{joinprovinceFlag,jdbcType=CHAR}, </if> </trim> </insert> <update 
+		id="updateByPrimaryKeySelective" parameterType="com.woodare.sds.service.core.dao.entity.TSyprovincesInfo" 
+		> update T_SY_PROVINCES_INFO <set > <if test="provinceNameCn != null" > PROVINCE_NAME_CN 
+		= #{provinceNameCn,jdbcType=VARCHAR}, </if> <if test="regionId != null" > 
+		REGION_ID = #{regionId,jdbcType=VARCHAR}, </if> <if test="provincecode != 
+		null" > PROVINCECODE = #{provincecode,jdbcType=CHAR}, </if> <if test="joinprovinceFlag 
+		!= null" > JOINPROVINCE_FLAG = #{joinprovinceFlag,jdbcType=CHAR}, </if> </set> 
+		where PROVINCE_ID = #{provinceId,jdbcType=VARCHAR} </update> <update id="updateByPrimaryKey" 
+		parameterType="com.woodare.sds.service.core.dao.entity.TSyprovincesInfo" 
+		> update T_SY_PROVINCES_INFO set PROVINCE_NAME_CN = #{provinceNameCn,jdbcType=VARCHAR}, 
+		REGION_ID = #{regionId,jdbcType=VARCHAR}, PROVINCECODE = #{provincecode,jdbcType=CHAR}, 
+		JOINPROVINCE_FLAG = #{joinprovinceFlag,jdbcType=CHAR} where PROVINCE_ID = 
+		#{provinceId,jdbcType=VARCHAR} </update> -->
+</mapper>

@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://www.mybatis.org/dtd/mybatis-3-config.dtd" >
+<mapper namespace="com.zz.common.dao.TimesegmentMapper" >
+  <resultMap id="BaseResultMap" type="com.zz.common.model.Timesegment" >
+    <id column="C_TSegmentId" property="cTsegmentid" jdbcType="INTEGER" />
+    <result column="C_TSegmentName" property="cTsegmentname" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    C_TSegmentId, C_TSegmentName
+  </sql>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_timesegment
+    where C_TSegmentId = #{cTsegmentid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_timesegment
+    where C_TSegmentId = #{cTsegmentid,jdbcType=INTEGER}
+  </delete>
+
+  <insert id="insert" parameterType="com.zz.common.model.Timesegment" >
+    insert into t_timesegment (C_TSegmentId, C_TSegmentName)
+    values (#{cTsegmentid,jdbcType=INTEGER}, #{cTsegmentname,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zz.common.model.Timesegment" >
+    insert into t_timesegment
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cTsegmentid != null" >
+        C_TSegmentId,
+      </if>
+      <if test="cTsegmentname != null" >
+        C_TSegmentName,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cTsegmentid != null" >
+        #{cTsegmentid,jdbcType=INTEGER},
+      </if>
+      <if test="cTsegmentname != null" >
+        #{cTsegmentname,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_timesegment
+    <set >
+      <if test="record.cTsegmentid != null" >
+        C_TSegmentId = #{record.cTsegmentid,jdbcType=INTEGER},
+      </if>
+      <if test="record.cTsegmentname != null" >
+        C_TSegmentName = #{record.cTsegmentname,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_timesegment
+    set C_TSegmentId = #{record.cTsegmentid,jdbcType=INTEGER},
+      C_TSegmentName = #{record.cTsegmentname,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zz.common.model.Timesegment" >
+    update t_timesegment
+    <set >
+      <if test="cTsegmentname != null" >
+        C_TSegmentName = #{cTsegmentname,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where C_TSegmentId = #{cTsegmentid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zz.common.model.Timesegment" >
+    update t_timesegment
+    set C_TSegmentName = #{cTsegmentname,jdbcType=VARCHAR}
+    where C_TSegmentId = #{cTsegmentid,jdbcType=INTEGER}
+  </update>
+</mapper>

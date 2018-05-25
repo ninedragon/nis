@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://www.mybatis.org/dtd/mybatis-3-config.dtd" >
+<mapper namespace="com.zz.common.dao.TestdeviceinfoMapper" >
+  <resultMap id="BaseResultMap" type="com.zz.common.model.Testdeviceinfo" >
+    <id column="C_DistrictBCDId" property="cDistrictbcdid" jdbcType="VARCHAR" />
+    <id column="C_AddressId" property="cAddressid" jdbcType="INTEGER" />
+    <id column="C_IntrusiveboxId" property="cIntrusiveboxid" jdbcType="INTEGER" />
+    <result column="C_EEHexId" property="cEehexid" jdbcType="VARCHAR" />
+    <result column="C_EEName" property="cEename" jdbcType="VARCHAR" />
+    <result column="C_EEMeterBCDId" property="cEemeterbcdid" jdbcType="VARCHAR" />
+    <result column="C_Desp" property="cDesp" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    C_DistrictBCDId, C_AddressId, C_IntrusiveboxId, C_EEHexId, C_EEName, C_EEMeterBCDId, 
+    C_Desp
+  </sql>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.zz.common.model.TestdeviceinfoKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_testdeviceinfo
+    where C_DistrictBCDId = #{cDistrictbcdid,jdbcType=VARCHAR}
+      and C_AddressId = #{cAddressid,jdbcType=INTEGER}
+      and C_IntrusiveboxId = #{cIntrusiveboxid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.zz.common.model.TestdeviceinfoKey" >
+    delete from t_testdeviceinfo
+    where C_DistrictBCDId = #{cDistrictbcdid,jdbcType=VARCHAR}
+      and C_AddressId = #{cAddressid,jdbcType=INTEGER}
+      and C_IntrusiveboxId = #{cIntrusiveboxid,jdbcType=INTEGER}
+  </delete>
+
+  <insert id="insert" parameterType="com.zz.common.model.Testdeviceinfo" >
+    insert into t_testdeviceinfo (C_DistrictBCDId, C_AddressId, C_IntrusiveboxId, 
+      C_EEHexId, C_EEName, C_EEMeterBCDId, 
+      C_Desp)
+    values (#{cDistrictbcdid,jdbcType=VARCHAR}, #{cAddressid,jdbcType=INTEGER}, #{cIntrusiveboxid,jdbcType=INTEGER}, 
+      #{cEehexid,jdbcType=VARCHAR}, #{cEename,jdbcType=VARCHAR}, #{cEemeterbcdid,jdbcType=VARCHAR}, 
+      #{cDesp,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zz.common.model.Testdeviceinfo" >
+    insert into t_testdeviceinfo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cDistrictbcdid != null" >
+        C_DistrictBCDId,
+      </if>
+      <if test="cAddressid != null" >
+        C_AddressId,
+      </if>
+      <if test="cIntrusiveboxid != null" >
+        C_IntrusiveboxId,
+      </if>
+      <if test="cEehexid != null" >
+        C_EEHexId,
+      </if>
+      <if test="cEename != null" >
+        C_EEName,
+      </if>
+      <if test="cEemeterbcdid != null" >
+        C_EEMeterBCDId,
+      </if>
+      <if test="cDesp != null" >
+        C_Desp,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cDistrictbcdid != null" >
+        #{cDistrictbcdid,jdbcType=VARCHAR},
+      </if>
+      <if test="cAddressid != null" >
+        #{cAddressid,jdbcType=INTEGER},
+      </if>
+      <if test="cIntrusiveboxid != null" >
+        #{cIntrusiveboxid,jdbcType=INTEGER},
+      </if>
+      <if test="cEehexid != null" >
+        #{cEehexid,jdbcType=VARCHAR},
+      </if>
+      <if test="cEename != null" >
+        #{cEename,jdbcType=VARCHAR},
+      </if>
+      <if test="cEemeterbcdid != null" >
+        #{cEemeterbcdid,jdbcType=VARCHAR},
+      </if>
+      <if test="cDesp != null" >
+        #{cDesp,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_testdeviceinfo
+    <set >
+      <if test="record.cDistrictbcdid != null" >
+        C_DistrictBCDId = #{record.cDistrictbcdid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cAddressid != null" >
+        C_AddressId = #{record.cAddressid,jdbcType=INTEGER},
+      </if>
+      <if test="record.cIntrusiveboxid != null" >
+        C_IntrusiveboxId = #{record.cIntrusiveboxid,jdbcType=INTEGER},
+      </if>
+      <if test="record.cEehexid != null" >
+        C_EEHexId = #{record.cEehexid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cEename != null" >
+        C_EEName = #{record.cEename,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cEemeterbcdid != null" >
+        C_EEMeterBCDId = #{record.cEemeterbcdid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cDesp != null" >
+        C_Desp = #{record.cDesp,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_testdeviceinfo
+    set C_DistrictBCDId = #{record.cDistrictbcdid,jdbcType=VARCHAR},
+      C_AddressId = #{record.cAddressid,jdbcType=INTEGER},
+      C_IntrusiveboxId = #{record.cIntrusiveboxid,jdbcType=INTEGER},
+      C_EEHexId = #{record.cEehexid,jdbcType=VARCHAR},
+      C_EEName = #{record.cEename,jdbcType=VARCHAR},
+      C_EEMeterBCDId = #{record.cEemeterbcdid,jdbcType=VARCHAR},
+      C_Desp = #{record.cDesp,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zz.common.model.Testdeviceinfo" >
+    update t_testdeviceinfo
+    <set >
+      <if test="cEehexid != null" >
+        C_EEHexId = #{cEehexid,jdbcType=VARCHAR},
+      </if>
+      <if test="cEename != null" >
+        C_EEName = #{cEename,jdbcType=VARCHAR},
+      </if>
+      <if test="cEemeterbcdid != null" >
+        C_EEMeterBCDId = #{cEemeterbcdid,jdbcType=VARCHAR},
+      </if>
+      <if test="cDesp != null" >
+        C_Desp = #{cDesp,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where C_DistrictBCDId = #{cDistrictbcdid,jdbcType=VARCHAR}
+      and C_AddressId = #{cAddressid,jdbcType=INTEGER}
+      and C_IntrusiveboxId = #{cIntrusiveboxid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zz.common.model.Testdeviceinfo" >
+    update t_testdeviceinfo
+    set C_EEHexId = #{cEehexid,jdbcType=VARCHAR},
+      C_EEName = #{cEename,jdbcType=VARCHAR},
+      C_EEMeterBCDId = #{cEemeterbcdid,jdbcType=VARCHAR},
+      C_Desp = #{cDesp,jdbcType=VARCHAR}
+    where C_DistrictBCDId = #{cDistrictbcdid,jdbcType=VARCHAR}
+      and C_AddressId = #{cAddressid,jdbcType=INTEGER}
+      and C_IntrusiveboxId = #{cIntrusiveboxid,jdbcType=INTEGER}
+  </update>
+</mapper>

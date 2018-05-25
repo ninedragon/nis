@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<entry key="profiler.settings.instrument.empty.methods">true</entry>
+<entry key="ProfilerCPUSettings_profile_runnables">true</entry>
+<entry key="ProfilerCPUSettings_filter_type">2</entry>
+<entry key="ProfilerMemorySettings_track_every">10</entry>
+<entry key="ProfilerMemorySettings_mode">4</entry>
+<entry key="ProfilerCPUSettings_root_classes">com.zz.common.controller.**
+com.zz.common.dao.**
+com.zz.common.model.**
+com.zz.common.timer.**
+com.zz.common.utils.**
+com.zz.core.config.**
+com.zz.core.freemarker.extend.**
+com.zz.core.freemarker.utils.**
+com.zz.core.mybatis.**
+com.zz.core.shiro.**
+com.zz.core.statics.**
+com.zz.core.tags.**
+com.zz.edata.bo.**
+com.zz.edata.controller.**
+com.zz.edata.service.**
+com.zz.edata2.controller.**
+com.zz.permission.bo.**
+com.zz.permission.controller.**
+com.zz.permission.service.**
+com.zz.test.**
+com.zz.uaop.**
+com.zz.user.bo.**
+com.zz.user.controller.**
+com.zz.user.manager.**
+com.zz.user.service.**
+</entry>
+<entry key="ProfilerCPUSettings_filter_value">com.zz.common.controller.*,
+com.zz.common.dao.*,
+com.zz.common.model.*,
+com.zz.common.timer.*,
+com.zz.common.utils.*,
+com.zz.core.config.*,
+com.zz.core.freemarker.extend.*,
+com.zz.core.freemarker.utils.*,
+com.zz.core.mybatis.*,
+com.zz.core.shiro.*,
+com.zz.core.statics.*,
+com.zz.core.tags.*,
+com.zz.edata.bo.*,
+com.zz.edata.controller.*,
+com.zz.edata.service.*,
+com.zz.edata2.controller.*,
+com.zz.permission.bo.*,
+com.zz.permission.controller.*,
+com.zz.permission.service.*,
+com.zz.test.*,
+com.zz.uaop.*,
+com.zz.user.bo.*,
+com.zz.user.controller.*,
+com.zz.user.manager.*,
+com.zz.user.service.*</entry>
+<entry key="profiler.settings.istrument.getter.setter.methods">true</entry>
+<entry key="myeclipse.profiling.mode">0</entry>
+<entry key="ProfilerMemorySettings_stacktraces">-1</entry>
+</properties>

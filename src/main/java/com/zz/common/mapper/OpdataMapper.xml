@@ -1,0 +1,860 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://www.mybatis.org/dtd/mybatis-3-config.dtd" >
+<mapper namespace="com.zz.common.dao.OpdataMapper">
+	<resultMap id="BaseResultMap" type="com.zz.common.model.Opdata">
+		<id column="C_DistrictBCDId" property="cDistrictbcdid" jdbcType="VARCHAR" />
+		<id column="C_AddressId" property="cAddressid" jdbcType="INTEGER" />
+		<id column="C_RecordDateBCD" property="cRecorddatebcd" jdbcType="INTEGER" />
+		<id column="C_TSegmentId" property="cTsegmentid" jdbcType="INTEGER" />
+		<id column="C_ChannelId" property="cChannelid" jdbcType="INTEGER" />
+		<id column="C_EEHexId" property="cEehexid" jdbcType="VARCHAR" />
+		<id column="C_EESequenceId" property="cEesequenceid" jdbcType="INTEGER" />
+		<result column="C_TKWh" property="cTkwh" jdbcType="DOUBLE" />
+		<result column="C_FaultId" property="cFaultid" jdbcType="INTEGER" />
+		<result column="C_FrameCmdId" property="cFramecmdid" jdbcType="VARCHAR" />
+		<result column="C_EEKWh" property="cEekwh" jdbcType="DOUBLE" />
+		<result column="C_EEOpenMinute" property="cEeopenminute"
+			jdbcType="INTEGER" />
+		<result column="C_EECloseMinute" property="cEecloseminute"
+			jdbcType="INTEGER" />
+		<result column="C_EEOpenCloseTimes" property="cEeopenclosetimes"
+			jdbcType="INTEGER" />
+		<result column="C_EEPeakW" property="cEepeakw" jdbcType="DOUBLE" />
+		<result column="C_RecordInsertTime" property="cRecordinserttime"
+			jdbcType="VARCHAR" />
+		<result column="C_IsValidRecord" property="cIsvalidrecord"
+			jdbcType="BIT" />
+	</resultMap>
+
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		C_DistrictBCDId, C_AddressId, C_RecordDateBCD, C_TSegmentId, C_ChannelId, C_EEHexId,
+		C_EESequenceId, C_TKWh, C_FaultId, C_FrameCmdId, C_EEKWh,
+		C_EEOpenMinute, C_EECloseMinute,
+		C_EEOpenCloseTimes, C_EEPeakW, C_RecordDateBCD, C_IsValidRecord
+	</sql>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="com.zz.common.model.OpdataKey">
+		select
+		a.C_TSegmentId,a.C_TKWh,a.C_EEPeakW,a.C_EESequenceId,b.C_EEClassificationName
+		from t_opdata
+		where C_DistrictBCDId = #{cDistrictbcdid,jdbcType=VARCHAR}
+		and C_AddressId = #{cAddressid,jdbcType=INTEGER}
+		and C_RecordDateBCD = #{cRecorddatebcd,jdbcType=INTEGER}
+		and C_TSegmentId = #{cTsegmentid,jdbcType=INTEGER}
+		and C_ChannelId = #{cChannelid,jdbcType=INTEGER}
+		and C_EEHexId = #{cEehexid,jdbcType=VARCHAR}
+		and C_EESequenceId = #{cEesequenceid,jdbcType=INTEGER}
+	</select>
+	<!--1.总体用电 -->
+	<select id="selectOpdatasByGrp" resultMap="BaseResultMap"
+		parameterType="com.zz.edata.bo.OpEegrpBO">
+		select
+		a.*
+		from t_opdata a,t_eeclassification b
+		where C_DistrictBCDId = #{cDistrictbcdid,jdbcType=VARCHAR}
+		and C_AddressId = #{cAddressid,jdbcType=INTEGER}
+		and C_RecordDateBCD = #{cRecorddatebcd,jdbcType=INTEGER}
+		and C_ChannelId = #{cChannelid,jdbcType=INTEGER}
+		and b.C_EEGrpId= #{cEegrpid,jdbcType=INTEGER}
+
+	</select>
+	<select id="selectOpdatasForZong" resultType="java.util.HashMap"
+		parameterType="com.zz.edata.bo.OpEegrpBO">
+		select
+		a.C_TSegmentId,sum(a.C_EEKWh) as tbianshi ,min(a.C_TKWh) as tzong,min(a.C_EESequenceId) as
+		C_EESequenceId,min(b.C_EEClassificationName) as C_EEClassificationName
+		from t_opdata a,t_eeclassification b
+		where C_DistrictBCDId =#{cDistrictbcdid,jdbcType=VARCHAR}
+		and C_AddressId = #{cAddressid,jdbcType=INTEGER}
+		and C_ChannelId = #{cChannelid,jdbcType=INTEGER}
+		and a.C_EEHexId=b.C_EEHexId
+		and C_RecordDateBCD = #{cRecorddatebcd,jdbcType=INTEGER}
+		and C_IsValidRecord='1'
+		<if test="C_OffLineVersion != ''">
+			and C_OffLineVersion= #{C_OffLineVersion,jdbcType=VARCHAR}
+		</if>
+		group BY C_TSegmentId
+		order BY C_TSegmentId asc;
+	</select>
+	<select id="listRecorddate" resultType="java.util.HashMap"
+		parameterType="com.zz.edata.bo.OpEegrpBO">
+		SELECT DISTINCT C_RecordDateBCD from t_opdata where C_DistrictBCDId =#{cDistrictbcdid,jdbcType=VARCHAR}
+		and C_AddressId = #{cAddressid,jdbcType=INTEGER}
+		and C_ChannelId = #{cChannelid,jdbcType=INTEGER};
+	</select>
+	<select id="selectOpdatasPower" resultType="java.util.HashMap"
+		parameterType="com.zz.edata.bo.OpEegrpBO">
+		select
+		max(C_TKWh)*4 as power
+		from t_opdata a
+		where C_DistrictBCDId =#{cDistrictbcdid,jdbcType=VARCHAR}
+		and C_AddressId = #{cAddressid,jdbcType=INTEGER}
+		and C_ChannelId = #{cChannelid,jdbcType=INTEGER}
+		and C_RecordDateBCD = #{cRecorddatebcd,jdbcType=INTEGER}
+		and C_IsValidRecord='1'
+	</select>
+	<select id="selectOpdatasForFen" resultType="java.util.HashMap"
+		parameterType="com.zz.edata.bo.OpEegrpBO">
+		select
+		sum(C_EEKWh) tfen,b.C_EEGrpId,min(c.C_EEGrpName) C_EEGrpName
+		from t_opdata a,t_eeclassification b,t_eeclassificationgrp c
+		where C_DistrictBCDId =#{cDistrictbcdid,jdbcType=VARCHAR}
+		and C_AddressId = #{cAddressid,jdbcType=INTEGER}
+		and C_ChannelId = #{cChannelid,jdbcType=INTEGER}
+		and a.C_EEHexId=b.C_EEHexId
+		and b.C_EEGrpId=c.C_EEGrpId
+		and C_RecordDateBCD = #{cRecorddatebcd,jdbcType=INTEGER}
+		and C_IsValidRecord='1'
+		and b.C_EEGrpId !=1
+		<if test="C_OffLineVersion != ''">
+			and C_OffLineVersion= #{C_OffLineVersion,jdbcType=VARCHAR}
+		</if>
+		group BY b.C_EEGrpId
+		order BY C_EEGrpId asc;
+	</select>
+	<select id="selectOpdatasForGrid" resultType="java.util.HashMap"
+		parameterType="com.zz.edata.bo.OpEegrpBO">
+		select
+		a.C_DistrictBCDId cDistrictbcdid,a.C_AddressId cAddressid,a.C_ChannelId
+		cChannelid,a.C_RecordDateBCD cRecorddatebcd,a.C_TSegmentId ts,a.C_TKWh
+		tzong,FORMAT(sum(a.C_EEKWh),4) tbianshi
+		,concat(FORMAT(sum(a.C_EEKWh)/a.C_TKWh*100,4),'%') ratio ,C_OffLineVersion
+		from t_opdata a,t_eeclassification b
+		where C_DistrictBCDId =#{cDistrictbcdid,jdbcType=VARCHAR}
+		and C_AddressId = #{cAddressid,jdbcType=INTEGER}
+		and C_ChannelId = #{cChannelid,jdbcType=INTEGER}
+        and a.C_EEHexId=b.C_EEHexId
+		and C_RecordDateBCD = #{cRecorddatebcd,jdbcType=INTEGER}
+		and C_IsValidRecord='1'
+		<if test="C_OffLineVersion != ''">
+			and C_OffLineVersion= #{C_OffLineVersion,jdbcType=VARCHAR}
+		</if>
+		group BY C_TSegmentId
+		<!-- order BY C_TSegmentId -->
+		asc limit
+		#{startindex,jdbcType=INTEGER} ,
+		#{limit,jdbcType=INTEGER}
+		;
+	</select>
+	<select id="selectOpdatasForGridCount" resultType="java.lang.Integer"
+		parameterType="com.zz.edata.bo.OpEegrpBO">
+		select
+		count(*) from (select C_TSegmentId
+		from t_opdata a,t_eeclassification b
+		where C_DistrictBCDId =#{cDistrictbcdid,jdbcType=VARCHAR}
+		and C_AddressId = #{cAddressid,jdbcType=INTEGER}
+		and C_ChannelId = #{cChannelid,jdbcType=INTEGER}
+		and a.C_EEHexId=b.C_EEHexId
+		and C_RecordDateBCD=#{cRecorddatebcd,jdbcType=VARCHAR}
+		and C_IsValidRecord='1'
+		<if test="C_OffLineVersion != ''">
+			and C_OffLineVersion= #{C_OffLineVersion,jdbcType=VARCHAR}
+		</if>
+		group BY C_TSegmentId
+		order BY C_TSegmentId asc) count
+	</select>
+	<select id="selectOpdatasForGridCountSQL" resultType="java.lang.Integer"
+		parameterType="com.zz.edata.bo.OpEegrpBO">
+		select
+		count(*) from (select top 100 percent C_TSegmentId
+		from t_opdata a,t_eeclassification b
+		where C_DistrictBCDId =#{cDistrictbcdid,jdbcType=VARCHAR}
+		and C_AddressId = #{cAddressid,jdbcType=INTEGER}
+		and C_ChannelId = #{cChannelid,jdbcType=INTEGER}
+		and a.C_EEHexId=b.C_EEHexId
+		and C_RecordDateBCD = #{cRecorddatebcd,jdbcType=INTEGER}
+		and C_IsValidRecord='1'
+		<if test="C_OffLineVersion != ''">
+			and C_OffLineVersion= #{C_OffLineVersion,jdbcType=VARCHAR}
+		</if>
+		group BY C_TSegmentId
+		order BY C_TSegmentId asc) count
+	</select>
+	<!--2.分项能耗 -->
+	<select id="selectOpdatasPowerEE" resultType="java.util.HashMap"
+		parameterType="com.zz.edata.bo.OpEegrpBO">
+		select
+		max(C_EEPeakW) EEpeak
+		from t_opdata a,t_eeclassification b
+		where C_DistrictBCDId =#{cDistrictbcdid,jdbcType=VARCHAR}
+		and C_AddressId = #{cAddressid,jdbcType=INTEGER}
+		and C_ChannelId = #{cChannelid,jdbcType=INTEGER}
+		and C_RecordDateBCD = #{cRecorddatebcd,jdbcType=INTEGER}
+		and C_IsValidRecord='1'
+		and a.C_EEHexId=b.C_EEHexId
+		and b.C_EEGrpId= #{cEegrpid,jdbcType=INTEGER}
+	</select>
+	<select id="selectFendataDraw" resultType="java.util.HashMap"
+		parameterType="com.zz.edata.bo.OpEegrpBO">
+		select
+		a.C_TSegmentId,sum(a.C_EEKWh) tbianshi,min(a.C_EESequenceId)
+		C_EESequenceId,min(b.C_EEClassificationName) C_EEClassificationName
+		from t_opdata a,t_eeclassification b
+		where C_DistrictBCDId =#{cDistrictbcdid,jdbcType=VARCHAR}
+		and C_AddressId = #{cAddressid,jdbcType=INTEGER}
+		and C_ChannelId = #{cChannelid,jdbcType=INTEGER}
+		and a.C_EEHexId=b.C_EEHexId
+		and C_RecordDateBCD = #{cRecorddatebcd,jdbcType=INTEGER}
+		and C_IsValidRecord='1'
+		and b.C_EEGrpId= #{cEegrpid,jdbcType=INTEGER}
+		group BY C_TSegmentId
+		order BY C_TSegmentId asc;
+	</select>
+	<select id="selectGridV22" resultType="java.util.HashMap"
+		parameterType="com.zz.edata.bo.OpEegrpBO">
+		select
+		a.C_DistrictBCDId cDistrictbcdid,a.C_AddressId cAddressid,a.C_ChannelId
+		cChannelid,a.C_RecordDateBCD cRecorddatebcd,a.C_TSegmentId
+		ts,FORMAT(sum(a.C_EEKWh),4) tbianshi
+		from t_opdata a,t_eeclassification b
+		where C_DistrictBCDId =#{cDistrictbcdid,jdbcType=VARCHAR}
+		and C_AddressId = #{cAddressid,jdbcType=INTEGER}
+		and C_ChannelId = #{cChannelid,jdbcType=INTEGER}
+		and a.C_EEHexId=b.C_EEHexId
+		and C_RecordDateBCD = #{cRecorddatebcd,jdbcType=INTEGER}
+		and C_IsValidRecord='1'
+		and b.C_EEGrpId= #{cEegrpid,jdbcType=INTEGER}
+		group BY C_TSegmentId
+		order BY C_TSegmentId asc limit
+		#{startindex,jdbcType=INTEGER} ,
+		#{limit,jdbcType=INTEGER}
+		;
+	</select>
+	<select id="selectGridV22SQL" resultType="java.util.HashMap"
+		parameterType="com.zz.edata.bo.OpEegrpBO">
+		select * from
+		( select top 100 percent
+		ROW_NUMBER() OVER (ORDER BY C_TSegmentId ASC) AS 'RowNumber',
+		min(a.C_DistrictBCDId) cDistrictbcdid,min(a.C_AddressId)
+		cAddressid,min(a.C_ChannelId) cChannelid,min(a.C_RecordDateBCD)
+		cRecorddatebcd,min(a.C_TSegmentId) ts,min(a.C_TKWh)
+		tzong,sum(a.C_EEKWh) tbianshi
+		,concat(sum(a.C_EEKWh)/min(a.C_TKWh)*100,'%') ratio
+		from t_opdata a,t_eeclassification b
+		where C_DistrictBCDId =#{cDistrictbcdid,jdbcType=VARCHAR}
+		and C_AddressId = #{cAddressid,jdbcType=INTEGER}
+		and C_ChannelId = #{cChannelid,jdbcType=INTEGER}
+		and a.C_EEHexId=b.C_EEHexId
+		and C_RecordDateBCD = #{cRecorddatebcd,jdbcType=INTEGER}
+		and C_IsValidRecord='1'
+		and b.C_EEGrpId= #{cEegrpid,jdbcType=INTEGER}
+		group BY C_TSegmentId
+		order BY C_TSegmentId
+		)as b
+		WHERE RowNumber BETWEEN #{startindex,jdbcType=INTEGER} AND (
+		#{startindex,jdbcType=INTEGER}+#{limit,jdbcType=INTEGER} )
+	</select>
+	<select id="selectGridCountV22" resultType="java.lang.Integer"
+		parameterType="com.zz.edata.bo.OpEegrpBO">
+		select
+		count(*) from (select C_TSegmentId
+		from t_opdata a,t_eeclassification b
+		where C_DistrictBCDId =#{cDistrictbcdid,jdbcType=VARCHAR}
+		and C_AddressId = #{cAddressid,jdbcType=INTEGER}
+		and C_ChannelId = #{cChannelid,jdbcType=INTEGER}
+		and a.C_EEHexId=b.C_EEHexId
+		and C_RecordDateBCD = #{cRecorddatebcd,jdbcType=INTEGER}
+		and C_IsValidRecord='1'
+		and b.C_EEGrpId= #{cEegrpid,jdbcType=INTEGER}
+		group BY C_TSegmentId
+		order BY C_TSegmentId asc) count
+	</select>
+	<select id="selectGridCountV22SQL" resultType="java.lang.Integer"
+		parameterType="com.zz.edata.bo.OpEegrpBO">
+		select
+		count(*) from (select top 100 percent C_TSegmentId
+		from t_opdata a,t_eeclassification b
+		where C_DistrictBCDId =#{cDistrictbcdid,jdbcType=VARCHAR}
+		and C_AddressId = #{cAddressid,jdbcType=INTEGER}
+		and C_ChannelId = #{cChannelid,jdbcType=INTEGER}
+		and a.C_EEHexId=b.C_EEHexId
+		and C_RecordDateBCD = #{cRecorddatebcd,jdbcType=INTEGER}
+		and C_IsValidRecord='1'
+		and b.C_EEGrpId= #{cEegrpid,jdbcType=INTEGER}
+		group BY C_TSegmentId
+		order BY C_TSegmentId asc) count
+	</select>
+	<select id="selectQitingTable" resultType="java.util.HashMap"
+		parameterType="com.zz.edata.bo.OpEegrpBO">
+		SELECT
+		C_EESequenceId,
+		CASE
+		WHEN starttime = 255 THEN
+		0
+		ELSE
+		((startSeg - 1) * 15 + starttime)
+		END AS starttime,
+		CASE
+		WHEN endtime = 255 THEN
+		0
+		ELSE
+		((endSeg - 1) * 15 + endtime)
+		END AS endtime,
+		power
+		power
+		FROM
+		(
+		(
+		SELECT
+		a.C_EESequenceId,
+		min(a.C_EEOpenMinute) starttime,
+		min(a.C_EECloseMinute) endtime -- ,starttime,endtime
+		,
+		sum(a.C_EEKWh) AS power,
+		min(a.C_TSegmentId) startSeg,
+		max(a.C_TSegmentId) endSeg
+		FROM
+		t_opdata a,
+		t_eeclassification b
+		WHERE
+		a.C_EEHexId = b.C_EEHexId
+		AND b.C_EEGrpId = #{cEegrpid,jdbcType=INTEGER}
+		and C_DistrictBCDId =#{cDistrictbcdid,jdbcType=VARCHAR}
+		and C_AddressId = #{cAddressid,jdbcType=INTEGER}
+		and C_ChannelId = #{cChannelid,jdbcType=INTEGER}
+		and C_RecordDateBCD = #{cRecorddatebcd,jdbcType=INTEGER}
+		and a.C_EEHexId=b.C_EEHexId
+		AND C_IsValidRecord = '1'
+		GROUP BY
+		C_EESequenceId
+		)
+		UNION
+		(
+		SELECT
+		a.C_EESequenceId,
+		min(a.C_EEOpenMinute) starttime,
+		min(a.C_EECloseMinute) endtime -- ,starttime,endtime
+		,
+		sum(a.C_EEKWh) AS power,
+		min(a.C_TSegmentId) startSeg,
+		max(a.C_TSegmentId) endSeg
+		FROM
+		t_opdata a,
+		t_eeclassification b
+		WHERE
+		a.C_EEHexId = b.C_EEHexId
+		AND b.C_EEGrpId = #{cEegrpid,jdbcType=INTEGER}
+		and C_DistrictBCDId =#{cDistrictbcdid,jdbcType=VARCHAR}
+		and C_AddressId = #{cAddressid,jdbcType=INTEGER}
+		and C_ChannelId = #{cChannelid,jdbcType=INTEGER}
+		and C_RecordDateBCD = #{cRecorddatebcd,jdbcType=INTEGER}
+		and a.C_EEHexId=b.C_EEHexId
+		AND C_IsValidRecord = '1'
+		GROUP BY
+		C_EESequenceId
+		)
+		) AS a
+	</select>
+	<select id="selectQitingTableCount" resultType="java.lang.Integer"
+		parameterType="com.zz.edata.bo.OpEegrpBO">
+		select
+		count(*) from (select C_TSegmentId
+		from t_opdata a,t_eeclassification b
+		where C_DistrictBCDId =#{cDistrictbcdid,jdbcType=VARCHAR}
+		and C_AddressId = #{cAddressid,jdbcType=INTEGER}
+		and C_ChannelId = #{cChannelid,jdbcType=INTEGER}
+		and a.C_EEHexId=b.C_EEHexId
+		and C_RecordDateBCD = #{cRecorddatebcd,jdbcType=INTEGER}
+		and C_IsValidRecord='1'
+		and b.C_EEGrpId= #{cEegrpid,jdbcType=INTEGER}
+		group BY C_TSegmentId
+		order BY C_TSegmentId asc) count
+	</select>
+	<!--3.原始上传数据 -->
+	<select id="selectGridV31" resultType="java.util.HashMap"
+		parameterType="com.zz.edata.bo.OpEegrpBO">
+		select
+		a.C_TSegmentId,c.C_TSegmentName,b.C_EEClassificationName,a.C_EESequenceId,a.C_EEKWh
+		,a.C_EEOpenMinute,a.C_EECloseMinute,a.C_EEOpenCloseTimes
+		,a.C_EEPeakW,a.C_FaultId,a.C_FrameCmdId,a.C_OffLineVersion
+		from t_opdata a,t_eeclassification b,t_timesegment c
+		where C_DistrictBCDId =#{cDistrictbcdid,jdbcType=VARCHAR}
+		and C_AddressId = #{cAddressid,jdbcType=INTEGER}
+		and C_ChannelId = #{cChannelid,jdbcType=INTEGER}
+		and a.C_EEHexId=b.C_EEHexId
+		and a.C_TSegmentId=c.C_TSegmentId
+		and C_RecordDateBCD = #{cRecorddatebcd,jdbcType=VARCHAR}
+		and a.C_Eepeakw BETWEEN #{minPower,jdbcType=INTEGER} AND (
+		#{maxPower,jdbcType=INTEGER})
+		and a.C_TSegmentId BETWEEN #{minTime,jdbcType=INTEGER} AND (
+		#{maxTime,jdbcType=INTEGER})
+		and C_IsValidRecord='1'
+		<if test="C_OffLineVersion != ''">
+			and C_OffLineVersion= #{C_OffLineVersion,jdbcType=VARCHAR}
+		</if>
+		<if test="cEehexid == '' and cEegrpid !=null">
+			and b.C_EEGrpId= #{cEegrpid,jdbcType=INTEGER}
+		</if>
+		<if test="cEehexid != ''">
+			and a.C_EEHexId= #{cEehexid,jdbcType=INTEGER}
+		</if>
+		order BY
+		C_DistrictBCDId,C_AddressId,C_ChannelId,C_RecordDateBCD,C_TSegmentId
+		asc limit
+		#{startindex,jdbcType=INTEGER} ,
+		#{limit,jdbcType=INTEGER}
+		;
+	</select>
+
+	<select id="selectGridV31SQL" resultType="java.util.HashMap"
+		parameterType="com.zz.edata.bo.OpEegrpBO">
+		select * from
+		( select top 100 percent ROW_NUMBER() OVER (ORDER BY a.C_TSegmentId
+		ASC) AS 'RowNumber',
+		a.C_TSegmentId,min(c.C_TSegmentName)
+		C_TSegmentName,min(b.C_EEClassificationName)C_EEClassificationName,min(a.C_EESequenceId)C_EESequenceId,min(a.C_EEKWh)C_EEKWh
+		,min(a.C_EEOpenMinute)C_EEOpenMinute,min(a.C_EECloseMinute)C_EECloseMinute,min(a.C_EEOpenCloseTimes)C_EEOpenCloseTimes
+		,min(a.C_EEPeakW)C_EEPeakW,min(a.C_FaultId)C_FaultId,min(a.C_FrameCmdId)C_FrameCmdId
+		from t_opdata a,t_eeclassification b,t_timesegment c
+		where C_DistrictBCDId =#{cDistrictbcdid,jdbcType=VARCHAR}
+		and C_AddressId = #{cAddressid,jdbcType=INTEGER}
+		and C_ChannelId = #{cChannelid,jdbcType=INTEGER}
+		and a.C_EEHexId=b.C_EEHexId
+		and a.C_TSegmentId=c.C_TSegmentId
+		and C_RecordDateBCD = #{cRecorddatebcd,jdbcType=INTEGER}
+		and C_IsValidRecord='1'
+		and b.C_EEGrpId= #{cEegrpid,jdbcType=INTEGER}
+		
+		order BY a.C_TSegmentId asc
+		)as b
+		WHERE RowNumber BETWEEN #{startindex,jdbcType=INTEGER} AND (
+		#{startindex,jdbcType=INTEGER}+#{limit,jdbcType=INTEGER} )
+	</select>
+
+	<select id="selectGridCountV31" resultType="java.lang.Integer"
+		parameterType="com.zz.edata.bo.OpEegrpBO">
+		select
+		count(*) from (select a.C_TSegmentId
+		from t_opdata a,t_eeclassification b,t_timesegment c
+		where C_DistrictBCDId =#{cDistrictbcdid,jdbcType=VARCHAR}
+		and C_AddressId = #{cAddressid,jdbcType=INTEGER}
+		and C_ChannelId = #{cChannelid,jdbcType=INTEGER}
+		and a.C_EEHexId=b.C_EEHexId
+		AND a.C_TSegmentId = c.C_TSegmentId
+		and C_RecordDateBCD = #{cRecorddatebcd,jdbcType=INTEGER}
+		and a.C_Eepeakw BETWEEN #{minPower,jdbcType=INTEGER} AND (
+		#{maxPower,jdbcType=INTEGER})
+		and a.C_TSegmentId BETWEEN #{minTime,jdbcType=INTEGER} AND (
+		#{maxTime,jdbcType=INTEGER}) 
+		and C_IsValidRecord='1'
+		<if test="C_OffLineVersion != ''">
+			and C_OffLineVersion= #{C_OffLineVersion,jdbcType=VARCHAR}
+		</if>
+		<if test="cEehexid == '' and cEegrpid !=null">
+			and b.C_EEGrpId= #{cEegrpid,jdbcType=INTEGER}
+		</if>
+		<if test="cEehexid != ''">
+			and a.C_EEHexId= #{cEehexid,jdbcType=INTEGER}
+		</if>
+		order BY C_TSegmentId asc) count
+	</select>
+	<select id="selectGridCountV31SQL" resultType="java.lang.Integer"
+		parameterType="com.zz.edata.bo.OpEegrpBO">
+		select
+		count(*) from (select top 100 percent a.C_TSegmentId
+		from t_opdata a,t_eeclassification b,t_timesegment c
+		where C_DistrictBCDId =#{cDistrictbcdid,jdbcType=VARCHAR}
+		and C_AddressId = #{cAddressid,jdbcType=INTEGER}
+		and C_ChannelId = #{cChannelid,jdbcType=INTEGER}
+		and a.C_EEHexId=b.C_EEHexId
+		AND a.C_TSegmentId = c.C_TSegmentId
+		and C_RecordDateBCD = #{cRecorddatebcd,jdbcType=INTEGER}
+		and C_IsValidRecord='1'
+		and b.C_EEGrpId= #{cEegrpid,jdbcType=INTEGER}
+		group BY a.C_TSegmentId
+		order BY C_TSegmentId asc) count
+	</select>
+
+	<!--3.原始上传数据 阶跃 -->
+	<select id="selectGridV41" resultType="java.util.HashMap"
+		parameterType="com.zz.edata.bo.OpEegrpBO">
+		select
+		a.C_TSegmentId,c.C_TSegmentName,b.C_EEClassificationName,a.C_EESequenceId,a.C_JumpSecond
+		,a.C_KW,a.C_FrameCmdId,a.C_ParaId
+		from t_opjumpdata a,t_eeclassification b,t_timesegment c
+		where C_DistrictBCDId =#{cDistrictbcdid,jdbcType=VARCHAR}
+		and C_AddressId = #{cAddressid,jdbcType=INTEGER}
+		and C_ChannelId = #{cChannelid,jdbcType=INTEGER}
+		and a.C_EEHexId=b.C_EEHexId
+		and a.C_TSegmentId=c.C_TSegmentId
+		and C_RecordDateBCD = #{cRecorddatebcd,jdbcType=VARCHAR}
+		and a.C_KW BETWEEN #{minPower,jdbcType=INTEGER} AND (
+		#{maxPower,jdbcType=INTEGER})
+		and a.C_TSegmentId BETWEEN #{minTime,jdbcType=INTEGER} AND (
+		#{maxTime,jdbcType=INTEGER})
+		<if test="cEehexid == ''">
+			and b.C_EEGrpId= #{cEegrpid,jdbcType=INTEGER}
+		</if>
+		<if test="cEehexid != ''">
+			and a.C_EEHexId= #{cEehexid,jdbcType=INTEGER}
+		</if>
+		order BY
+		C_DistrictBCDId,C_AddressId,C_ChannelId,C_RecordDateBCD,C_TSegmentId
+		asc limit
+		#{startindex,jdbcType=INTEGER} ,
+		#{limit,jdbcType=INTEGER}
+		;
+	</select>
+	<select id="selectGridCountV41" resultType="java.lang.Integer"
+		parameterType="com.zz.edata.bo.OpEegrpBO">
+		select
+		count(*) from (select a.C_TSegmentId
+		from t_opjumpdata a,t_eeclassification b,t_timesegment c
+		where C_DistrictBCDId =#{cDistrictbcdid,jdbcType=VARCHAR}
+		and C_AddressId = #{cAddressid,jdbcType=INTEGER}
+		and C_ChannelId = #{cChannelid,jdbcType=INTEGER}
+		and a.C_EEHexId=b.C_EEHexId
+		AND a.C_TSegmentId = c.C_TSegmentId
+		and C_RecordDateBCD = #{cRecorddatebcd,jdbcType=VARCHAR}
+		and a.C_KW BETWEEN #{minPower,jdbcType=INTEGER} AND (
+		#{maxPower,jdbcType=INTEGER})
+		and a.C_TSegmentId BETWEEN #{minTime,jdbcType=INTEGER} AND (
+		#{maxTime,jdbcType=INTEGER})
+		<if test="cEehexid == ''">
+			and b.C_EEGrpId= #{cEegrpid,jdbcType=INTEGER}
+		</if>
+		<if test="cEehexid != ''">
+			and a.C_EEHexId= #{cEehexid,jdbcType=INTEGER}
+		</if>
+		order BY C_TSegmentId asc) count
+	</select>
+	<!--4.分项对比-->
+	<select id="listChannelEE" resultType="java.util.HashMap">
+        select * from t_channel_ee	
+    </select>
+	<insert id="insert" parameterType="com.zz.common.model.Opdata">
+		insert into t_opdata (C_DistrictBCDId, C_AddressId, C_RecordDateBCD,
+		C_TSegmentId, C_ChannelId, C_EEHexId,
+		C_EESequenceId, C_TKWh, C_FaultId,
+		C_FrameCmdId, C_EEKWh, C_EEOpenMinute,
+		C_EECloseMinute, C_EEOpenCloseTimes, C_EEPeakW,
+		C_RecordInsertTime, C_IsValidRecord)
+		values (#{cDistrictbcdid,jdbcType=VARCHAR}, #{cAddressid,jdbcType=INTEGER},
+		#{cRecorddatebcd,jdbcType=INTEGER},
+		#{cTsegmentid,jdbcType=INTEGER}, #{cChannelid,jdbcType=INTEGER}, #{cEehexid,jdbcType=VARCHAR},
+		#{cEesequenceid,jdbcType=INTEGER}, #{cTkwh,jdbcType=DOUBLE},
+		#{cFaultid,jdbcType=INTEGER},
+		#{cFramecmdid,jdbcType=VARCHAR}, #{cEekwh,jdbcType=DOUBLE}, #{cEeopenminute,jdbcType=INTEGER},
+		#{cEecloseminute,jdbcType=INTEGER},
+		#{cEeopenclosetimes,jdbcType=INTEGER}, #{cEepeakw,jdbcType=DOUBLE},
+		#{cRecordinserttime,jdbcType=VARCHAR}, #{cIsvalidrecord,jdbcType=BIT})
+	</insert>
+	<insert id="insertSelective" parameterType="com.zz.common.model.Opdata">
+		insert into t_opdata
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="cDistrictbcdid != null">
+				C_DistrictBCDId,
+			</if>
+			<if test="cAddressid != null">
+				C_AddressId,
+			</if>
+			<if test="cRecorddatebcd != null">
+				C_RecordDateBCD,
+			</if>
+			<if test="cTsegmentid != null">
+				C_TSegmentId,
+			</if>
+			<if test="cChannelid != null">
+				C_ChannelId,
+			</if>
+			<if test="cEehexid != null">
+				C_EEHexId,
+			</if>
+			<if test="cEesequenceid != null">
+				C_EESequenceId,
+			</if>
+			<if test="cTkwh != null">
+				C_TKWh,
+			</if>
+			<if test="cFaultid != null">
+				C_FaultId,
+			</if>
+			<if test="cFramecmdid != null">
+				C_FrameCmdId,
+			</if>
+			<if test="cEekwh != null">
+				C_EEKWh,
+			</if>
+			<if test="cEeopenminute != null">
+				C_EEOpenMinute,
+			</if>
+			<if test="cEecloseminute != null">
+				C_EECloseMinute,
+			</if>
+			<if test="cEeopenclosetimes != null">
+				C_EEOpenCloseTimes,
+			</if>
+			<if test="cEepeakw != null">
+				C_EEPeakW,
+			</if>
+			<if test="cRecordinserttime != null">
+				C_RecordInsertTime,
+			</if>
+			<if test="cIsvalidrecord != null">
+				C_IsValidRecord,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="cDistrictbcdid != null">
+				#{cDistrictbcdid,jdbcType=VARCHAR},
+			</if>
+			<if test="cAddressid != null">
+				#{cAddressid,jdbcType=INTEGER},
+			</if>
+			<if test="cRecorddatebcd != null">
+				#{cRecorddatebcd,jdbcType=INTEGER},
+			</if>
+			<if test="cTsegmentid != null">
+				#{cTsegmentid,jdbcType=INTEGER},
+			</if>
+			<if test="cChannelid != null">
+				#{cChannelid,jdbcType=INTEGER},
+			</if>
+			<if test="cEehexid != null">
+				#{cEehexid,jdbcType=VARCHAR},
+			</if>
+			<if test="cEesequenceid != null">
+				#{cEesequenceid,jdbcType=INTEGER},
+			</if>
+			<if test="cTkwh != null">
+				#{cTkwh,jdbcType=DOUBLE},
+			</if>
+			<if test="cFaultid != null">
+				#{cFaultid,jdbcType=INTEGER},
+			</if>
+			<if test="cFramecmdid != null">
+				#{cFramecmdid,jdbcType=VARCHAR},
+			</if>
+			<if test="cEekwh != null">
+				#{cEekwh,jdbcType=DOUBLE},
+			</if>
+			<if test="cEeopenminute != null">
+				#{cEeopenminute,jdbcType=INTEGER},
+			</if>
+			<if test="cEecloseminute != null">
+				#{cEecloseminute,jdbcType=INTEGER},
+			</if>
+			<if test="cEeopenclosetimes != null">
+				#{cEeopenclosetimes,jdbcType=INTEGER},
+			</if>
+			<if test="cEepeakw != null">
+				#{cEepeakw,jdbcType=DOUBLE},
+			</if>
+			<if test="cRecordinserttime != null">
+				#{cRecordinserttime,jdbcType=VARCHAR},
+			</if>
+			<if test="cIsvalidrecord != null">
+				#{cIsvalidrecord,jdbcType=BIT},
+			</if>
+		</trim>
+	</insert>
+
+	<update id="updateByExampleSelective" parameterType="map">
+		update t_opdata
+		<set>
+			<if test="record.cDistrictbcdid != null">
+				C_DistrictBCDId = #{record.cDistrictbcdid,jdbcType=VARCHAR},
+			</if>
+			<if test="record.cAddressid != null">
+				C_AddressId = #{record.cAddressid,jdbcType=INTEGER},
+			</if>
+			<if test="record.cRecorddatebcd != null">
+				C_RecordDateBCD = #{record.cRecorddatebcd,jdbcType=INTEGER},
+			</if>
+			<if test="record.cTsegmentid != null">
+				C_TSegmentId = #{record.cTsegmentid,jdbcType=INTEGER},
+			</if>
+			<if test="record.cChannelid != null">
+				C_ChannelId = #{record.cChannelid,jdbcType=INTEGER},
+			</if>
+			<if test="record.cEehexid != null">
+				C_EEHexId = #{record.cEehexid,jdbcType=VARCHAR},
+			</if>
+			<if test="record.cEesequenceid != null">
+				C_EESequenceId = #{record.cEesequenceid,jdbcType=INTEGER},
+			</if>
+			<if test="record.cTkwh != null">
+				C_TKWh = #{record.cTkwh,jdbcType=DOUBLE},
+			</if>
+			<if test="record.cFaultid != null">
+				C_FaultId = #{record.cFaultid,jdbcType=INTEGER},
+			</if>
+			<if test="record.cFramecmdid != null">
+				C_FrameCmdId = #{record.cFramecmdid,jdbcType=VARCHAR},
+			</if>
+			<if test="record.cEekwh != null">
+				C_EEKWh = #{record.cEekwh,jdbcType=DOUBLE},
+			</if>
+			<if test="record.cEeopenminute != null">
+				C_EEOpenMinute = #{record.cEeopenminute,jdbcType=INTEGER},
+			</if>
+			<if test="record.cEecloseminute != null">
+				C_EECloseMinute = #{record.cEecloseminute,jdbcType=INTEGER},
+			</if>
+			<if test="record.cEeopenclosetimes != null">
+				C_EEOpenCloseTimes = #{record.cEeopenclosetimes,jdbcType=INTEGER},
+			</if>
+			<if test="record.cEepeakw != null">
+				C_EEPeakW = #{record.cEepeakw,jdbcType=DOUBLE},
+			</if>
+			<if test="record.cRecordinserttime != null">
+				C_RecordInsertTime = #{record.cRecordinserttime,jdbcType=VARCHAR},
+			</if>
+			<if test="record.cIsvalidrecord != null">
+				C_IsValidRecord = #{record.cIsvalidrecord,jdbcType=BIT},
+			</if>
+		</set>
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExample" parameterType="map">
+		update t_opdata
+		set C_DistrictBCDId = #{record.cDistrictbcdid,jdbcType=VARCHAR},
+		C_AddressId = #{record.cAddressid,jdbcType=INTEGER},
+		C_RecordDateBCD = #{record.cRecorddatebcd,jdbcType=INTEGER},
+		C_TSegmentId = #{record.cTsegmentid,jdbcType=INTEGER},
+		C_ChannelId = #{record.cChannelid,jdbcType=INTEGER},
+		C_EEHexId = #{record.cEehexid,jdbcType=VARCHAR},
+		C_EESequenceId = #{record.cEesequenceid,jdbcType=INTEGER},
+		C_TKWh = #{record.cTkwh,jdbcType=DOUBLE},
+		C_FaultId = #{record.cFaultid,jdbcType=INTEGER},
+		C_FrameCmdId = #{record.cFramecmdid,jdbcType=VARCHAR},
+		C_EEKWh = #{record.cEekwh,jdbcType=DOUBLE},
+		C_EEOpenMinute = #{record.cEeopenminute,jdbcType=INTEGER},
+		C_EECloseMinute = #{record.cEecloseminute,jdbcType=INTEGER},
+		C_EEOpenCloseTimes = #{record.cEeopenclosetimes,jdbcType=INTEGER},
+		C_EEPeakW = #{record.cEepeakw,jdbcType=DOUBLE},
+		C_RecordInsertTime = #{record.cRecordinserttime,jdbcType=VARCHAR},
+		C_IsValidRecord = #{record.cIsvalidrecord,jdbcType=BIT}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByPrimaryKeySelective" parameterType="com.zz.common.model.Opdata">
+		update t_opdata
+		<set>
+			<if test="cTkwh != null">
+				C_TKWh = #{cTkwh,jdbcType=DOUBLE},
+			</if>
+			<if test="cFaultid != null">
+				C_FaultId = #{cFaultid,jdbcType=INTEGER},
+			</if>
+			<if test="cFramecmdid != null">
+				C_FrameCmdId = #{cFramecmdid,jdbcType=VARCHAR},
+			</if>
+			<if test="cEekwh != null">
+				C_EEKWh = #{cEekwh,jdbcType=DOUBLE},
+			</if>
+			<if test="cEeopenminute != null">
+				C_EEOpenMinute = #{cEeopenminute,jdbcType=INTEGER},
+			</if>
+			<if test="cEecloseminute != null">
+				C_EECloseMinute = #{cEecloseminute,jdbcType=INTEGER},
+			</if>
+			<if test="cEeopenclosetimes != null">
+				C_EEOpenCloseTimes = #{cEeopenclosetimes,jdbcType=INTEGER},
+			</if>
+			<if test="cEepeakw != null">
+				C_EEPeakW = #{cEepeakw,jdbcType=DOUBLE},
+			</if>
+			<if test="cRecordinserttime != null">
+				C_RecordInsertTime = #{cRecordinserttime,jdbcType=VARCHAR},
+			</if>
+			<if test="cIsvalidrecord != null">
+				C_IsValidRecord = #{cIsvalidrecord,jdbcType=BIT},
+			</if>
+		</set>
+		where C_DistrictBCDId = #{cDistrictbcdid,jdbcType=VARCHAR}
+		and C_AddressId = #{cAddressid,jdbcType=INTEGER}
+		and C_RecordDateBCD = #{cRecorddatebcd,jdbcType=INTEGER}
+		and C_TSegmentId = #{cTsegmentid,jdbcType=INTEGER}
+		and C_ChannelId = #{cChannelid,jdbcType=INTEGER}
+		and C_EEHexId = #{cEehexid,jdbcType=VARCHAR}
+		and C_EESequenceId = #{cEesequenceid,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.zz.common.model.Opdata">
+		update t_opdata
+		set C_TKWh = #{cTkwh,jdbcType=DOUBLE},
+		C_FaultId = #{cFaultid,jdbcType=INTEGER},
+		C_FrameCmdId = #{cFramecmdid,jdbcType=VARCHAR},
+		C_EEKWh = #{cEekwh,jdbcType=DOUBLE},
+		C_EEOpenMinute = #{cEeopenminute,jdbcType=INTEGER},
+		C_EECloseMinute = #{cEecloseminute,jdbcType=INTEGER},
+		C_EEOpenCloseTimes = #{cEeopenclosetimes,jdbcType=INTEGER},
+		C_EEPeakW = #{cEepeakw,jdbcType=DOUBLE},
+		C_RecordInsertTime = #{cRecordinserttime,jdbcType=VARCHAR},
+		C_IsValidRecord = #{cIsvalidrecord,jdbcType=BIT}
+		where C_DistrictBCDId = #{cDistrictbcdid,jdbcType=VARCHAR}
+		and C_AddressId = #{cAddressid,jdbcType=INTEGER}
+		and C_RecordDateBCD = #{cRecorddatebcd,jdbcType=INTEGER}
+		and C_TSegmentId = #{cTsegmentid,jdbcType=INTEGER}
+		and C_ChannelId = #{cChannelid,jdbcType=INTEGER}
+		and C_EEHexId = #{cEehexid,jdbcType=VARCHAR}
+		and C_EESequenceId = #{cEesequenceid,jdbcType=INTEGER}
+	</update>
+</mapper>

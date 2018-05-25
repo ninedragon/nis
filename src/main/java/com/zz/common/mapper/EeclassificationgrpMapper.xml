@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://www.mybatis.org/dtd/mybatis-3-config.dtd" >
+<mapper namespace="com.zz.common.dao.EeclassificationgrpMapper" >
+  <resultMap id="BaseResultMap" type="com.zz.common.model.Eeclassificationgrp" >
+    <id column="C_EEGrpId" property="cEegrpid" jdbcType="INTEGER" />
+    <result column="C_EEGrpName" property="cEegrpname" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    C_EEGrpId, C_EEGrpName
+  </sql>
+
+  <select id="selectAllEG" resultMap="BaseResultMap">
+    select
+    C_EEGrpId, C_EEGrpName
+    from t_eeclassificationgrp
+  </select>  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_eeclassificationgrp
+    where C_EEGrpId = #{cEegrpid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_eeclassificationgrp
+    where C_EEGrpId = #{cEegrpid,jdbcType=INTEGER}
+  </delete>
+
+  <insert id="insert" parameterType="com.zz.common.model.Eeclassificationgrp" >
+    insert into t_eeclassificationgrp (C_EEGrpId, C_EEGrpName)
+    values (#{cEegrpid,jdbcType=INTEGER}, #{cEegrpname,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zz.common.model.Eeclassificationgrp" >
+    insert into t_eeclassificationgrp
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cEegrpid != null" >
+        C_EEGrpId,
+      </if>
+      <if test="cEegrpname != null" >
+        C_EEGrpName,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cEegrpid != null" >
+        #{cEegrpid,jdbcType=INTEGER},
+      </if>
+      <if test="cEegrpname != null" >
+        #{cEegrpname,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_eeclassificationgrp
+    <set >
+      <if test="record.cEegrpid != null" >
+        C_EEGrpId = #{record.cEegrpid,jdbcType=INTEGER},
+      </if>
+      <if test="record.cEegrpname != null" >
+        C_EEGrpName = #{record.cEegrpname,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_eeclassificationgrp
+    set C_EEGrpId = #{record.cEegrpid,jdbcType=INTEGER},
+      C_EEGrpName = #{record.cEegrpname,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zz.common.model.Eeclassificationgrp" >
+    update t_eeclassificationgrp
+    <set >
+      <if test="cEegrpname != null" >
+        C_EEGrpName = #{cEegrpname,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where C_EEGrpId = #{cEegrpid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zz.common.model.Eeclassificationgrp" >
+    update t_eeclassificationgrp
+    set C_EEGrpName = #{cEegrpname,jdbcType=VARCHAR}
+    where C_EEGrpId = #{cEegrpid,jdbcType=INTEGER}
+  </update>
+</mapper>

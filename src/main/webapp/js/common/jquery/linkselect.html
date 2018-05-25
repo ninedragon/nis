@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+<meta charset="UTF-8">
+<title>三级联动测试</title>
+<script type="text/javascript" src="">
+
+</script>
+</head>
+<body>
+<p>您的收货地址：</p>
+<select id="province" onchange="Get_Next_Place('province','Get_city')">
+<option id="Not_data1">Province</option>
+<option id="GuangDong" value="GuangDong">GuangDong</option>
+<option id="ShanDong" value="ShanDong">ShanDong</option>
+<option id="HuNan" value="HuNan">HuNan</option>
+</select>
+<select id="city" onchange="Get_Next_Place('city','Get_country')">
+<option id="Not_data2">City</option>
+</select>
+<select id="country">
+<option id="Not_data3">Country</option>
+</select>
+<br/>
+</body>
+</html>

@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://www.mybatis.org/dtd/mybatis-3-config.dtd">
+<mapper namespace="com.zz.common.dao.TSyCityInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.zz.common.model.TSyCityInfoBean" >
+    <id column="CITY_CODE" property="cityCode" jdbcType="VARCHAR" />
+    <result column="CITY_NAME_CN" property="cityNameCn" jdbcType="VARCHAR" />
+    <result column="PROVINCE_ID" property="provinceId" jdbcType="VARCHAR" />
+    <result column="CITY_TIER" property="cityTier" jdbcType="CHAR" />
+    <result column="PROVINCELEVEL_FLAG" property="provincelevelFlag" jdbcType="CHAR" />
+    <result column="DISTRICT_FLAG" property="districtFlag" jdbcType="CHAR" />
+    <result column="SUPERIOR_CITY" property="superiorCity" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    CITY_CODE, CITY_NAME_CN, PROVINCE_ID, CITY_TIER, PROVINCELEVEL_FLAG, DISTRICT_FLAG, 
+    SUPERIOR_CITY
+  </sql>
+  <select id="getCity" resultMap="BaseResultMap" parameterType="Map">
+  			select 
+  			 <include refid="Base_Column_List" />
+  			  from T_SY_CITY_INFO where
+  			  1=1 and
+  			   PROVINCE_ID=#{provinceId} and DISTRICT_FLAG=#{districtFlag}
+  			  order by T_SY_CITY_INFO.CITY_NAME_CN  
+  </select>
+   <select id="getCityByEp" resultMap="BaseResultMap" parameterType="Map">
+  			SELECT
+		distinct  <include refid="Base_Column_List" />
+		FROM
+			T_SY_CITY_INFO a
+		INNER JOIN t_epu_info b ON a.CITY_CODE = b.epu_city
+		WHERE
+			1 = 1  and  PROVINCE_ID=#{provinceId} and DISTRICT_FLAG=#{districtFlag} and b.DEL_FLAG='0'
+		ORDER BY
+			a.CITY_NAME_CN
+   </select>
+  
+  <select id="getAllCity" resultMap="BaseResultMap" parameterType="Map">
+  			select 
+  			 <include refid="Base_Column_List" />
+  			  from T_SY_CITY_INFO where 
+  			   PROVINCE_ID=#{provinceId} and DISTRICT_FLAG=#{districtFlag}
+  			  order by T_SY_CITY_INFO.CITY_NAME_CN  
+  </select>
+  
+  <select id="getCityDistrict" resultMap="BaseResultMap" parameterType="java.lang.String">
+  			 select 
+  			 <include refid="Base_Column_List" />
+  			  from T_SY_CITY_INFO where SUPERIOR_CITY in( 
+  select CITY_CODE from T_SY_CITY_INFO where CITY_CODE=#{provinceId})
+   order by T_SY_CITY_INFO.CITY_NAME_CN  
+  </select>
+    <select id="getCityDistrictByEp" resultMap="BaseResultMap" parameterType="java.lang.String">
+  			
+		SELECT
+			distinct <include refid="Base_Column_List" />
+		FROM
+			T_SY_CITY_INFO a
+		INNER JOIN t_epu_info b ON a.CITY_CODE = b.epu_district
+		WHERE
+			SUPERIOR_CITY IN (
+				SELECT
+					CITY_CODE
+				FROM
+					T_SY_CITY_INFO
+				WHERE
+					1 = 1
+			)  and b.DEL_FLAG='0'
+		ORDER BY
+			a.CITY_NAME_CN
+  </select>
+  
+  
+    <select id="getCityInfocode" resultType="String" parameterType="java.lang.String">
+  			 select  CITYINFO_CODE from T_SY_CITY_INFO where CITY_CODE=#{citycode} 
+    </select>
+  <select id="getReport" resultMap="BaseResultMap" parameterType="String">
+  		 select CITY_REPORT ,COUNTY_REPORT from T_SY_CITY_INFO where CITY_CODE=#{citycode}
+  </select>
+  <!-- <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_SY_CITY_INFO
+    where CITY_CODE = #{cityCode,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from T_SY_CITY_INFO
+    where CITY_CODE = #{cityCode,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.woodare.sds.service.core.dao.entity.TSyCityInfo" >
+    insert into T_SY_CITY_INFO (CITY_CODE, CITY_NAME_CN, PROVINCE_ID, 
+      CITY_TIER, PROVINCELEVEL_FLAG, DISTRICT_FLAG, 
+      SUPERIOR_CITY, CITY_AVG_HOUSING_PRICE, CITY_MAP, 
+      CITYINFO_CODE, CITY_NAME_EN, CITY_NAME_SHORT
+      )
+    values (#{cityCode,jdbcType=VARCHAR}, #{cityNameCn,jdbcType=VARCHAR}, #{provinceId,jdbcType=VARCHAR}, 
+      #{cityTier,jdbcType=CHAR}, #{provincelevelFlag,jdbcType=CHAR}, #{districtFlag,jdbcType=CHAR}, 
+      #{superiorCity,jdbcType=VARCHAR}, #{cityAvgHousingPrice,jdbcType=DECIMAL}, #{cityMap,jdbcType=VARCHAR}, 
+      #{cityinfoCode,jdbcType=CHAR}, #{cityNameEn,jdbcType=VARCHAR}, #{cityNameShort,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.woodare.sds.service.core.dao.entity.TSyCityInfo" >
+    insert into T_SY_CITY_INFO
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cityCode != null" >
+        CITY_CODE,
+      </if>
+      <if test="cityNameCn != null" >
+        CITY_NAME_CN,
+      </if>
+      <if test="provinceId != null" >
+        PROVINCE_ID,
+      </if>
+      <if test="cityTier != null" >
+        CITY_TIER,
+      </if>
+      <if test="provincelevelFlag != null" >
+        PROVINCELEVEL_FLAG,
+      </if>
+      <if test="districtFlag != null" >
+        DISTRICT_FLAG,
+      </if>
+      <if test="superiorCity != null" >
+        SUPERIOR_CITY,
+      </if>
+      <if test="cityAvgHousingPrice != null" >
+        CITY_AVG_HOUSING_PRICE,
+      </if>
+      <if test="cityMap != null" >
+        CITY_MAP,
+      </if>
+      <if test="cityinfoCode != null" >
+        CITYINFO_CODE,
+      </if>
+      <if test="cityNameEn != null" >
+        CITY_NAME_EN,
+      </if>
+      <if test="cityNameShort != null" >
+        CITY_NAME_SHORT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cityCode != null" >
+        #{cityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="cityNameCn != null" >
+        #{cityNameCn,jdbcType=VARCHAR},
+      </if>
+      <if test="provinceId != null" >
+        #{provinceId,jdbcType=VARCHAR},
+      </if>
+      <if test="cityTier != null" >
+        #{cityTier,jdbcType=CHAR},
+      </if>
+      <if test="provincelevelFlag != null" >
+        #{provincelevelFlag,jdbcType=CHAR},
+      </if>
+      <if test="districtFlag != null" >
+        #{districtFlag,jdbcType=CHAR},
+      </if>
+      <if test="superiorCity != null" >
+        #{superiorCity,jdbcType=VARCHAR},
+      </if>
+      <if test="cityAvgHousingPrice != null" >
+        #{cityAvgHousingPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="cityMap != null" >
+        #{cityMap,jdbcType=VARCHAR},
+      </if>
+      <if test="cityinfoCode != null" >
+        #{cityinfoCode,jdbcType=CHAR},
+      </if>
+      <if test="cityNameEn != null" >
+        #{cityNameEn,jdbcType=VARCHAR},
+      </if>
+      <if test="cityNameShort != null" >
+        #{cityNameShort,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.woodare.sds.service.core.dao.entity.TSyCityInfo" >
+    update T_SY_CITY_INFO
+    <set >
+      <if test="cityNameCn != null" >
+        CITY_NAME_CN = #{cityNameCn,jdbcType=VARCHAR},
+      </if>
+      <if test="provinceId != null" >
+        PROVINCE_ID = #{provinceId,jdbcType=VARCHAR},
+      </if>
+      <if test="cityTier != null" >
+        CITY_TIER = #{cityTier,jdbcType=CHAR},
+      </if>
+      <if test="provincelevelFlag != null" >
+        PROVINCELEVEL_FLAG = #{provincelevelFlag,jdbcType=CHAR},
+      </if>
+      <if test="districtFlag != null" >
+        DISTRICT_FLAG = #{districtFlag,jdbcType=CHAR},
+      </if>
+      <if test="superiorCity != null" >
+        SUPERIOR_CITY = #{superiorCity,jdbcType=VARCHAR},
+      </if>
+      <if test="cityAvgHousingPrice != null" >
+        CITY_AVG_HOUSING_PRICE = #{cityAvgHousingPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="cityMap != null" >
+        CITY_MAP = #{cityMap,jdbcType=VARCHAR},
+      </if>
+      <if test="cityinfoCode != null" >
+        CITYINFO_CODE = #{cityinfoCode,jdbcType=CHAR},
+      </if>
+      <if test="cityNameEn != null" >
+        CITY_NAME_EN = #{cityNameEn,jdbcType=VARCHAR},
+      </if>
+      <if test="cityNameShort != null" >
+        CITY_NAME_SHORT = #{cityNameShort,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where CITY_CODE = #{cityCode,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.woodare.sds.service.core.dao.entity.TSyCityInfo" >
+    update T_SY_CITY_INFO
+    set CITY_NAME_CN = #{cityNameCn,jdbcType=VARCHAR},
+      PROVINCE_ID = #{provinceId,jdbcType=VARCHAR},
+      CITY_TIER = #{cityTier,jdbcType=CHAR},
+      PROVINCELEVEL_FLAG = #{provincelevelFlag,jdbcType=CHAR},
+      DISTRICT_FLAG = #{districtFlag,jdbcType=CHAR},
+      SUPERIOR_CITY = #{superiorCity,jdbcType=VARCHAR},
+      CITY_AVG_HOUSING_PRICE = #{cityAvgHousingPrice,jdbcType=DECIMAL},
+      CITY_MAP = #{cityMap,jdbcType=VARCHAR},
+      CITYINFO_CODE = #{cityinfoCode,jdbcType=CHAR},
+      CITY_NAME_EN = #{cityNameEn,jdbcType=VARCHAR},
+      CITY_NAME_SHORT = #{cityNameShort,jdbcType=VARCHAR}
+    where CITY_CODE = #{cityCode,jdbcType=VARCHAR}
+  </update> -->
+</mapper>

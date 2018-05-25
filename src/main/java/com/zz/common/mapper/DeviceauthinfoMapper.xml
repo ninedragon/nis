@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://www.mybatis.org/dtd/mybatis-3-config.dtd" >
+<mapper namespace="com.zz.common.dao.DeviceauthinfoMapper" >
+  <resultMap id="BaseResultMap" type="com.zz.common.model.Deviceauthinfo" >
+    <result column="C_DistrictBCDId" property="cDistrictbcdid" jdbcType="VARCHAR" />
+    <result column="C_AddressId" property="cAddressid" jdbcType="INTEGER" />
+    <result column="C_AuthTime" property="cAuthtime" jdbcType="VARCHAR" />
+    <result column="C_DeviceIP" property="cDeviceip" jdbcType="VARCHAR" />
+    <result column="C_DevicePort" property="cDeviceport" jdbcType="INTEGER" />
+    <result column="C_PowerOnFlag" property="cPoweronflag" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    C_DistrictBCDId, C_AddressId, C_AuthTime, C_DeviceIP, C_DevicePort, C_PowerOnFlag
+  </sql>
+
+
+  <insert id="insert" parameterType="com.zz.common.model.Deviceauthinfo" >
+    insert into t_deviceauthinfo (C_DistrictBCDId, C_AddressId, C_AuthTime, 
+      C_DeviceIP, C_DevicePort, C_PowerOnFlag
+      )
+    values (#{cDistrictbcdid,jdbcType=VARCHAR}, #{cAddressid,jdbcType=INTEGER}, #{cAuthtime,jdbcType=VARCHAR}, 
+      #{cDeviceip,jdbcType=VARCHAR}, #{cDeviceport,jdbcType=INTEGER}, #{cPoweronflag,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zz.common.model.Deviceauthinfo" >
+    insert into t_deviceauthinfo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cDistrictbcdid != null" >
+        C_DistrictBCDId,
+      </if>
+      <if test="cAddressid != null" >
+        C_AddressId,
+      </if>
+      <if test="cAuthtime != null" >
+        C_AuthTime,
+      </if>
+      <if test="cDeviceip != null" >
+        C_DeviceIP,
+      </if>
+      <if test="cDeviceport != null" >
+        C_DevicePort,
+      </if>
+      <if test="cPoweronflag != null" >
+        C_PowerOnFlag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cDistrictbcdid != null" >
+        #{cDistrictbcdid,jdbcType=VARCHAR},
+      </if>
+      <if test="cAddressid != null" >
+        #{cAddressid,jdbcType=INTEGER},
+      </if>
+      <if test="cAuthtime != null" >
+        #{cAuthtime,jdbcType=VARCHAR},
+      </if>
+      <if test="cDeviceip != null" >
+        #{cDeviceip,jdbcType=VARCHAR},
+      </if>
+      <if test="cDeviceport != null" >
+        #{cDeviceport,jdbcType=INTEGER},
+      </if>
+      <if test="cPoweronflag != null" >
+        #{cPoweronflag,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_deviceauthinfo
+    <set >
+      <if test="record.cDistrictbcdid != null" >
+        C_DistrictBCDId = #{record.cDistrictbcdid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cAddressid != null" >
+        C_AddressId = #{record.cAddressid,jdbcType=INTEGER},
+      </if>
+      <if test="record.cAuthtime != null" >
+        C_AuthTime = #{record.cAuthtime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cDeviceip != null" >
+        C_DeviceIP = #{record.cDeviceip,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cDeviceport != null" >
+        C_DevicePort = #{record.cDeviceport,jdbcType=INTEGER},
+      </if>
+      <if test="record.cPoweronflag != null" >
+        C_PowerOnFlag = #{record.cPoweronflag,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_deviceauthinfo
+    set C_DistrictBCDId = #{record.cDistrictbcdid,jdbcType=VARCHAR},
+      C_AddressId = #{record.cAddressid,jdbcType=INTEGER},
+      C_AuthTime = #{record.cAuthtime,jdbcType=VARCHAR},
+      C_DeviceIP = #{record.cDeviceip,jdbcType=VARCHAR},
+      C_DevicePort = #{record.cDeviceport,jdbcType=INTEGER},
+      C_PowerOnFlag = #{record.cPoweronflag,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://www.mybatis.org/dtd/mybatis-3-config.dtd" >
+<mapper namespace="com.zz.common.dao.DeviceinfoMapper" >
+  <resultMap id="BaseResultMap" type="com.zz.common.model.Deviceinfo" >
+    <id column="C_DistrictBCDId" property="cDistrictbcdid" jdbcType="VARCHAR" />
+    <id column="C_AddressId" property="cAddressid" jdbcType="INTEGER" />
+    <result column="C_ChannelNum" property="cChannelnum" jdbcType="INTEGER" />
+    <result column="C_HardwareVer" property="cHardwarever" jdbcType="VARCHAR" />
+    <result column="C_SoftwareVer" property="cSoftwarever" jdbcType="VARCHAR" />
+    <result column="C_FixIP" property="cFixip" jdbcType="VARCHAR" />
+    <result column="C_LastComTime" property="cLastcomtime" jdbcType="VARCHAR" />
+    <result column="C_SoftUpdateDate" property="cSoftupdatedate" jdbcType="VARCHAR" />
+    <result column="C_InstallDate" property="cInstalldate" jdbcType="VARCHAR" />
+    <result column="C_Desp" property="cDesp" jdbcType="VARCHAR" />
+    <result column="recorddate_range" property="recorddateRange" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    C_DistrictBCDId, C_AddressId, C_ChannelNum, C_HardwareVer, C_SoftwareVer, C_FixIP, 
+    C_LastComTime, C_SoftUpdateDate, C_InstallDate, C_Desp
+  </sql>
+
+    <select id="selectAllDeviceDis" resultMap="BaseResultMap" >
+    select
+    C_DistrictBCDId,C_AddressId ,C_ChannelNum
+    from t_deviceinfo
+  </select>
+  <select id="listDevcieInfo" resultMap="BaseResultMap" >
+    select
+      *    
+     from t_deviceinfo
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.zz.common.model.DeviceinfoKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_deviceinfo
+    where C_DistrictBCDId = #{cDistrictbcdid,jdbcType=VARCHAR}
+      and C_AddressId = #{cAddressid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.zz.common.model.DeviceinfoKey" >
+    delete from t_deviceinfo
+    where C_DistrictBCDId = #{cDistrictbcdid,jdbcType=VARCHAR}
+      and C_AddressId = #{cAddressid,jdbcType=INTEGER}
+  </delete>
+
+  <insert id="insert" parameterType="com.zz.common.model.Deviceinfo" >
+    insert into t_deviceinfo (C_DistrictBCDId, C_AddressId, C_ChannelNum, 
+      C_HardwareVer, C_SoftwareVer, C_FixIP, 
+      C_LastComTime, C_SoftUpdateDate, C_InstallDate, 
+      C_Desp)
+    values (#{cDistrictbcdid,jdbcType=VARCHAR}, #{cAddressid,jdbcType=INTEGER}, #{cChannelnum,jdbcType=INTEGER}, 
+      #{cHardwarever,jdbcType=VARCHAR}, #{cSoftwarever,jdbcType=VARCHAR}, #{cFixip,jdbcType=VARCHAR}, 
+      #{cLastcomtime,jdbcType=VARCHAR}, #{cSoftupdatedate,jdbcType=VARCHAR}, #{cInstalldate,jdbcType=VARCHAR}, 
+      #{cDesp,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zz.common.model.Deviceinfo" >
+    insert into t_deviceinfo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cDistrictbcdid != null" >
+        C_DistrictBCDId,
+      </if>
+      <if test="cAddressid != null" >
+        C_AddressId,
+      </if>
+      <if test="cChannelnum != null" >
+        C_ChannelNum,
+      </if>
+      <if test="cHardwarever != null" >
+        C_HardwareVer,
+      </if>
+      <if test="cSoftwarever != null" >
+        C_SoftwareVer,
+      </if>
+      <if test="cFixip != null" >
+        C_FixIP,
+      </if>
+      <if test="cLastcomtime != null" >
+        C_LastComTime,
+      </if>
+      <if test="cSoftupdatedate != null" >
+        C_SoftUpdateDate,
+      </if>
+      <if test="cInstalldate != null" >
+        C_InstallDate,
+      </if>
+      <if test="cDesp != null" >
+        C_Desp,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cDistrictbcdid != null" >
+        #{cDistrictbcdid,jdbcType=VARCHAR},
+      </if>
+      <if test="cAddressid != null" >
+        #{cAddressid,jdbcType=INTEGER},
+      </if>
+      <if test="cChannelnum != null" >
+        #{cChannelnum,jdbcType=INTEGER},
+      </if>
+      <if test="cHardwarever != null" >
+        #{cHardwarever,jdbcType=VARCHAR},
+      </if>
+      <if test="cSoftwarever != null" >
+        #{cSoftwarever,jdbcType=VARCHAR},
+      </if>
+      <if test="cFixip != null" >
+        #{cFixip,jdbcType=VARCHAR},
+      </if>
+      <if test="cLastcomtime != null" >
+        #{cLastcomtime,jdbcType=VARCHAR},
+      </if>
+      <if test="cSoftupdatedate != null" >
+        #{cSoftupdatedate,jdbcType=VARCHAR},
+      </if>
+      <if test="cInstalldate != null" >
+        #{cInstalldate,jdbcType=VARCHAR},
+      </if>
+      <if test="cDesp != null" >
+        #{cDesp,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_deviceinfo
+    <set >
+      <if test="record.cDistrictbcdid != null" >
+        C_DistrictBCDId = #{record.cDistrictbcdid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cAddressid != null" >
+        C_AddressId = #{record.cAddressid,jdbcType=INTEGER},
+      </if>
+      <if test="record.cChannelnum != null" >
+        C_ChannelNum = #{record.cChannelnum,jdbcType=INTEGER},
+      </if>
+      <if test="record.cHardwarever != null" >
+        C_HardwareVer = #{record.cHardwarever,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cSoftwarever != null" >
+        C_SoftwareVer = #{record.cSoftwarever,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cFixip != null" >
+        C_FixIP = #{record.cFixip,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cLastcomtime != null" >
+        C_LastComTime = #{record.cLastcomtime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cSoftupdatedate != null" >
+        C_SoftUpdateDate = #{record.cSoftupdatedate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cInstalldate != null" >
+        C_InstallDate = #{record.cInstalldate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cDesp != null" >
+        C_Desp = #{record.cDesp,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_deviceinfo
+    set C_DistrictBCDId = #{record.cDistrictbcdid,jdbcType=VARCHAR},
+      C_AddressId = #{record.cAddressid,jdbcType=INTEGER},
+      C_ChannelNum = #{record.cChannelnum,jdbcType=INTEGER},
+      C_HardwareVer = #{record.cHardwarever,jdbcType=VARCHAR},
+      C_SoftwareVer = #{record.cSoftwarever,jdbcType=VARCHAR},
+      C_FixIP = #{record.cFixip,jdbcType=VARCHAR},
+      C_LastComTime = #{record.cLastcomtime,jdbcType=VARCHAR},
+      C_SoftUpdateDate = #{record.cSoftupdatedate,jdbcType=VARCHAR},
+      C_InstallDate = #{record.cInstalldate,jdbcType=VARCHAR},
+      C_Desp = #{record.cDesp,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zz.common.model.Deviceinfo" >
+    update t_deviceinfo
+    <set >
+      <if test="cChannelnum != null" >
+        C_ChannelNum = #{cChannelnum,jdbcType=INTEGER},
+      </if>
+      <if test="cHardwarever != null" >
+        C_HardwareVer = #{cHardwarever,jdbcType=VARCHAR},
+      </if>
+      <if test="cSoftwarever != null" >
+        C_SoftwareVer = #{cSoftwarever,jdbcType=VARCHAR},
+      </if>
+      <if test="cFixip != null" >
+        C_FixIP = #{cFixip,jdbcType=VARCHAR},
+      </if>
+      <if test="cLastcomtime != null" >
+        C_LastComTime = #{cLastcomtime,jdbcType=VARCHAR},
+      </if>
+      <if test="cSoftupdatedate != null" >
+        C_SoftUpdateDate = #{cSoftupdatedate,jdbcType=VARCHAR},
+      </if>
+      <if test="cInstalldate != null" >
+        C_InstallDate = #{cInstalldate,jdbcType=VARCHAR},
+      </if>
+      <if test="cDesp != null" >
+        C_Desp = #{cDesp,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where C_DistrictBCDId = #{cDistrictbcdid,jdbcType=VARCHAR}
+      and C_AddressId = #{cAddressid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zz.common.model.Deviceinfo" >
+    update t_deviceinfo
+    set C_ChannelNum = #{cChannelnum,jdbcType=INTEGER},
+      C_HardwareVer = #{cHardwarever,jdbcType=VARCHAR},
+      C_SoftwareVer = #{cSoftwarever,jdbcType=VARCHAR},
+      C_FixIP = #{cFixip,jdbcType=VARCHAR},
+      C_LastComTime = #{cLastcomtime,jdbcType=VARCHAR},
+      C_SoftUpdateDate = #{cSoftupdatedate,jdbcType=VARCHAR},
+      C_InstallDate = #{cInstalldate,jdbcType=VARCHAR},
+      C_Desp = #{cDesp,jdbcType=VARCHAR}
+    where C_DistrictBCDId = #{cDistrictbcdid,jdbcType=VARCHAR}
+      and C_AddressId = #{cAddressid,jdbcType=INTEGER}
+  </update>
+</mapper>

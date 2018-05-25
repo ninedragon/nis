@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://www.mybatis.org/dtd/mybatis-3-config.dtd" >
+<mapper namespace="com.zz.common.dao.TestopdataMapper" >
+  <resultMap id="BaseResultMap" type="com.zz.common.model.Testopdata" >
+    <id column="C_DistrictBCDId" property="cDistrictbcdid" jdbcType="VARCHAR" />
+    <id column="C_AddressId" property="cAddressid" jdbcType="INTEGER" />
+    <id column="C_RecordDateBCD" property="cRecorddatebcd" jdbcType="INTEGER" />
+    <id column="C_Minute" property="cMinute" jdbcType="INTEGER" />
+    <id column="C_IntrusiveboxId" property="cIntrusiveboxid" jdbcType="INTEGER" />
+    <result column="C_TSegmentId" property="cTsegmentid" jdbcType="INTEGER" />
+    <result column="C_IbLastMTKWh" property="cIblastmtkwh" jdbcType="DOUBLE" />
+    <result column="C_IbCurrMTKWh" property="cIbcurrmtkwh" jdbcType="DOUBLE" />
+    <result column="C_IbKWh" property="cIbkwh" jdbcType="DOUBLE" />
+    <result column="C_IbLastMTKVarh" property="cIblastmtkvarh" jdbcType="DOUBLE" />
+    <result column="C_IbCurrMTKVarh" property="cIbcurrmtkvarh" jdbcType="DOUBLE" />
+    <result column="C_IbKVarh" property="cIbkvarh" jdbcType="DOUBLE" />
+    <result column="C_RecordInsertTime" property="cRecordinserttime" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    C_DistrictBCDId, C_AddressId, C_RecordDateBCD, C_Minute, C_IntrusiveboxId, C_TSegmentId, 
+    C_IbLastMTKWh, C_IbCurrMTKWh, C_IbKWh, C_IbLastMTKVarh, C_IbCurrMTKVarh, C_IbKVarh, 
+    C_RecordInsertTime
+  </sql>
+ 
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.zz.common.model.TestopdataKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_testopdata
+    where C_DistrictBCDId = #{cDistrictbcdid,jdbcType=VARCHAR}
+      and C_AddressId = #{cAddressid,jdbcType=INTEGER}
+      and C_RecordDateBCD = #{cRecorddatebcd,jdbcType=INTEGER}
+      and C_Minute = #{cMinute,jdbcType=INTEGER}
+      and C_IntrusiveboxId = #{cIntrusiveboxid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.zz.common.model.TestopdataKey" >
+    delete from t_testopdata
+    where C_DistrictBCDId = #{cDistrictbcdid,jdbcType=VARCHAR}
+      and C_AddressId = #{cAddressid,jdbcType=INTEGER}
+      and C_RecordDateBCD = #{cRecorddatebcd,jdbcType=INTEGER}
+      and C_Minute = #{cMinute,jdbcType=INTEGER}
+      and C_IntrusiveboxId = #{cIntrusiveboxid,jdbcType=INTEGER}
+  </delete>
+
+  <insert id="insert" parameterType="com.zz.common.model.Testopdata" >
+    insert into t_testopdata (C_DistrictBCDId, C_AddressId, C_RecordDateBCD, 
+      C_Minute, C_IntrusiveboxId, C_TSegmentId, 
+      C_IbLastMTKWh, C_IbCurrMTKWh, C_IbKWh, 
+      C_IbLastMTKVarh, C_IbCurrMTKVarh, C_IbKVarh, 
+      C_RecordInsertTime)
+    values (#{cDistrictbcdid,jdbcType=VARCHAR}, #{cAddressid,jdbcType=INTEGER}, #{cRecorddatebcd,jdbcType=INTEGER}, 
+      #{cMinute,jdbcType=INTEGER}, #{cIntrusiveboxid,jdbcType=INTEGER}, #{cTsegmentid,jdbcType=INTEGER}, 
+      #{cIblastmtkwh,jdbcType=DOUBLE}, #{cIbcurrmtkwh,jdbcType=DOUBLE}, #{cIbkwh,jdbcType=DOUBLE}, 
+      #{cIblastmtkvarh,jdbcType=DOUBLE}, #{cIbcurrmtkvarh,jdbcType=DOUBLE}, #{cIbkvarh,jdbcType=DOUBLE}, 
+      #{cRecordinserttime,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zz.common.model.Testopdata" >
+    insert into t_testopdata
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cDistrictbcdid != null" >
+        C_DistrictBCDId,
+      </if>
+      <if test="cAddressid != null" >
+        C_AddressId,
+      </if>
+      <if test="cRecorddatebcd != null" >
+        C_RecordDateBCD,
+      </if>
+      <if test="cMinute != null" >
+        C_Minute,
+      </if>
+      <if test="cIntrusiveboxid != null" >
+        C_IntrusiveboxId,
+      </if>
+      <if test="cTsegmentid != null" >
+        C_TSegmentId,
+      </if>
+      <if test="cIblastmtkwh != null" >
+        C_IbLastMTKWh,
+      </if>
+      <if test="cIbcurrmtkwh != null" >
+        C_IbCurrMTKWh,
+      </if>
+      <if test="cIbkwh != null" >
+        C_IbKWh,
+      </if>
+      <if test="cIblastmtkvarh != null" >
+        C_IbLastMTKVarh,
+      </if>
+      <if test="cIbcurrmtkvarh != null" >
+        C_IbCurrMTKVarh,
+      </if>
+      <if test="cIbkvarh != null" >
+        C_IbKVarh,
+      </if>
+      <if test="cRecordinserttime != null" >
+        C_RecordInsertTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cDistrictbcdid != null" >
+        #{cDistrictbcdid,jdbcType=VARCHAR},
+      </if>
+      <if test="cAddressid != null" >
+        #{cAddressid,jdbcType=INTEGER},
+      </if>
+      <if test="cRecorddatebcd != null" >
+        #{cRecorddatebcd,jdbcType=INTEGER},
+      </if>
+      <if test="cMinute != null" >
+        #{cMinute,jdbcType=INTEGER},
+      </if>
+      <if test="cIntrusiveboxid != null" >
+        #{cIntrusiveboxid,jdbcType=INTEGER},
+      </if>
+      <if test="cTsegmentid != null" >
+        #{cTsegmentid,jdbcType=INTEGER},
+      </if>
+      <if test="cIblastmtkwh != null" >
+        #{cIblastmtkwh,jdbcType=DOUBLE},
+      </if>
+      <if test="cIbcurrmtkwh != null" >
+        #{cIbcurrmtkwh,jdbcType=DOUBLE},
+      </if>
+      <if test="cIbkwh != null" >
+        #{cIbkwh,jdbcType=DOUBLE},
+      </if>
+      <if test="cIblastmtkvarh != null" >
+        #{cIblastmtkvarh,jdbcType=DOUBLE},
+      </if>
+      <if test="cIbcurrmtkvarh != null" >
+        #{cIbcurrmtkvarh,jdbcType=DOUBLE},
+      </if>
+      <if test="cIbkvarh != null" >
+        #{cIbkvarh,jdbcType=DOUBLE},
+      </if>
+      <if test="cRecordinserttime != null" >
+        #{cRecordinserttime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_testopdata
+    <set >
+      <if test="record.cDistrictbcdid != null" >
+        C_DistrictBCDId = #{record.cDistrictbcdid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cAddressid != null" >
+        C_AddressId = #{record.cAddressid,jdbcType=INTEGER},
+      </if>
+      <if test="record.cRecorddatebcd != null" >
+        C_RecordDateBCD = #{record.cRecorddatebcd,jdbcType=INTEGER},
+      </if>
+      <if test="record.cMinute != null" >
+        C_Minute = #{record.cMinute,jdbcType=INTEGER},
+      </if>
+      <if test="record.cIntrusiveboxid != null" >
+        C_IntrusiveboxId = #{record.cIntrusiveboxid,jdbcType=INTEGER},
+      </if>
+      <if test="record.cTsegmentid != null" >
+        C_TSegmentId = #{record.cTsegmentid,jdbcType=INTEGER},
+      </if>
+      <if test="record.cIblastmtkwh != null" >
+        C_IbLastMTKWh = #{record.cIblastmtkwh,jdbcType=DOUBLE},
+      </if>
+      <if test="record.cIbcurrmtkwh != null" >
+        C_IbCurrMTKWh = #{record.cIbcurrmtkwh,jdbcType=DOUBLE},
+      </if>
+      <if test="record.cIbkwh != null" >
+        C_IbKWh = #{record.cIbkwh,jdbcType=DOUBLE},
+      </if>
+      <if test="record.cIblastmtkvarh != null" >
+        C_IbLastMTKVarh = #{record.cIblastmtkvarh,jdbcType=DOUBLE},
+      </if>
+      <if test="record.cIbcurrmtkvarh != null" >
+        C_IbCurrMTKVarh = #{record.cIbcurrmtkvarh,jdbcType=DOUBLE},
+      </if>
+      <if test="record.cIbkvarh != null" >
+        C_IbKVarh = #{record.cIbkvarh,jdbcType=DOUBLE},
+      </if>
+      <if test="record.cRecordinserttime != null" >
+        C_RecordInsertTime = #{record.cRecordinserttime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_testopdata
+    set C_DistrictBCDId = #{record.cDistrictbcdid,jdbcType=VARCHAR},
+      C_AddressId = #{record.cAddressid,jdbcType=INTEGER},
+      C_RecordDateBCD = #{record.cRecorddatebcd,jdbcType=INTEGER},
+      C_Minute = #{record.cMinute,jdbcType=INTEGER},
+      C_IntrusiveboxId = #{record.cIntrusiveboxid,jdbcType=INTEGER},
+      C_TSegmentId = #{record.cTsegmentid,jdbcType=INTEGER},
+      C_IbLastMTKWh = #{record.cIblastmtkwh,jdbcType=DOUBLE},
+      C_IbCurrMTKWh = #{record.cIbcurrmtkwh,jdbcType=DOUBLE},
+      C_IbKWh = #{record.cIbkwh,jdbcType=DOUBLE},
+      C_IbLastMTKVarh = #{record.cIblastmtkvarh,jdbcType=DOUBLE},
+      C_IbCurrMTKVarh = #{record.cIbcurrmtkvarh,jdbcType=DOUBLE},
+      C_IbKVarh = #{record.cIbkvarh,jdbcType=DOUBLE},
+      C_RecordInsertTime = #{record.cRecordinserttime,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zz.common.model.Testopdata" >
+    update t_testopdata
+    <set >
+      <if test="cTsegmentid != null" >
+        C_TSegmentId = #{cTsegmentid,jdbcType=INTEGER},
+      </if>
+      <if test="cIblastmtkwh != null" >
+        C_IbLastMTKWh = #{cIblastmtkwh,jdbcType=DOUBLE},
+      </if>
+      <if test="cIbcurrmtkwh != null" >
+        C_IbCurrMTKWh = #{cIbcurrmtkwh,jdbcType=DOUBLE},
+      </if>
+      <if test="cIbkwh != null" >
+        C_IbKWh = #{cIbkwh,jdbcType=DOUBLE},
+      </if>
+      <if test="cIblastmtkvarh != null" >
+        C_IbLastMTKVarh = #{cIblastmtkvarh,jdbcType=DOUBLE},
+      </if>
+      <if test="cIbcurrmtkvarh != null" >
+        C_IbCurrMTKVarh = #{cIbcurrmtkvarh,jdbcType=DOUBLE},
+      </if>
+      <if test="cIbkvarh != null" >
+        C_IbKVarh = #{cIbkvarh,jdbcType=DOUBLE},
+      </if>
+      <if test="cRecordinserttime != null" >
+        C_RecordInsertTime = #{cRecordinserttime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where C_DistrictBCDId = #{cDistrictbcdid,jdbcType=VARCHAR}
+      and C_AddressId = #{cAddressid,jdbcType=INTEGER}
+      and C_RecordDateBCD = #{cRecorddatebcd,jdbcType=INTEGER}
+      and C_Minute = #{cMinute,jdbcType=INTEGER}
+      and C_IntrusiveboxId = #{cIntrusiveboxid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zz.common.model.Testopdata" >
+    update t_testopdata
+    set C_TSegmentId = #{cTsegmentid,jdbcType=INTEGER},
+      C_IbLastMTKWh = #{cIblastmtkwh,jdbcType=DOUBLE},
+      C_IbCurrMTKWh = #{cIbcurrmtkwh,jdbcType=DOUBLE},
+      C_IbKWh = #{cIbkwh,jdbcType=DOUBLE},
+      C_IbLastMTKVarh = #{cIblastmtkvarh,jdbcType=DOUBLE},
+      C_IbCurrMTKVarh = #{cIbcurrmtkvarh,jdbcType=DOUBLE},
+      C_IbKVarh = #{cIbkvarh,jdbcType=DOUBLE},
+      C_RecordInsertTime = #{cRecordinserttime,jdbcType=VARCHAR}
+    where C_DistrictBCDId = #{cDistrictbcdid,jdbcType=VARCHAR}
+      and C_AddressId = #{cAddressid,jdbcType=INTEGER}
+      and C_RecordDateBCD = #{cRecorddatebcd,jdbcType=INTEGER}
+      and C_Minute = #{cMinute,jdbcType=INTEGER}
+      and C_IntrusiveboxId = #{cIntrusiveboxid,jdbcType=INTEGER}
+  </update>
+</mapper>

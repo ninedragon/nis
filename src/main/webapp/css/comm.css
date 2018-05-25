@@ -1,0 +1,267 @@
+/* 绂佺敤iPhone涓璖afari鐨勫瓧鍙疯嚜鍔ㄨ皟鏁� */
+html{ -webkit-text-size-adjust:none;}
+
+/* 璁剧疆HTML5鍏冪礌涓哄潡 */
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section{ display:block;}
+
+/* 璁剧疆鍥剧墖瑙嗛绛夎嚜閫傚簲璋冩暣 */
+img { max-width:100%; height:auto; width:auto9; /* ie8 */}
+.video embed, .video object, .video iframe { width:100%; height:auto;}
+
+
+/* 鏍峰紡娓呴浂
+---------------------------------------- */
+body,select,input{ margin:0; padding:0; font: normal 62.5% "Microsoft YaHei", Arial, sans-serif;}
+div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, fieldset, input, textarea, p, blockquote, th, td, address { margin: 0; padding: 0; font-size: 100%; font-weight: normal; outline:0;}
+pre{ vertical-align:top; margin: 0; padding: 0;}
+button{ border:none; outline:0;}
+ol, ul { list-style: none;}
+a { text-decoration: none; cursor: pointer; outline:0;}
+a:hover{ text-decoration:none;}
+input, textarea { background: none; border: none; font: normal 62.5% "Microsoft YaHei", Arial, sans-serif;}
+*{ margin:0; padding:0}
+html,body{ height:100%; position:relative;}
+img{ cursor:pointer; border:0;}
+
+/* 椤电湁寮�濮�
+---------------------------------------- */
+.wapp-head{ height:40px; line-height:40px; position:absolute; left:200px; top:0px; right:0px; background-color:#54b9cd; z-index:3}
+.wapp-head.long{ left:0px;}
+.wapp-head span.link{ width:20px; height:20px; float:left; margin:9px 0px 0px 10px; background:url(../image/icon05.png) no-repeat center center; background-size:8px; border:1px solid #FFF; -webkit-border-radius:5px; text-indent:-999px; overflow:hidden; cursor:pointer;}
+.wapp-head span.link.on{ background:url(../image/icon04.png) no-repeat center center; background-size:8px;}
+.wapp-head .user{ float:right; margin:0px 25px 0px 0px; font-size:14px; color:#FFF; background:url(../image/icon06.png) no-repeat left center; background-size:20px; text-indent:30px; cursor:pointer;}
+.wapp-head .user span.caret{ display:inline-block; width:0; height:0; margin-left:2px; vertical-align:middle; border-top:4px dashed; border-right:4px solid transparent; border-left:4px solid transparent;}
+.wapp-head .lay{ display:none; width:100%; height:100%; position:fixed; left:0px; top:0px; z-index:999;}
+.wapp-head .lay ul{ width:160px; position:absolute; right:15px; top:40px; background-color:#FFF; box-shadow:0 6px 12px rgba(0,0,0,.175); border:1px solid rgba(0,0,0,.15); -webkit-border-radius:5px; overflow:hidden;}
+.wapp-head .lay ul li{ width:100%; height:30px; line-height:30px; float:left; font-size:14px; text-indent:10%; color:#333; text-align:left; padding:0px; cursor:pointer;}
+.wapp-head .lay ul li:hover{ background-color:#EEE;}
+
+
+/* 宸︿晶瀵艰埅
+---------------------------------------- */
+ul.left-nav{ width:200px; position:absolute; left:0px; top:0px; bottom:0px; background-color:#3d4955; z-index:2}
+ul.left-nav h4{ width:100%; float:left; height:40px; line-height:40px; font-size:16px; color:#FFF; text-indent:5%; font-weight:bold; background-color:#54b9cd; margin:0px 0px 40px 0px;}
+ul.left-nav li{ width:100%; height:50px; line-height:50px; float:left; border-bottom:1px solid #52565a; font-size:14px; color:#FFF; text-align:left; text-indent:12%; cursor:pointer; background:url(../image/icon01.png) no-repeat 5% center; background-size:8px;}
+ul.left-nav li.on{ background:#54b9cd url(../image/icon02.png) no-repeat 5% center; background-size:8px;}
+ul.left-nav ul.side-nav{ display:none; width:100%; float:left; background-color:#252934;}
+ul.left-nav ul.side-nav li{ width:100%; height:50px; line-height:50px; float:left; border-bottom:1px solid #52565a; font-size:14px; color:#FFF; text-align:left; text-indent:20%; cursor:pointer; background:none; position:relative;}
+ul.left-nav ul.side-nav li.on{ background:#252934 url(../image/icon03.png) no-repeat right center; background-size:8px;}
+ul.left-nav ul.side-nav li:last-child{ border:0px;}
+
+/* 涓讳綋
+---------------------------------------- */
+.wapp-main{ position:absolute; left:215px; right:0px; top:40px; bottom:0px; overflow-x:hidden; overflow-y:auto; padding:15px 15px 15px 0px; z-index:1}
+.wapp-main.long{ left:15px;}
+.wapp-main h4{ width:100%; float:left; font-size:30px; color:#333; text-align:left; border-bottom:1px solid #EEE; padding:0px 0px 10px 0px;}
+
+/* 鎼滅储
+---------------------------------------- */
+.search{ width:100%; float:left; border-bottom:1px solid #EEE; padding:0px 0px 10px 0px;}
+.search lable{ float:left; height:32px; line-height:32px; margin:10px 20px 0px 0px;}
+.search lable span{ float:left; font-size:14px; color:#333; text-align:left; font-weight:bold; margin:0px 10px 0px 0px;}
+.search lable select{ float:left; width:130px; height:30px; font-size:14px; color:#333; text-align:left; border:1px solid #CCC; -webkit-border-radius:5px;}
+.search lable input{ float:left; width:130px; height:30px; font-size:14px; color:#333; text-align:left; border:1px solid #CCC; -webkit-border-radius:5px; text-indent:5px;}
+.search lable input.long{ width:330px;}
+.search .but-nav{ float:left; margin:10px 0px 0px 0px;}
+.search .but-nav span.but{ float:left; height:32px; line-height:32px; font-size:13px; color:#FFF; text-align:center; -webkit-border-radius:5px; background-color:#f86e51; padding:0px 20px; cursor:pointer; margin:0px 10px 0px 0px;}
+.search .but-nav span.but:hover{ background-color:#f06648;}
+
+/* 璋冪敤澶栭儴鍥捐〃
+---------------------------------------- */
+.all-img{ width:100%; float:left; margin:20px 0px 0px 0px; border-bottom:1px solid #CCC; padding:20px 0px;}
+
+/* 鍏朵粬鎿嶄綔
+---------------------------------------- */
+.other-nav{ width:100%; float:left; margin:20px 0px 0px 0px;}
+.other-nav .but-nav{ height:30px; float:left; border:1px solid #EEE; -webkit-border-radius:5px;}
+.other-nav .but-nav span{ width:60px; height:30px; line-height:30px; font-size:14px; color:#333; text-align:left; float:left; border-right:1px solid #EEE; cursor:pointer; text-indent:20px; padding:0px 10px 0px 0px;}
+.other-nav .but-nav span.icon01{ background: url(../image/icon11.png) no-repeat 10px center; background-size:11px;}
+.other-nav .but-nav span.icon02{ background: url(../image/icon07.png) no-repeat 10px center; background-size:13px;}
+.other-nav .but-nav span.icon03{ background: url(../image/icon08.png) no-repeat 10px center; background-size:10px;}
+.other-nav .but-nav span{ width:60px; height:30px; line-height:30px; font-size:14px; color:#333; text-align:center; float:left; border-right:1px solid #EEE; cursor:pointer;}
+.other-nav .but-nav span{ width:60px; height:30px; line-height:30px; font-size:14px; color:#333; text-align:center; float:left; border-right:1px solid #EEE; cursor:pointer;}
+.other-nav .but-nav span:last-child{ border:0px;}
+.other-nav .sec-box{ height:30px; float:right; border:1px solid #EEE; -webkit-border-radius:5px;}
+.other-nav .sec-box input{ width:200px; height:30px; float:left; border:0px; margin:0px 0px 0px 10px;}
+.other-nav .sec-box span{ width:60px; height:30px; line-height:30px; text-align:left; float:left; background: url(../image/icon16.png) no-repeat 5px center; background-size:15px; border-left:1px solid #EEE; text-indent:25px; cursor:pointer;}
+
+/* 琛ㄦ牸
+---------------------------------------- */
+.table-box{ width:100%; float:left; overflow:hidden; overflow-x:auto; margin:20px 0px 0px 0px;}
+.table-box table{ float:left; border-collapse:collapse; line-height:20px; background:#f4faf6; border:solid 1px #FFF;}
+.table-box table th{ min-width:50px; background:#54b9cd; padding:10px 0px; color:#FFF; font-size:13px; border:solid 1px #FFF; border-width:1px 1px 1px 0px; text-align:center; font-weight:bold;}
+.table-box table tr th:last-child{ border-right:0px;}
+.table-box table tr:hover{ background-color:#EEE;}
+.table-box table tr:nth-child(odd){ background-color:#FFF;}
+.table-box table td{ height:32px; line-height:32px; max-width:300px; border:solid 1px #FFF; border-width:0px 1px 1px 0px; color:#666;}
+.table-box table tr td:last-child{ border-right:0px;}
+.table-box table td font.tips01{ color:#666}
+.table-box table td font.tips02{ color:#F90}
+.table-box table td font.tips03{ color:#FF0000}
+.table-box table td span{ display:inline-block; line-height:normal; padding:5px 20px 5px 0px; cursor:pointer; text-indent:15px;}
+.table-box table td span.icon01{ background: url(../image/icon07.png) no-repeat left center; background-size:13px;}
+.table-box table td span.icon02{ background: url(../image/icon08.png) no-repeat left center; background-size:10px;}
+.table-box table td span.icon03{ background: url(../image/icon09.png) no-repeat left center; background-size:9px;}
+.table-box table td span.icon04{ background: url(../image/icon13.png) no-repeat left center; background-size:12px;}
+.table-box table td span.icon05{ background: url(../image/icon15.png) no-repeat left center; background-size:9px;}
+.table-box table td span.icon06{ background: url(../image/icon14.png) no-repeat left center; background-size:11px;}
+.table-box table td span.icon07{ background: url(../image/icon17.png) no-repeat left center; background-size:13px;}
+
+/* 鍒嗛〉
+---------------------------------------- */
+.paging{ width:100%; height:50px; float:left;}
+.paging .box{ float:right; margin:0px 20px 0px 0px;}
+.paging .box a{ width:30px; height:30px; line-height:30px; text-align:center; font-size:12px; color:#505050; float:left; text-decoration:none; background-color:#ebebeb; -webkit-border-radius:3px; -moz-border-radius:3px; border-radius:3px; margin:10px 5px 0px 0px;}
+.paging .box a.ps{ width:50px;}
+.paging .box a.pl{ width:30px; background:#ebebeb url(../image/p01.png) no-repeat center center;}
+.paging .box a.pr{ width:30px; background:#ebebeb url(../image/p02.png) no-repeat center center;}
+.paging .box a.on{ width:30px; background-color:#54b9cd; color:#FFF;}
+.paging .input-box{ float:right; line-height:30px; margin:10px 20px 0px 0px; font-size:12px;}
+.paging span{ float:left;}
+.paging .gob{ width:50px; height:30px;}
+.paging .gob a{ width:50px; height:30px; float:left; background: url(../image/p03.png) no-repeat center center;}
+.paging .input{ width:30px; height:25px; border:solid 1px #bfbfbf; -webkit-border-radius:3px; -moz-border-radius:3px; border-radius:3px; float:left; margin:2px 5px;}
+.paging input{ width:28px; height:25px; line-height:25px; margin:0px 0px 0px 0px; border:0px; float:left; color:#696969; font-size:12px; text-align:center;}
+
+/* 寮瑰眰
+---------------------------------------- */
+.wapp-layer{ display:none; width:100%; height:100%; position:fixed; left:0px; top:0px; z-index:999; background-color:rgba(0,0,0,.5);}
+.wapp-layer .box{ width:500px; height:510px; position:absolute; left:50%; top:50%; margin:-265px 0px 0px -250px; background-color:#FFF; -webkit-border-radius:5px; overflow:hidden; box-shadow:0 6px 12px rgba(0,0,0,.175);}
+.wapp-layer .box.tips{ height:220px; margin:-100px 0px 0px -250px;}
+.wapp-layer .box.checkbox{ height:300px; margin:-150px 0px 0px -250px;}
+.wapp-layer .box h4{ width:100%; height:40px; line-height:40px; float:left; background-color:#54b9cd; font-size:16px; color:#FFF; text-indent:5%;}
+.wapp-layer .box h4 span{ width:40px; height:40px; float:right; background:url(../image/icon10.png) no-repeat center center; background-size:15px; text-indent:-999px; overflow:hidden; cursor:pointer;}
+.wapp-layer .edit{ width:100%; height:430px; float:left; margin:20px 0px 0px 0px; overflow-x:hidden; overflow-y:auto}
+.wapp-layer .edit p{ width:80%; float:left; margin:20px 0px 20px 10%; text-align:center; font-size:18px;}
+.wapp-layer .edit lable{ width:90%; float:left; height:32px; line-height:32px; margin:10px 20px 0px 10%;}
+.wapp-layer .edit lable span{ width:100px; float:left; font-size:14px; color:#333; text-align:left; font-weight:bold; margin:0px 10px 0px 0px;}
+.wapp-layer .edit lable span.other{ width:auto;}
+.wapp-layer .edit lable select{ float:left; width:280px; height:30px; font-size:14px; color:#333; text-align:left; border:1px solid #CCC; -webkit-border-radius:5px;}
+.wapp-layer .edit lable input{ float:left; width:280px; height:30px; font-size:14px; color:#333; text-align:left; border:1px solid #CCC; -webkit-border-radius:5px; text-indent:5px;}
+.wapp-layer .edit lable input.checkbox{ width:auto; height:auto; float:left; margin:10px 5px 0px 0px;}
+.wapp-layer .edit lable input.other{ width:220px;}
+.wapp-layer .edit lable font{ height:auto; line-height:normal; font-size:13px; color:#54b9cd; float:left; border-bottom:1px solid #54b9cd; margin:5px 0px 0px 5px; cursor:pointer;}
+.wapp-layer .edit .but-nav{ width:100%; float:left; margin:0px 0px 0px 0px; text-align:center;}
+.wapp-layer .edit .but-nav span.but{ display:inline-block; height:32px; line-height:32px; font-size:13px; color:#FFF; text-align:center; -webkit-border-radius:5px; background-color:#f86e51; padding:0px 20px; cursor:pointer; margin:20px 10px 0px 0px;}
+.wapp-layer .edit .but-nav span.but:hover{ background-color:#f06648;}
+.wapp-layer .edit .but-nav span.but.miss{ background-color:#CCC; color:#333;}
+
+/* 鍔ㄦ�佷俊鎭�
+---------------------------------------- */
+.date-mode{ position:absolute; left:0px; top:66px; bottom:0px; right:0px;}
+
+/* 鏍戠粨鏋�
+---------------------------------------- */
+.tree-box{ width:180px; position:absolute; left:0px; top:0px; bottom:0px; float:left; border-right:1px solid #EEE;}
+
+/* 鍔ㄦ�佹暟鎹�
+---------------------------------------- */
+.data-bar{ position:absolute; left:206px; top:15px; right:15px; bottom:0px;}
+.data-bar ul.tab-nav{ width:100%; height:40px; line-height:40px; float:left; border-bottom:1px solid #EEE;}
+.data-bar ul.tab-nav li{ height:40px; line-height:40px; float:left; border:1px solid #EEE; -webkit-border-radius:5px 5px 0px 0px; border-bottom:0px; padding:0px 30px; margin:0px 5px 0px 0px; font-size:13px; cursor:pointer;}
+.data-bar ul.tab-nav li.on{ background-color:#54b9cd; color:#FFF;}
+.data-bar .box{ width:100%; position:absolute; left:0px; top:50px; bottom:15px; float:left; overflow:auto;}
+
+/* 璧勬枡缂栬緫
+---------------------------------------- */
+.datum{ width:100%; float:left; margin:20px 0px 0px 0px;}
+.datum table{ float:left; border-collapse:collapse; line-height:20px; background:#f4faf6;}
+.datum table.other{ display:none; margin:0px 0px 20px 0px;}
+.datum table.other td{ border-top:0px; text-indent:25px;}
+.datum table td{ height:32px; line-height:32px; border:solid 1px #EEE; color:#666; text-align:left; text-indent:10px; font-size:14px; position:relative;}
+.datum table tr td:last-child{ background-color:#FFF;}
+.datum table td input{ float:left; width:80%; height:30px; font-size:14px; color:#333; text-align:left; border:1px solid #CCC; -webkit-border-radius:5px; text-indent:5px; margin:5px 10px;}
+.datum table td font.tips{ font-size:12px; height:42px; line-height:42px; color:#333; float:left; color:#F90;}
+.datum table td font.num{ width:20px; height:20px; line-height:20px; text-align:center; text-indent:0px; background-color:#54b9cd; font-size:12px; color:#FFF; -webkit-border-radius:50%; position:absolute; right:10px; top:6px;}
+.datum table td span{ width:100%; color:#54b9cd; background:url(../image/icon11.png) no-repeat 10px center; background-size:10px; text-indent:25px; text-align:left; float:left; cursor:pointer;}
+.datum table td span.miss{ background:url(../image/icon12.png) no-repeat 10px center; background-size:10px;}
+.datum .but-nav{ width:100%; float:left; margin:0px 0px 20px 0px; text-align:center;}
+.datum .but-nav span.but{ display:inline-block; height:32px; line-height:32px; font-size:13px; color:#FFF; text-align:center; -webkit-border-radius:5px; background-color:#f86e51; padding:0px 20px; cursor:pointer; margin:20px 10px 0px 0px;}
+.datum .but-nav span.but:hover{ background-color:#f06648;}
+.datum .but-nav span.but.miss{ background-color:#CCC; color:#333;}
+
+/* 褰撴祻瑙堝櫒鐨勫彲瑙嗗尯鍩熷皬浜�700px */
+@media screen and (max-width:700px){
+	/* 椤电湁寮�濮�
+	---------------------------------------- */
+	.wapp-head{ height:40px; line-height:40px; position:absolute; left:0px; top:0px; right:0px; background-color:#54b9cd; z-index:3}
+	.wapp-head span.link{ background:url(../image/icon04.png) no-repeat center center; background-size:8px;}
+	.wapp-head span.link.on{ background:url(../image/icon05.png) no-repeat center center; background-size:8px;}
+	.wapp-head .user{ display:none;}
+	
+	/* 宸︿晶瀵艰埅
+	---------------------------------------- */
+	ul.left-nav{ display:none; top:40px;}
+	ul.left-nav h4{ display:none;}
+	ul.left-nav li{ width:100%; height:40px; line-height:40px; float:left; border-bottom:1px solid #52565a; font-size:13px; color:#FFF; text-align:left; text-indent:12%; cursor:pointer; background:url(../image/icon01.png) no-repeat 5% center; background-size:8px;}
+	ul.left-nav li.on{ background:#54b9cd url(../image/icon02.png) no-repeat 5% center; background-size:8px;}
+	ul.left-nav ul.side-nav{ display:none; width:100%; float:left; background-color:#252934;}
+	ul.left-nav ul.side-nav li{ width:100%; height:40px; line-height:40px; float:left; border-bottom:1px solid #52565a; font-size:13px; color:#FFF; text-align:left; text-indent:20%; cursor:pointer; background:none; position:relative;}
+	ul.left-nav ul.side-nav li.on{ background:#252934 url(../image/icon03.png) no-repeat right center; background-size:8px;}
+	ul.left-nav ul.side-nav li:last-child{ border:0px;}
+	
+	/* 涓讳綋
+	---------------------------------------- */
+	.wapp-main{ position:absolute; left:10px; right:0px; top:40px; bottom:0px; overflow-x:hidden; overflow-y:auto; padding:15px 10px 0px 0px; z-index:1;}
+	.wapp-main.long{ left:10px;}
+	.wapp-main h4{ width:100%; float:left; font-size:20px; color:#333; text-align:left; border-bottom:1px solid #EEE; padding:0px 0px 10px 0px;}
+	
+	/* 鎼滅储
+	---------------------------------------- */
+	.search lable{ width:100%; float:left; height:32px; line-height:32px; margin:10px 0px 0px 0px;}
+	.search lable span{ width:40%; float:left; font-size:14px; color:#333; text-align:left; font-weight:bold; margin:0px 10px 0px 0px;}
+	.search lable select{ float:left; width:55%; height:30px; font-size:14px; color:#333; text-align:left; border:1px solid #CCC; -webkit-border-radius:5px;}
+	.search lable input{ float:left; width:55%; height:30px; font-size:14px; color:#333; text-align:left; border:1px solid #CCC; -webkit-border-radius:5px; text-indent:5px;}
+	.search lable input.long{ width:55%;}
+	.search .but-nav{ width:100%; float:left; margin:10px 0px 0px 0px; text-align:center;}
+	.search .but-nav span.but{ display:inline-block; height:32px; line-height:32px; font-size:12px; color:#FFF; text-align:center; -webkit-border-radius:5px; background-color:#f86e51; padding:0px 10px; cursor:pointer; margin:0px 2px; float:none;}
+	.search .but-nav span.but:hover{ background-color:#f06648;}
+	
+	/* 鍏朵粬鎿嶄綔
+	---------------------------------------- */
+	.other-nav .sec-box{ height:30px; float:left; border:1px solid #EEE; -webkit-border-radius:5px; margin:10px 0px 0px 0px;}
+	
+	/* 琛ㄦ牸
+	---------------------------------------- */
+	.table-box table th{ min-width:100px; height:auto; line-height:normal; background:#54b9cd; padding:10px 0px; color:#FFF; font-size:13px; border:solid 1px #FFF; border-width:1px 1px 1px 0px; text-align:center}
+	.table-box table td{ height:auto; line-height:normal; padding:10px 0px; border:solid 1px #FFF; border-width:0px 1px 1px 0px; color:#666;}
+	
+	/* 鍒嗛〉
+	---------------------------------------- */
+	.paging .box a.ps{ width:50px; display:none;}
+	
+	/* 寮瑰眰
+	---------------------------------------- */
+	.wapp-layer{ width:100%; height:100%; position:fixed; left:0px; top:0px; z-index:999; background-color:rgba(0,0,0,.5);}
+	.wapp-layer .box{ width:90%; height:90%; position:absolute; left:5%; top:5%; margin:0px; background-color:#FFF; -webkit-border-radius:5px; overflow:hidden; box-shadow:0 6px 12px rgba(0,0,0,.175);}
+	.wapp-layer .box.tips{ width:90%; height:220px; left:5%; margin:-100px 0px 0px 0px; top:50%;}
+	.wapp-layer .box.checkbox{ width:90%; height:300px; left:5%; margin:-150px 0px 0px 0px; top:50%;}
+	.wapp-layer .box h4{ width:100%; height:40px; line-height:40px; float:left; background-color:#54b9cd; font-size:16px; color:#FFF; text-indent:5%;}
+	.wapp-layer .box h4 span{ width:40px; height:40px; float:right; background:url(../image/icon10.png) no-repeat center center; background-size:12px; text-indent:-999px; overflow:hidden; cursor:pointer;}
+	.wapp-layer .edit{ width:90%; float:left; margin:20px 0px 0px 5%;}
+	.wapp-layer .edit lable{ width:100%; float:left; height:32px; line-height:32px; margin:10px 20px 0px 0px;}
+	.wapp-layer .edit lable span{ width:35%; float:left; font-size:14px; color:#333; text-align:left; font-weight:bold; margin:0px 10px 0px 0px;}
+	.wapp-layer .edit lable select{ float:left; width:60%; height:30px; font-size:14px; color:#333; text-align:left; border:1px solid #CCC; -webkit-border-radius:5px;}
+	.wapp-layer .edit lable input{ float:left; width:60%; height:30px; font-size:14px; color:#333; text-align:left; border:1px solid #CCC; -webkit-border-radius:5px; text-indent:5px;}
+	.wapp-layer .edit lable input.other{ width:38%;}
+	.wapp-layer .edit lable font{ height:auto; line-height:normal; font-size:12px; color:#54b9cd; float:left; border-bottom:1px solid #54b9cd; margin:5px 0px 0px 5px; cursor:pointer;}
+	.wapp-layer .edit .but-nav{ width:100%; float:left; margin:0px 0px 0px 0px; text-align:center;}
+	.wapp-layer .edit .but-nav span.but{ display:inline-block; height:32px; line-height:32px; font-size:13px; color:#FFF; text-align:center; -webkit-border-radius:5px; background-color:#f86e51; padding:0px 20px; cursor:pointer; margin:20px 10px 0px 0px;}
+	.wapp-layer .edit .but-nav span.but:hover{ background-color:#f06648;}
+	.wapp-layer .edit .but-nav span.but.miss{ background-color:#CCC; color:#333;}
+	
+	/* 鍔ㄦ�佷俊鎭�
+	---------------------------------------- */
+	.date-mode{ position:absolute; left:0px; top:66px; bottom:0px; right:10px; overflow:auto;}
+	
+	/* 鍔ㄦ�佹暟鎹�
+	---------------------------------------- */
+	.data-bar{ width:1000px; height:1000px; position:relative; left:0; top:0; right:0; bottom:0; margin:0px 0px 0px 206px;}
+	.data-bar ul.tab-nav{ width:100%; height:30px; line-height:30px; float:left; border-bottom:1px solid #EEE;}
+	.data-bar ul.tab-nav li{ height:30px; line-height:30px; float:left; border:1px solid #EEE; -webkit-border-radius:5px 5px 0px 0px; border-bottom:0px; padding:0px 20px; margin:0px 5px 0px 0px; font-size:12px; cursor:pointer;}
+	.data-bar .box{ width:100%; position:absolute; left:0px; top:50px; bottom:15px; float:left; overflow:hidden;}
+	
+	/* 璧勬枡缂栬緫
+	---------------------------------------- */
+	.datum table td{ height:auto; line-height:normal; padding:10px 0px 10px 5px; border:solid 1px #EEE; color:#666; text-align:left; text-indent:0px; font-size:12px; position:relative;}
+}

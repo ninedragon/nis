@@ -1,0 +1,448 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://www.mybatis.org/dtd/mybatis-3-config.dtd" >
+<mapper namespace="com.zz.common.dao.OpjumpdataMapper" >
+  <resultMap id="BaseResultMap" type="com.zz.common.model.Opjumpdata" >
+    <result column="C_DistrictBCDId" property="cDistrictbcdid" jdbcType="VARCHAR" />
+    <result column="C_AddressId" property="cAddressid" jdbcType="INTEGER" />
+    <result column="C_RecordDateBCD" property="cRecorddatebcd" jdbcType="INTEGER" />
+    <result column="C_TSegmentId" property="cTsegmentid" jdbcType="INTEGER" />
+    <result column="C_ChannelId" property="cChannelid" jdbcType="INTEGER" />
+    <result column="C_ParaId" property="cParaid" jdbcType="INTEGER" />
+    <result column="C_EESequenceId" property="cEesequenceid" jdbcType="INTEGER" />
+    <result column="C_EEHexId" property="cEehexid" jdbcType="VARCHAR" />
+    <result column="C_JumpSecond" property="cJumpsecond" jdbcType="INTEGER" />
+    <result column="C_KW" property="cKw" jdbcType="DOUBLE" />
+    <result column="C_FrameCmdId" property="cFramecmdid" jdbcType="VARCHAR" />
+    <result column="C_RecordInsertTime" property="cRecordinserttime" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    C_DistrictBCDId, C_AddressId, C_RecordDateBCD, C_TSegmentId, C_ChannelId, C_ParaId, 
+    C_EESequenceId, C_EEHexId, C_JumpSecond, C_KW, C_FrameCmdId, C_RecordInsertTime
+  </sql>
+
+<!--1.查询  -->
+<select id="selectGridV51" resultType="java.util.HashMap" parameterType="com.zz.edata.bo.OpEegrpBO" >
+ (
+	SELECT
+		a.C_DistrictBCDId cDistrictbcdid ,
+		a.C_AddressId cAddressid,
+		a.C_ChannelId cChannelid,
+		a.C_RecordDateBCD cRecordDateBCD,
+		a.C_JumpSecond jump
+	FROM
+		(
+			SELECT
+				a.C_DistrictBCDId,
+				a.C_AddressId,
+				a.C_ChannelId,
+				a.C_RecordDateBCD,
+				a.C_JumpSecond
+			FROM
+				t_opjumpdata a
+			WHERE
+				C_RecordDateBCD &gt;#{version1,jdbcType=INTEGER}
+			and C_RecordDateBCD &lt;#{version11,jdbcType=INTEGER}
+			AND a.C_EEHexId = #{cEehexid,jdbcType=VARCHAR}
+			AND a.C_ParaId = "0"
+			AND a.C_EESequenceId = "0"
+		) a
+	LEFT JOIN (
+		SELECT
+			a.C_DistrictBCDId,
+			a.C_AddressId,
+			a.C_ChannelId,
+			a.C_RecordDateBCD,
+			a.C_JumpSecond
+		FROM
+			t_opjumpdata a
+		WHERE
+		C_RecordDateBCD &gt;#{version2,jdbcType=INTEGER}
+		and C_RecordDateBCD &lt;#{version21,jdbcType=INTEGER}
+		AND a.C_EEHexId = #{cEehexid,jdbcType=VARCHAR}
+		AND a.C_ParaId = "0"
+		AND a.C_EESequenceId = "0"
+	) b ON a.C_DistrictBCDId = b.C_DistrictBCDId
+	AND a.C_AddressId = b.C_AddressId
+	AND a.C_ChannelId = b.C_ChannelId
+	AND a.C_RecordDateBCD = (b.C_RecordDateBCD - 20000)
+	AND a.C_JumpSecond = b.C_JumpSecond
+	WHERE
+		(b.C_JumpSecond IS NULL) -- -- 
+	
+)
+UNION ALL
+	(
+		SELECT
+		
+		b.C_DistrictBCDId cDistrictbcdid ,
+		b.C_AddressId cAddressid,
+		b.C_ChannelId cChannelid,
+		b.C_RecordDateBCD cRecordDateBCD,
+		b.C_JumpSecond jump
+		FROM
+			(
+				SELECT
+					a.C_DistrictBCDId,
+					a.C_AddressId,
+					a.C_ChannelId,
+					a.C_RecordDateBCD,
+					a.C_JumpSecond
+				FROM
+					t_opjumpdata a
+				WHERE
+				C_RecordDateBCD &gt;#{version1,jdbcType=INTEGER}
+			    and C_RecordDateBCD &lt;#{version11,jdbcType=INTEGER}
+				AND a.C_EEHexId = "02"
+				AND a.C_ParaId = "0"
+				AND a.C_EESequenceId = "0"
+			) a
+		RIGHT JOIN (
+			SELECT
+				a.C_DistrictBCDId,
+				a.C_AddressId,
+				a.C_ChannelId,
+				a.C_RecordDateBCD,
+				a.C_JumpSecond
+			FROM
+				t_opjumpdata a
+			WHERE
+			C_RecordDateBCD &gt;#{version2,jdbcType=INTEGER}
+		   and C_RecordDateBCD &lt;#{version21,jdbcType=INTEGER}
+			AND a.C_EEHexId = #{cEehexid,jdbcType=VARCHAR}
+			AND a.C_ParaId = "0"
+			AND a.C_EESequenceId = "0"
+		) b ON a.C_DistrictBCDId = b.C_DistrictBCDId
+		AND a.C_AddressId = b.C_AddressId
+		AND a.C_ChannelId = b.C_ChannelId
+		AND a.C_RecordDateBCD = (b.C_RecordDateBCD - 20000)
+		AND a.C_JumpSecond = b.C_JumpSecond
+		WHERE
+			(a.C_JumpSecond IS NULL) 
+	)
+ORDER BY
+  right(cRecordDateBCD,4),
+	cDistrictbcdid,
+	cAddressid,
+	cChannelid,	
+	jump
+</select>
+<select id="selectGridCountV51" resultType="java.lang.Integer" parameterType="com.zz.edata.bo.OpEegrpBO" >
+   select 
+ count(*) from ( SELECT
+	a.C_DistrictBCDId cDistrictbcdid,
+	a.C_AddressId cAddressid,
+	a.C_ChannelId cChannelid,
+	b.C_RecordDateBCD cRecordDateBCD,
+	a.C_TSegmentId ts,
+	a.C_JumpSecond jump15,
+	b.C_JumpSecond jump17
+	
+FROM
+	(
+		SELECT
+			C_DistrictBCDId,
+			C_AddressId,
+			C_ChannelId,
+			C_JumpSecond,
+			C_RecordDateBCD,
+			C_TSegmentId
+		FROM
+			t_opjumpdata a
+		WHERE
+			C_RecordDateBCD &lt;160000
+		and a.C_EESequenceId="0"
+		AND a.C_EEHexId = #{cEehexid,jdbcType=VARCHAR}
+		AND a.C_ParaId = #{cParaid,jdbcType=VARCHAR}
+	) a,
+	(
+		SELECT
+			C_DistrictBCDId,
+			C_AddressId,
+			C_ChannelId,
+			C_JumpSecond,
+			C_RecordDateBCD,
+			C_TSegmentId
+		FROM
+			t_opjumpdata a
+		WHERE
+			C_RecordDateBCD &gt;160000
+		and a.C_EESequenceId="0"	
+		AND a.C_EEHexId = #{cEehexid,jdbcType=VARCHAR}
+		AND a.C_ParaId = #{cParaid,jdbcType=VARCHAR}
+	) b
+WHERE
+	a.C_DistrictBCDId = b.C_DistrictBCDId
+AND a.C_AddressId = b.C_AddressId
+AND a.C_ChannelId = b.C_ChannelId
+AND a.C_RecordDateBCD = (b.C_RecordDateBCD - 20000)
+AND a.C_TSegmentId = b.C_TSegmentId 
+AND a.C_JumpSecond != b.C_JumpSecond
+group by a.C_AddressId,
+			a.C_ChannelId,
+			a.C_JumpSecond,
+			a.C_RecordDateBCD,
+			a.C_TSegmentId,
+            a.C_JumpSecond
+ORDER BY
+	a.C_RecordDateBCD,
+	b.C_TSegmentId,
+	a.C_JumpSecond ASC )  count
+</select>
+<!-- 直接传sql查询 -->
+<select id="selectBySql" parameterType="com.zz.edata.bo.OpEegrpBO" resultType="java.util.LinkedHashMap"> 
+${sql} 
+</select>
+
+<!-- 分项对比查询 -->
+<select id="listSubcompareResult" parameterType="com.zz.edata.bo.SubcompareBO" resultType="java.util.LinkedHashMap"> 
+select * from 
+(select * from t_opdata where id not in  
+(SELECT
+	t_zong.id
+FROM
+	(select * from t_opdata where C_ChannelId=#{zongchannelId,jdbcType=INTEGER} and C_OffLineVersion=#{offlineversion,jdbcType=VARCHAR}) t_zong,
+	(select * from t_opdata where C_ChannelId=#{cChannelId,jdbcType=INTEGER} and C_OffLineVersion=#{offlineversion,jdbcType=VARCHAR})  t_fen
+WHERE
+	t_fen.C_DistrictBCDId = t_zong.C_DistrictBCDId
+AND t_fen.C_AddressId = t_zong.C_AddressId -- ip一样
+AND t_fen.C_TSegmentId = t_zong.C_TSegmentId 
+AND t_fen.C_RecordDateBCD = t_zong.C_RecordDateBCD -- 时间一样
+AND t_fen.C_EEHexId = t_zong.C_EEHexId       -- 电器一样
+AND t_fen.C_EEOpenMinute = t_zong.C_EEOpenMinute       -- 电器一样
+AND t_fen.C_EECloseMinute = t_zong.C_EECloseMinute       -- 电器一样
+AND t_fen.C_EEKWh between t_zong.C_EEKWh*0.95 and  t_zong.C_EEKWh*1.05    -- 电量
+AND t_fen.C_EEPeakW between t_zong.C_EEPeakW*0.95 and  t_zong.C_EEPeakW*1.05    -- 功率
+) and C_ChannelId in(#{zongchannelId,jdbcType=INTEGER},#{cChannelId,jdbcType=INTEGER}) and C_OffLineVersion=#{offlineversion,jdbcType=VARCHAR}
+ORDER BY 
+  right(C_RecordDateBCD,4),
+	C_Districtbcdid,
+	C_Addressid,
+  C_TSegmentId
+)t_op ,t_opjumpdata t_opj 
+where 
+t_op.C_DistrictBCDId = t_opj.C_DistrictBCDId
+AND t_op.C_AddressId = t_opj.C_AddressId -- ip一样
+AND t_op.C_RecordDateBCD = t_opj.C_RecordDateBCD -- 时间一样
+AND t_op.C_TSegmentId = t_opj.C_TSegmentId 
+AND t_op.C_ChannelId = t_opj.C_ChannelId -- 时间一样
+AND t_op.C_EESequenceId = t_opj.C_EESequenceId -- 序列号一样
+
+and t_op.C_DistrictBCDId =#{cDistrictbcdid,jdbcType=VARCHAR}
+AND t_op.C_AddressId = #{cAddressId,jdbcType=INTEGER} -- ip一样
+AND t_op.C_RecordDateBCD =  #{cRecorddatebcd,jdbcType=INTEGER} -- 时间一样
+and t_opj.C_OffLineVersion=#{offlineversion,jdbcType=VARCHAR}
+and t_op.C_OffLineVersion=#{offlineversion,jdbcType=VARCHAR}
+</select>
+  <insert id="insert" parameterType="com.zz.common.model.Opjumpdata" >
+    insert into t_opjumpdata (C_DistrictBCDId, C_AddressId, C_RecordDateBCD, 
+      C_TSegmentId, C_ChannelId, C_ParaId, 
+      C_EESequenceId, C_EEHexId, C_JumpSecond, 
+      C_KW, C_FrameCmdId, C_RecordInsertTime
+      )
+    values (#{cDistrictbcdid,jdbcType=VARCHAR}, #{cAddressid,jdbcType=INTEGER}, #{cRecorddatebcd,jdbcType=INTEGER}, 
+      #{cTsegmentid,jdbcType=INTEGER}, #{cChannelid,jdbcType=INTEGER}, #{cParaid,jdbcType=INTEGER}, 
+      #{cEesequenceid,jdbcType=INTEGER}, #{cEehexid,jdbcType=VARCHAR}, #{cJumpsecond,jdbcType=INTEGER}, 
+      #{cKw,jdbcType=DOUBLE}, #{cFramecmdid,jdbcType=VARCHAR}, #{cRecordinserttime,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zz.common.model.Opjumpdata" >
+    insert into t_opjumpdata
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cDistrictbcdid != null" >
+        C_DistrictBCDId,
+      </if>
+      <if test="cAddressid != null" >
+        C_AddressId,
+      </if>
+      <if test="cRecorddatebcd != null" >
+        C_RecordDateBCD,
+      </if>
+      <if test="cTsegmentid != null" >
+        C_TSegmentId,
+      </if>
+      <if test="cChannelid != null" >
+        C_ChannelId,
+      </if>
+      <if test="cParaid != null" >
+        C_ParaId,
+      </if>
+      <if test="cEesequenceid != null" >
+        C_EESequenceId,
+      </if>
+      <if test="cEehexid != null" >
+        C_EEHexId,
+      </if>
+      <if test="cJumpsecond != null" >
+        C_JumpSecond,
+      </if>
+      <if test="cKw != null" >
+        C_KW,
+      </if>
+      <if test="cFramecmdid != null" >
+        C_FrameCmdId,
+      </if>
+      <if test="cRecordinserttime != null" >
+        C_RecordInsertTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cDistrictbcdid != null" >
+        #{cDistrictbcdid,jdbcType=VARCHAR},
+      </if>
+      <if test="cAddressid != null" >
+        #{cAddressid,jdbcType=INTEGER},
+      </if>
+      <if test="cRecorddatebcd != null" >
+        #{cRecorddatebcd,jdbcType=INTEGER},
+      </if>
+      <if test="cTsegmentid != null" >
+        #{cTsegmentid,jdbcType=INTEGER},
+      </if>
+      <if test="cChannelid != null" >
+        #{cChannelid,jdbcType=INTEGER},
+      </if>
+      <if test="cParaid != null" >
+        #{cParaid,jdbcType=INTEGER},
+      </if>
+      <if test="cEesequenceid != null" >
+        #{cEesequenceid,jdbcType=INTEGER},
+      </if>
+      <if test="cEehexid != null" >
+        #{cEehexid,jdbcType=VARCHAR},
+      </if>
+      <if test="cJumpsecond != null" >
+        #{cJumpsecond,jdbcType=INTEGER},
+      </if>
+      <if test="cKw != null" >
+        #{cKw,jdbcType=DOUBLE},
+      </if>
+      <if test="cFramecmdid != null" >
+        #{cFramecmdid,jdbcType=VARCHAR},
+      </if>
+      <if test="cRecordinserttime != null" >
+        #{cRecordinserttime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_opjumpdata
+    <set >
+      <if test="record.cDistrictbcdid != null" >
+        C_DistrictBCDId = #{record.cDistrictbcdid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cAddressid != null" >
+        C_AddressId = #{record.cAddressid,jdbcType=INTEGER},
+      </if>
+      <if test="record.cRecorddatebcd != null" >
+        C_RecordDateBCD = #{record.cRecorddatebcd,jdbcType=INTEGER},
+      </if>
+      <if test="record.cTsegmentid != null" >
+        C_TSegmentId = #{record.cTsegmentid,jdbcType=INTEGER},
+      </if>
+      <if test="record.cChannelid != null" >
+        C_ChannelId = #{record.cChannelid,jdbcType=INTEGER},
+      </if>
+      <if test="record.cParaid != null" >
+        C_ParaId = #{record.cParaid,jdbcType=INTEGER},
+      </if>
+      <if test="record.cEesequenceid != null" >
+        C_EESequenceId = #{record.cEesequenceid,jdbcType=INTEGER},
+      </if>
+      <if test="record.cEehexid != null" >
+        C_EEHexId = #{record.cEehexid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cJumpsecond != null" >
+        C_JumpSecond = #{record.cJumpsecond,jdbcType=INTEGER},
+      </if>
+      <if test="record.cKw != null" >
+        C_KW = #{record.cKw,jdbcType=DOUBLE},
+      </if>
+      <if test="record.cFramecmdid != null" >
+        C_FrameCmdId = #{record.cFramecmdid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cRecordinserttime != null" >
+        C_RecordInsertTime = #{record.cRecordinserttime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_opjumpdata
+    set C_DistrictBCDId = #{record.cDistrictbcdid,jdbcType=VARCHAR},
+      C_AddressId = #{record.cAddressid,jdbcType=INTEGER},
+      C_RecordDateBCD = #{record.cRecorddatebcd,jdbcType=INTEGER},
+      C_TSegmentId = #{record.cTsegmentid,jdbcType=INTEGER},
+      C_ChannelId = #{record.cChannelid,jdbcType=INTEGER},
+      C_ParaId = #{record.cParaid,jdbcType=INTEGER},
+      C_EESequenceId = #{record.cEesequenceid,jdbcType=INTEGER},
+      C_EEHexId = #{record.cEehexid,jdbcType=VARCHAR},
+      C_JumpSecond = #{record.cJumpsecond,jdbcType=INTEGER},
+      C_KW = #{record.cKw,jdbcType=DOUBLE},
+      C_FrameCmdId = #{record.cFramecmdid,jdbcType=VARCHAR},
+      C_RecordInsertTime = #{record.cRecordinserttime,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://www.mybatis.org/dtd/mybatis-3-config.dtd" >
+<mapper namespace="com.zz.common.dao.TSyCodeDefimeMapper">
+	<resultMap id="BaseResultMap"
+		type="com.zz.common.model.TSyCodeDefimeBean">
+		<id column="CODE" property="code" jdbcType="CHAR" />
+		<result column="CODE_NAME" property="codeName" jdbcType="VARCHAR" />
+		<result column="CODE_TYPE" property="codeType" jdbcType="CHAR" />
+		<result column="CODE_TYPE_CN" property="codeTypeCn" jdbcType="VARCHAR" />
+			<result column="order_Num" property="orderNum" jdbcType="CHAR" />
+		<result column="remark" property="remark" jdbcType="VARCHAR" />
+			<result column="parent_code" property="parentCode" jdbcType="CHAR" />
+		<result column="parent_code_name" property="parentCodeName" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		CODE, CODE_NAME, CODE_TYPE, CODE_TYPE_CN,order_Num,remark
+	</sql>
+	<select id="getCode" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from T_SY_CODE_DEFINE
+		where CODE_NAME = #{codeName}
+	</select>
+	<!-- 审批结论 -->
+	<select id="getVerifyType" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from T_SY_CODE_DEFINE
+		where CODE_TYPE ='D0001'
+	</select>
+	<!--商圈 -->
+	<select id="getTradezone" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from T_SY_CODE_DEFINE
+		where CODE_TYPE ='D0005'
+		order by T_SY_CODE_DEFINE.CODE_NAME
+	</select>
+	<!--聚客点 -->
+	<select id="getChanceType" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from T_SY_CODE_DEFINE
+		where CODE_TYPE ='D0006'
+			order by T_SY_CODE_DEFINE.CODE_NAME
+	</select>
+	<!--品牌 -->
+	<select id="getBrand" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from T_SY_CODE_DEFINE
+		where CODE_TYPE ='D0007'
+	</select>
+	<!--物业类型 -->
+	<select id="getProperty" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from T_SY_CODE_DEFINE
+		where CODE_TYPE ='D0009'
+	</select>
+	<!--是否新城市 -->
+	<select id="getNewCity" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from T_SY_CODE_DEFINE
+		where CODE_TYPE ='D0011'
+			order by T_SY_CODE_DEFINE.CODE_NAME
+	</select>
+	<!--资产类型 -->
+	<select id="getAssets" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from T_SY_CODE_DEFINE
+		where CODE_TYPE ='D0008'
+	</select>
+	<!--商业体量 -->
+	<select id="getVolume" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from T_SY_CODE_DEFINE
+		where CODE_TYPE ='D0027'
+	</select>
+	<!--城市等级 -->
+	<select id="getCityGrade" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from T_SY_CODE_DEFINE
+		where CODE_TYPE ='D0016'
+	</select>
+	<!--餐厅类型 -->
+	<select id="getStoreType" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from T_SY_CODE_DEFINE
+		where CODE_TYPE ='D0012'
+	</select>
+
+	<!--项目类型 -->
+	<select id="getProjectType" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from T_SY_CODE_DEFINE
+		where CODE_TYPE ='D0029'
+	</select>
+
+	<!--KIOSK类型 -->
+	<select id="getKioskType" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from T_SY_CODE_DEFINE
+		where CODE_TYPE ='D0030'
+	</select>
+	
+	<!--开发阶段 -->
+	<select id="getDevStages" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from T_SY_CODE_DEFINE
+		where CODE_TYPE ='D0044'
+	</select>
+
+	<!--上报类型 -->
+	<select id="getReportType" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from T_SY_CODE_DEFINE
+		where CODE_TYPE ='D0053'
+	</select>
+	<!--SP审核状态 -->
+	<select id="getIsComplete" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from T_SY_CODE_DEFINE
+		where CODE_TYPE ='D0003'
+	</select>
+	
+	<!--价格梯次 -->
+	<select id="getArrangement" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from T_SY_CODE_DEFINE
+		where CODE_TYPE ='D0017'
+	</select>
+
+	<select id="getCodeByCodeType" parameterType="java.lang.String" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from T_SY_CODE_DEFINE
+		<trim prefix="WHERE " suffixOverrides="AND">
+			<if test="codeType != null">
+				CODE_TYPE=#{codeType,jdbcType=VARCHAR} AND
+			</if>
+		</trim>
+		order by ORDER_NUM
+	</select>
+	
+	<select id="getCodeByCode" parameterType="java.lang.String" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from T_SY_CODE_DEFINE
+		<trim prefix="WHERE " suffixOverrides="AND">
+			<if test="codeType != null">
+				CODE=#{code,jdbcType=VARCHAR} AND
+			</if>
+		</trim>
+	</select>
+	  <select id="getEpuCodeByCode" parameterType="java.lang.String" resultMap="BaseResultMap">
+		SELECT
+		a.CODE,
+		a.CODE_NAME,
+		a.CODE_TYPE,
+		a.CODE_TYPE_CN,
+		a.order_Num,
+		a.remark AS parent_code,
+		b.CODE_NAME AS parent_code_name
+		FROM
+		T_SY_CODE_DEFINE a
+		LEFT JOIN T_SY_CODE_DEFINE b ON a.REMARK = b.CODE
+		<trim prefix="WHERE " suffixOverrides="AND">
+			<if test="code != null">
+				a.CODE=#{code,jdbcType=VARCHAR} AND
+			</if>
+		</trim>
+	</select>
+</mapper>

@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://www.mybatis.org/dtd/mybatis-3-config.dtd" >
+<mapper namespace="com.zz.common.dao.DistrictinfoMapper" >
+  <resultMap id="BaseResultMap" type="com.zz.common.model.Districtinfo" >
+    <id column="C_DistrictBCDId" property="cDistrictbcdid" jdbcType="VARCHAR" />
+    <result column="C_DistrictName" property="cDistrictname" jdbcType="VARCHAR" />
+    <result column="C_Desp" property="cDesp" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    C_DistrictBCDId, C_DistrictName, C_Desp
+  </sql>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_districtinfo
+    where C_DistrictBCDId = #{cDistrictbcdid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_districtinfo
+    where C_DistrictBCDId = #{cDistrictbcdid,jdbcType=VARCHAR}
+  </delete>
+
+  <insert id="insert" parameterType="com.zz.common.model.Districtinfo" >
+    insert into t_districtinfo (C_DistrictBCDId, C_DistrictName, C_Desp
+      )
+    values (#{cDistrictbcdid,jdbcType=VARCHAR}, #{cDistrictname,jdbcType=VARCHAR}, #{cDesp,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zz.common.model.Districtinfo" >
+    insert into t_districtinfo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cDistrictbcdid != null" >
+        C_DistrictBCDId,
+      </if>
+      <if test="cDistrictname != null" >
+        C_DistrictName,
+      </if>
+      <if test="cDesp != null" >
+        C_Desp,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cDistrictbcdid != null" >
+        #{cDistrictbcdid,jdbcType=VARCHAR},
+      </if>
+      <if test="cDistrictname != null" >
+        #{cDistrictname,jdbcType=VARCHAR},
+      </if>
+      <if test="cDesp != null" >
+        #{cDesp,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_districtinfo
+    <set >
+      <if test="record.cDistrictbcdid != null" >
+        C_DistrictBCDId = #{record.cDistrictbcdid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cDistrictname != null" >
+        C_DistrictName = #{record.cDistrictname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cDesp != null" >
+        C_Desp = #{record.cDesp,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_districtinfo
+    set C_DistrictBCDId = #{record.cDistrictbcdid,jdbcType=VARCHAR},
+      C_DistrictName = #{record.cDistrictname,jdbcType=VARCHAR},
+      C_Desp = #{record.cDesp,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zz.common.model.Districtinfo" >
+    update t_districtinfo
+    <set >
+      <if test="cDistrictname != null" >
+        C_DistrictName = #{cDistrictname,jdbcType=VARCHAR},
+      </if>
+      <if test="cDesp != null" >
+        C_Desp = #{cDesp,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where C_DistrictBCDId = #{cDistrictbcdid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zz.common.model.Districtinfo" >
+    update t_districtinfo
+    set C_DistrictName = #{cDistrictname,jdbcType=VARCHAR},
+      C_Desp = #{cDesp,jdbcType=VARCHAR}
+    where C_DistrictBCDId = #{cDistrictbcdid,jdbcType=VARCHAR}
+  </update>
+</mapper>
