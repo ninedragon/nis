@@ -65,6 +65,9 @@
 				WHERE
 					1 = 1
 			)  and b.DEL_FLAG='0'
+			<if test="epuCity != null and epuCity !=''">
+          and b.epu_city = #{epuCity,jdbcType=VARCHAR} 
+          </if>
 		ORDER BY
 			a.CITY_NAME_CN
   </select>

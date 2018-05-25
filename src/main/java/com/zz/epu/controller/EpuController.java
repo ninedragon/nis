@@ -401,7 +401,7 @@ public class EpuController extends BaseController {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("provinceId", pId);
 		map.put("districtFlag", "0");
-		List<TSyCityInfoBean> allList=(List<TSyCityInfoBean>)epuService.getCity(map);
+		List<TSyCityInfoBean> allList=(List<TSyCityInfoBean>)epuService.getCityByEp(map);
 	    List<Item> list = new ArrayList<Item>(allList.size());
 	    for(TSyCityInfoBean p : allList){
 	        Item item = new Item();
@@ -420,7 +420,7 @@ public class EpuController extends BaseController {
 	@ResponseBody
 	public List<Item> showCounty(HttpServletRequest request,String pId,String pName){ 
 		
-		List<TSyCityInfoBean> allList=(List<TSyCityInfoBean>)epuService.getCityDistrict(pId);
+		List<TSyCityInfoBean> allList=(List<TSyCityInfoBean>)epuService.getCityDistrictByEp(pId);
 	    List<Item> list = new ArrayList<Item>(allList.size());
 	    for(TSyCityInfoBean p : allList){
 	        Item item = new Item();

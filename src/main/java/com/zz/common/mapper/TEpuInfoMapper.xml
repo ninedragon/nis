@@ -144,7 +144,6 @@
             <if test="epuDistrict != null and epuDistrict !=''">
           and  epu.epu_district = #{epuDistrict,jdbcType=VARCHAR} 
           </if>
-          	order by epu.UPDATE_TIME desc
   </select>
   
   

@@ -3,6 +3,8 @@ package com.zz.common.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.zz.common.model.TSyCityInfoBean;
 
 
@@ -22,7 +24,7 @@ public interface TSyCityInfoMapper {
 	List<TSyCityInfoBean> getCityDistrict(String provinceId);
 	
 	// 根据市获取区
-	List<TSyCityInfoBean> getCityDistrictByEp(String provinceId);
+	List<TSyCityInfoBean> getCityDistrictByEp(@Param("epuCity")  String epuCity);
 
 	// 获取当前市的code码
 	String getCityInfocode(String citycode);
