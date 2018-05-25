@@ -102,7 +102,7 @@
         }
        
     }
-     if (type == 1) {
+   /*   if (type == 1) {
            $("#cityName").val(treeNode.name);
 		   $("#epuCity").val(treeNode.id);
 		    $("#epuDistrict").val("");
@@ -118,7 +118,7 @@
 	       	var tabId = $(".tab-nav li[view='show']").attr("id");
 	        $("#" + tabId + "Iframe")[0].contentWindow.location.reload(true);    
         }
-    
+     */
       if (type == 3) {
 		   $("#cityName").val("");
            $("#epuCity").val("");

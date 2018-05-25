@@ -214,7 +214,7 @@ function showTop(rowId){
 	 	        		 
 	 	        		 var branchBoxDifference = 100;//差值
 	 	        		 var branchBoxRelative = 100;//没有表箱的分支箱相对位置
-	 	        	   	 var gird = 100;
+	 	        	   	 var gird = 250;
 	 		        	 var tempXAll = null;
 	 	        		 
 	 	    	         var cabinetsX = branchBoxX;//出线柜X绝对位置

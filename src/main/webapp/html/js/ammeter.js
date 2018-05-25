@@ -217,7 +217,7 @@ function showTop(rowId,tableBoxId){
             	 if(null != data && data.length > 0){
      	         	var branchBoxDifference = 100;//差值
  	        		var branchBoxRelative = 100;//没有表箱的分支箱相对位置
- 	        	   	var gird = 100;
+ 	        	   	var gird = 250;
  		        	var tempXAll = null;
  		        	var ammeterX = 100;//电表X绝对位置
 	     		    var ammeterY = 500;//电表Y绝对位置	
