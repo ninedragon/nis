@@ -41,9 +41,9 @@
             marker.setIcon(icon);
             var markerMenu = new BMap.ContextMenu();
             var ci = config.marker.index;
-            markerMenu.addItem(new BMap.MenuItem('删除', function () {
+         /*    markerMenu.addItem(new BMap.MenuItem('删除', function () {
                 config.marker.remove(ci);
-            }, 100));
+            }, 100)); */
             marker.addContextMenu(markerMenu);
 
             config.marker.add(marker);
