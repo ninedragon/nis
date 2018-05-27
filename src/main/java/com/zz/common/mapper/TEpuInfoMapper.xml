@@ -14,7 +14,7 @@
     <result column="epu_city" jdbcType="VARCHAR" property="epuCity" />
     <result column="epu_district" jdbcType="VARCHAR" property="epuDistrict" />
     <result column="epu_type" jdbcType="VARCHAR" property="epuType" />
-      <result column="epu_type_name" jdbcType="VARCHAR" property="epuTypeName" />
+    <result column="epu_type_name" jdbcType="VARCHAR" property="epuTypeName" />
     <result column="epu_xscale" jdbcType="DOUBLE" property="epuXscale" />
     <result column="epu_yscale" jdbcType="DOUBLE" property="epuYscale" />
     <result column="epu_parent_id" jdbcType="VARCHAR" property="epuParentId" />
@@ -24,15 +24,15 @@
     <result column="UPDATE_ID" jdbcType="VARCHAR" property="updateId" />
     <result column="DEL_FLAG" jdbcType="VARCHAR" property="delFlag" />
     <result column="address_id" jdbcType="VARCHAR" property="addressId" />
-      <result column="epu_province_name" property="epuProvinceName" jdbcType="VARCHAR" />
+    <result column="epu_province_name" property="epuProvinceName" jdbcType="VARCHAR" />
     <result column="epu_city_name" property="epuCityName" jdbcType="VARCHAR" />
     <result column="epu_district_name" property="epuDistrictName" jdbcType="VARCHAR" />
-     <result column="epu_status" property="epuStatus" jdbcType="VARCHAR" />
-       <result column="epu_parent_name" property="epuParentName" jdbcType="VARCHAR" />
-        <result column="epu_parent_type_name" property="epuParentTypeName" jdbcType="VARCHAR" />
-       <result column="epu_parent_type" property="epuParentType" jdbcType="VARCHAR" />
-        <result column="channel_id" property="channelId" jdbcType="VARCHAR" />
-       <result column="line_id" property="lineId" jdbcType="VARCHAR" />
+    <result column="epu_status" property="epuStatus" jdbcType="VARCHAR" />
+    <result column="epu_parent_name" property="epuParentName" jdbcType="VARCHAR" />
+    <result column="epu_parent_type_name" property="epuParentTypeName" jdbcType="VARCHAR" />
+    <result column="epu_parent_type" property="epuParentType" jdbcType="VARCHAR" />
+    <result column="channel_id" property="channelId" jdbcType="VARCHAR" />
+     <result column="line_id" property="lineId" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List">
     <!--
@@ -77,21 +77,15 @@
 			epu.DEL_FLAG,
 			epu.channel_id,
 			epu.line_id,
-			a.PROVINCE_NAME_CN AS epu_province_name,
-			b.CITY_NAME_CN AS epu_city_name,
-			c.CITY_NAME_CN AS epu_district_name,
-			e.CODE_NAME AS epu_type_name,
-			parent.epu_name as epu_parent_name,
-			 parent.epu_type as epu_parent_type,
-             f.CODE_NAME AS epu_parent_type_name
+			epu.epu_province_name,
+			epu.epu_city_name,
+			epu.epu_district_name,
+			epu.epu_type_name,
+			epu.epu_parent_name,
+			epu.epu_parent_type,
+             epu.epu_parent_type_name
 			FROM
-				t_epu_info epu
-			LEFT JOIN t_sy_provinces_info a ON epu.epu_province = a.PROVINCE_ID
-			LEFT JOIN t_sy_city_info b ON epu.epu_city = b.CITY_CODE
-			LEFT JOIN t_sy_city_info c ON epu.epu_district = c.CITY_CODE
-			LEFT JOIN T_SY_CODE_DEFINE e ON epu.epu_type = e. CODE
-			LEFT JOIN t_epu_info parent ON epu.epu_parent_id = parent.row_id
-			LEFT JOIN T_SY_CODE_DEFINE f ON parent.epu_type = f.CODE
+				view_epu_info epu
           where 1=1 and  epu.DEL_FLAG='0' 
             <if test="rowId != null and rowId !=''">
           and  epu.row_id = #{rowId,jdbcType=VARCHAR} 
@@ -119,21 +113,15 @@
 			epu.DEL_FLAG,
 			epu.channel_id,
 			epu.line_id,
-			a.PROVINCE_NAME_CN AS epu_province_name,
-			b.CITY_NAME_CN AS epu_city_name,
-			c.CITY_NAME_CN AS epu_district_name,
-			e.CODE_NAME AS epu_type_name,
-			parent.epu_name as epu_parent_name,
-			 parent.epu_type as epu_parent_type,
-             f.CODE_NAME AS epu_parent_type_name
+			epu.epu_province_name,
+			epu_city_name,
+			epu_district_name,
+			epu_type_name,
+			epu_parent_name,
+			epu_parent_type,
+            epu_parent_type_name
 			FROM
-				t_epu_info epu
-			LEFT JOIN t_sy_provinces_info a ON epu.epu_province = a.PROVINCE_ID
-			LEFT JOIN t_sy_city_info b ON epu.epu_city = b.CITY_CODE
-			LEFT JOIN t_sy_city_info c ON epu.epu_district = c.CITY_CODE
-			LEFT JOIN T_SY_CODE_DEFINE e ON epu.epu_type = e. CODE
-			LEFT JOIN t_epu_info parent ON epu.epu_parent_id = parent.row_id
-			LEFT JOIN T_SY_CODE_DEFINE f ON parent.epu_type = f.CODE
+				view_epu_info epu
           where 1=1 and  epu.DEL_FLAG='0' and epu.epu_type='M0001' and epu.epu_xscale IS NOT NULL and  epu.epu_Yscale IS NOT NULL 
             <if test="rowId != null and rowId !=''">
           and  epu.row_id = #{rowId,jdbcType=VARCHAR} 
@@ -168,21 +156,15 @@
 			epu.DEL_FLAG,
 			epu.channel_id,
 			epu.line_id,
-			a.PROVINCE_NAME_CN AS epu_province_name,
-			b.CITY_NAME_CN AS epu_city_name,
-			c.CITY_NAME_CN AS epu_district_name,
-			e.CODE_NAME AS epu_type_name,
-			parent.epu_name as epu_parent_name,
-			 parent.epu_type as epu_parent_type,
-             f.CODE_NAME AS epu_parent_type_name
+			epu_province_name,
+			epu_city_name,
+			epu_district_name,
+			epu_type_name,
+			epu_parent_name,
+			epu_parent_type,
+            epu_parent_type_name
 			FROM
-				t_epu_info epu
-			LEFT JOIN t_sy_provinces_info a ON epu.epu_province = a.PROVINCE_ID
-			LEFT JOIN t_sy_city_info b ON epu.epu_city = b.CITY_CODE
-			LEFT JOIN t_sy_city_info c ON epu.epu_district = c.CITY_CODE
-			LEFT JOIN T_SY_CODE_DEFINE e ON epu.epu_type = e. CODE
-			LEFT JOIN t_epu_info parent ON epu.epu_parent_id = parent.row_id
-			LEFT JOIN T_SY_CODE_DEFINE f ON parent.epu_type = f.CODE
+				view_epu_info epu
           where 1=1 and  epu.DEL_FLAG='0' 
             <if test="rowId != null  and rowId !=''">
           and  epu.row_id = #{rowId,jdbcType=VARCHAR} 
@@ -226,21 +208,15 @@
 			epu.DEL_FLAG,
 			epu.channel_id,
 			epu.line_id,
-			a.PROVINCE_NAME_CN AS epu_province_name,
-			b.CITY_NAME_CN AS epu_city_name,
-			c.CITY_NAME_CN AS epu_district_name,
-			e.CODE_NAME AS epu_type_name,
-			parent.epu_name as epu_parent_name,
-			 parent.epu_type as epu_parent_type,
-             f.CODE_NAME AS epu_parent_type_name
+			epu_province_name,
+			epu_city_name,
+			epu_district_name,
+			epu_type_name,
+			epu_parent_name,
+			epu_parent_type,
+            epu_parent_type_name
 			FROM
-				t_epu_info epu
-			LEFT JOIN t_sy_provinces_info a ON epu.epu_province = a.PROVINCE_ID
-			LEFT JOIN t_sy_city_info b ON epu.epu_city = b.CITY_CODE
-			LEFT JOIN t_sy_city_info c ON epu.epu_district = c.CITY_CODE
-			LEFT JOIN T_SY_CODE_DEFINE e ON epu.epu_type = e. CODE
-			LEFT JOIN t_epu_info parent ON epu.epu_parent_id = parent.row_id
-			LEFT JOIN T_SY_CODE_DEFINE f ON parent.epu_type = f.CODE
+				view_epu_info epu
 			where 1=1    and  epu.DEL_FLAG='0'        
            <if test="epuProvince != '' and epuProvince != null">  
 	        and epu.epu_province=  #{epuProvince,jdbcType=VARCHAR}
@@ -268,7 +244,7 @@
     		<include refid="limit_sql" />
   </select>
   <select id="findCount" resultMap="BaseResultMap" >
- 	    select count(row_id) from  t_epu_info  epu 
+ 	    select count(row_id) from  view_epu_info  epu 
  	     where 1=1    and  epu.DEL_FLAG='0'    
  	  	  <if test="epuProvince != '' and epuProvince != null">  
 	        and epu.epu_province=  #{epuProvince,jdbcType=VARCHAR}
@@ -300,7 +276,7 @@
     -->
     select 
     <include refid="Base_Column_List" />
-    from t_epu_info
+    from view_epu_info
     where row_id = #{rowId,jdbcType=VARCHAR} and DEL_FLAG='0'
   </select>
   
@@ -350,7 +326,7 @@
     -->
     select 
     <include refid="Base_Column_List" />
-    from t_epu_info
+    from view_epu_info
     where epu_type = #{epuType,jdbcType=VARCHAR} and epu_district = #{epuDistrict,jdbcType=VARCHAR} and DEL_FLAG='0' 
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
@@ -361,36 +337,43 @@
     delete from t_epu_info
     where row_id = #{rowId,jdbcType=VARCHAR} and DEL_FLAG='0'
   </delete>
-  <insert id="insert" parameterType="com.zz.common.model.TEpuInfo">
+  
+    <insert id="insertSelective" parameterType="com.zz.common.model.TEpuInfo">
     <!--
       WARNING - @mbggenerated
       This element is automatically generated by MyBatis Generator, do not modify.
     -->
-    insert into t_epu_info (row_id, district_id, epu_name, 
-      epu_local, epu_province, epu_city, 
-      epu_district, epu_type, epu_xscale, 
-      epu_yscale, epu_parent_id, CREATE_TIME, 
-      CREATE_ID, UPDATE_TIME, UPDATE_ID, 
-      DEL_FLAG, address_id,channel_id,line_id)
-    values (#{rowId,jdbcType=VARCHAR}, #{districtId,jdbcType=VARCHAR}, #{epuName,jdbcType=VARCHAR}, 
-      #{epuLocal,jdbcType=VARCHAR}, #{epuProvince,jdbcType=VARCHAR}, #{epuCity,jdbcType=VARCHAR}, 
-      #{epuDistrict,jdbcType=VARCHAR}, #{epuType,jdbcType=VARCHAR}, #{epuXscale,jdbcType=DOUBLE}, 
-      #{epuYscale,jdbcType=DOUBLE}, #{epuParentId,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{createId,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{updateId,jdbcType=VARCHAR}, 
-      #{delFlag,jdbcType=VARCHAR}, #{addressId,jdbcType=VARCHAR},#{channelId,jdbcType=VARCHAR},#{lineId,jdbcType=VARCHAR})
-  </insert>
-  <insert id="insertSelective" parameterType="com.zz.common.model.TEpuInfo">
-    <!--
-      WARNING - @mbggenerated
-      This element is automatically generated by MyBatis Generator, do not modify.
-    -->
-    insert into t_epu_info
+    insert into 
+        <if test="epuType == 'M0001'">
+         t_substain 
+         </if>
+          <if test="epuType == 'M0002'">
+         t_outgoingCabinet 
+         </if>  
+          <if test="epuType == 'M0003'">
+         t_branchBox 
+         </if>  
+           <if test="epuType == 'M0004'">
+         t_meterBox 
+         </if>    
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="rowId != null and rowId !=''" >
-        row_id,
+        <if test="rowId != null and rowId !=''" >
+          <if test="epuType == 'M0001'">
+         substainId,
+         </if>
+          <if test="epuType == 'M0002'">
+         outgoingCabinetId ,
+         </if>  
+          <if test="epuType == 'M0003'">
+         branchBoxId ,
+         </if>  
+           <if test="epuType == 'M0004'">
+         meterBoxId ,
+         </if>    
+       
       </if>
       <if test="districtId != null and districtId !=''">
-        district_id,
+        C_DistrictBCDId,
       </if>
       <if test="epuName != null and epuName !=''">
         epu_name,
@@ -407,9 +390,6 @@
       <if test="epuDistrict != null and epuDistrict !=''">
         epu_district,
       </if>
-      <if test="epuType != null and epuType !=''">
-        epu_type,
-      </if>
       <if test="epuXscale != null and epuXscale !=''">
         epu_xscale,
       </if>
@@ -417,7 +397,16 @@
         epu_yscale,
       </if>
       <if test="epuParentId != null and epuParentId !=''">
-        epu_parent_id,
+           
+          <if test="epuType == 'M0002'">
+         substainId ,
+         </if>  
+          <if test="epuType == 'M0003'">
+         outgoingCabinetId ,
+         </if>  
+           <if test="epuType == 'M0004'">
+         branchBoxId ,
+         </if>    
       </if>
       <if test="createTime != null and createTime !=''">
         CREATE_TIME,
@@ -435,10 +424,10 @@
         DEL_FLAG,
       </if>
       <if test="addressId != null and addressId !=''">
-        address_id,
+        C_AddressId,
       </if>
        <if test="channelId != null and channelId !=''">
-        channel_id,
+        C_ChannelNum,
       </if>
        <if test="lineId != null and lineId !=''">
         line_id,
@@ -465,10 +454,7 @@
       </if>
       <if test="epuDistrict != null and epuDistrict !=''">
         #{epuDistrict,jdbcType=VARCHAR},
-      </if>
-      <if test="epuType != null and epuType !=''">
-        #{epuType,jdbcType=VARCHAR},
-      </if>
+      </if>  
       <if test="epuXscale != null and epuXscale !=''">
         #{epuXscale,jdbcType=DOUBLE},
       </if>
@@ -504,15 +490,28 @@
       </if>
     </trim>
   </insert>
+  
   <update id="updateByPrimaryKeySelective" parameterType="com.zz.common.model.TEpuInfo">
     <!--
       WARNING - @mbggenerated
       This element is automatically generated by MyBatis Generator, do not modify.
     -->
-    update t_epu_info
+    update 
+     <if test="epuType == 'M0001'">
+         t_substain 
+         </if>
+          <if test="epuType == 'M0002'">
+         t_outgoingCabinet 
+         </if>  
+          <if test="epuType == 'M0003'">
+         t_branchBox 
+         </if>  
+           <if test="epuType == 'M0004'">
+         t_meterBox 
+         </if>
     <set>
       <if test="districtId != null and districtId !=''">
-        district_id = #{districtId,jdbcType=VARCHAR},
+        C_DistrictBCDId = #{districtId,jdbcType=VARCHAR},
       </if>
       <if test="epuName != null and epuName !=''">
         epu_name = #{epuName,jdbcType=VARCHAR},
@@ -528,9 +527,6 @@
       </if>
       <if test="epuDistrict != null and epuDistrict !=''">
         epu_district = #{epuDistrict,jdbcType=VARCHAR},
-      </if>
-      <if test="epuType != null and epuType !=''">
-        epu_type = #{epuType,jdbcType=VARCHAR},
       </if>
       <if test="epuXscale != null and epuXscale !=''">
         epu_xscale = #{epuXscale,jdbcType=DOUBLE},
@@ -557,50 +553,37 @@
         DEL_FLAG = #{delFlag,jdbcType=VARCHAR},
       </if>
       <if test="addressId != null and addressId !=''">
-        address_id = #{addressId,jdbcType=VARCHAR},
+        C_AddressId = #{addressId,jdbcType=VARCHAR},
       </if>
       <if test="channelId != null and channelId !=''">
-        channel_id = #{channelId,jdbcType=VARCHAR},
+        C_ChannelNum = #{channelId,jdbcType=VARCHAR},
       </if>
       <if test="lineId != null and lineId !=''">
         line_id = #{lineId,jdbcType=VARCHAR},
       </if>
     </set>
-    where row_id = #{rowId,jdbcType=VARCHAR} and DEL_FLAG='0'
+    where 1=1
+       <if test="epuType == 'M0001'">
+         t_substain = #{rowId,jdbcType=VARCHAR} 
+         </if>
+          <if test="epuType == 'M0002'">
+         t_outgoingCabinet= #{rowId,jdbcType=VARCHAR}  
+         </if>  
+          <if test="epuType == 'M0003'">
+         t_branchBox = #{rowId,jdbcType=VARCHAR} 
+         </if>  
+           <if test="epuType == 'M0004'">
+         t_meterBox = #{rowId,jdbcType=VARCHAR} 
+         </if>
+    and DEL_FLAG='0'
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.zz.common.model.TEpuInfo">
-    <!--
-      WARNING - @mbggenerated
-      This element is automatically generated by MyBatis Generator, do not modify.
-    -->
-    update t_epu_info
-    set district_id = #{districtId,jdbcType=VARCHAR},
-      epu_name = #{epuName,jdbcType=VARCHAR},
-      epu_local = #{epuLocal,jdbcType=VARCHAR},
-      epu_province = #{epuProvince,jdbcType=VARCHAR},
-      epu_city = #{epuCity,jdbcType=VARCHAR},
-      epu_district = #{epuDistrict,jdbcType=VARCHAR},
-      epu_type = #{epuType,jdbcType=VARCHAR},
-      epu_xscale = #{epuXscale,jdbcType=DOUBLE},
-      epu_yscale = #{epuYscale,jdbcType=DOUBLE},
-      epu_parent_id = #{epuParentId,jdbcType=VARCHAR},
-      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
-      CREATE_ID = #{createId,jdbcType=VARCHAR},
-      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
-      UPDATE_ID = #{updateId,jdbcType=VARCHAR},
-      DEL_FLAG = #{delFlag,jdbcType=VARCHAR},
-      address_id = #{addressId,jdbcType=VARCHAR},
-         channel_id = #{channelId,jdbcType=VARCHAR},
-            line_id = #{addressId,jdbcType=VARCHAR}
-    where row_id = #{lineId,jdbcType=VARCHAR} and DEL_FLAG='0'
-  </update>
-  
+
     <update id="delMarkByRowId" parameterType="java.lang.String">  
-    update t_epu_info
+    update t_substain
     set 
       epu_xscale = null,
       epu_yscale = null
-    where row_id = #{rowId,jdbcType=VARCHAR} and DEL_FLAG='0'
+    where substainId = #{rowId,jdbcType=VARCHAR} and DEL_FLAG='0'
   </update>
   
   
@@ -611,7 +594,7 @@
     -->
     select 
      <include refid="Base_Column_List" />
-    from t_epu_info
+    from view_epu_info
     where epu_name = #{epuName,jdbcType=VARCHAR}  and epu_district = #{epuDistrict,jdbcType=VARCHAR} and  epu_type = #{epuType,jdbcType=VARCHAR}    and DEL_FLAG='0'
   </select>
 </mapper>

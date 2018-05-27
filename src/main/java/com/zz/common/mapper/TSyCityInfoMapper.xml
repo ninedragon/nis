@@ -27,7 +27,7 @@
 		distinct  <include refid="Base_Column_List" />
 		FROM
 			T_SY_CITY_INFO a
-		INNER JOIN t_epu_info b ON a.CITY_CODE = b.epu_city
+		INNER JOIN view_epu_info b ON a.CITY_CODE = b.epu_city
 		WHERE
 			1 = 1  and  PROVINCE_ID=#{provinceId} and DISTRICT_FLAG=#{districtFlag} and b.DEL_FLAG='0'
 		ORDER BY
@@ -55,7 +55,7 @@
 			distinct <include refid="Base_Column_List" />
 		FROM
 			T_SY_CITY_INFO a
-		INNER JOIN t_epu_info b ON a.CITY_CODE = b.epu_district
+		INNER JOIN view_epu_info b ON a.CITY_CODE = b.epu_district
 		WHERE
 			SUPERIOR_CITY IN (
 				SELECT

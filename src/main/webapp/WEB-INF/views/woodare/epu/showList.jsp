@@ -574,38 +574,8 @@
 			                   
 			                }
 				    });
-				 });
-					  
-					  
-					  
+				 });				  
 			 };
-		    
-<%-- 				epAdd.linkMap=function linkMap() {
-					 var rowId=$('#saveDiv #rowId').val();
-					var cityName=$("#saveDiv #epuDistrict").find("option:selected").text();
-					/*  if(rowId=='' || rowId==null || rowId==undefined )
-						 {
-						rowId= guid();
-						$('#rowId').val(rowId);
-						 } */
-						var rowId=$("#saveDiv #rowId").val();
-						var epuProvince=$("#saveDiv #epuProvince").val();
-						var epuCity=$("#saveDiv #epuCity").val();
-						var epuDistrict=$("#saveDiv #epuDistrict").val();					
-						var epuType=$("#saveDiv #epuType").val();					
-						var epuName=$("#saveDiv #epuName").val();
-						var epuLocal=$("#saveDiv #epuLocal").val();
-						var epuParentId=$("#saveDiv #epuParentId").val();
-						var districtId=$("#saveDiv #districtId").val();
-						var addressId=$("#saveDiv #addressId").val();
-						var channelId=$("#saveDiv #channelId").val();
-						var lineId=$("#saveDiv #lineId").val();
-						var url="<%=basePath%>/html/mapMark.html";
-						url+="?rowId=" + rowId+"&cityName="+encodeURI(cityName)+"&epuProvince="+epuProvince+"&epuCity="+epuCity;
-						url+="&epuDistrict=" + epuDistrict+"&epuType="+epuType+"&epuName="+encodeURI(epuName)+"&epuLocal="+encodeURI(epuLocal);
-						url+="&epuParentId=" + epuParentId+"&districtId="+districtId+"&addressId="+addressId+"&channelId="+channelId+"&lineId="+encodeURI(lineId);
-					 window.location=url;
-				 }; --%>
 				 
 /* 				 function guid() {
 					    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
@@ -1408,12 +1378,12 @@
 										   epuEdit.addressId=epuInfo.addressId;
 										  epuEdit.channelId=epuInfo.channelId;
 										   epuEdit.lineId=epuInfo.lineId ;
-										
+									  $("#saveDiv #epuType").attr("disabled", "disabled");
 								    $("#saveDiv").show();
+								     //$("#saveDiv #epuType").attr("disabled", "disabled");
 								    epuEdit.initPage();
 				                    epuEdit.registEvent();	
-				                     $("#loadingDiv").hide();
-							
+				                     $("#loadingDiv").hide();							
 							}             
 							});
 							}
@@ -1547,6 +1517,7 @@
             
             <lable>
                 <span>设备类型</span>
+                
                 <select name="epuType" id="epuType" class="text requiredSelect" title="设备类型"></select>
             </lable>
             

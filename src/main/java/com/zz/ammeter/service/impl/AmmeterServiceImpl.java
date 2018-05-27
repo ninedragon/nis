@@ -36,55 +36,6 @@ public class AmmeterServiceImpl extends BaseMybatisDao<TAmmeterInfoMapper> imple
 	@Autowired
 	TAmmeterInfoMapper ammeterInfoMapper;
 	
-/*	
-	
-	
-	public Map<String, Object> getEpuCodeByCode(String code) {
-
-		TSyCodeDefimeBean epuTypeBean = codeDefimeMapper.getEpuCodeByCode(code);
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("epuTypeBean", epuTypeBean);
-		return map;
-	}
-
-	public Map<String, Object> getParentEpu(String epuType) {
-
-		List<TEpuInfo> epuParentList = epuInfoMapper.selectByEpuType(epuType);
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("epuParentList", epuParentList);
-		return map;
-	}
-	
-	public Map<String, Object> selectDistrictId() {
-
-		List<TEpuInfo>  epuInfoList = epuInfoMapper.selectDistrictId("");
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("epuInfoList", epuInfoList);
-		return map;
-	}
-	public Map<String, Object> selectDIstinctByChannelId() {
-
-		List<TEpuInfo>  epuInfoList = epuInfoMapper.selectDIstinctByChannelId("");
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("epuInfoList", epuInfoList);
-		return map;
-	}
-	
-	
-	public Map<String, Object> selectAddressIdByDistrictId(String districtId) {
-
-		List<TEpuInfo>  epuInfoList = epuInfoMapper.selectAddressIdByDistrictId(districtId);
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("epuInfoList", epuInfoList);
-		return map;
-	}
-	
-
-	
-
-	
-
-	 */
 	public Map<String, Object> selectEpuNameByAm(String epuDistrict) {
 
 		List<TAmmeterInfo> epuParentList = ammeterInfoMapper.selectEpuNameByAm(epuDistrict);
