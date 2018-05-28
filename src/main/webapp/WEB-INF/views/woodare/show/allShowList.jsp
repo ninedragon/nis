@@ -237,7 +237,7 @@
             <ul class="tab-nav">
                 <li  id="tab1"  onclick="tabClick(1)" style="background-color: orange" view="show" >地图总览</li>                
                 <li  id="tab2" onclick="tabClick(2)" view="none"><div id='xbName'>箱变名称</div></li>
-                <li  id="tab3" onclick="tabClick(3)" view="none"><div id='tableBoxName'>表箱单线图</div></li>
+<!--                 <li  id="tab3" onclick="tabClick(3)" view="none"><div id='tableBoxName'>表箱单线图</div></li> -->
             </ul>
             <div class="box" id="tabShow">         
 	            <div class="tab_css" id="tab1_content" style="display: block">  
@@ -246,9 +246,9 @@
 	            <div class="tab_css" id="tab2_content"  style="display: none;">  
 	                 <iframe id="tab2Iframe" src="<%=basePath%>/html/topologyHtml.html" width="4000" height="4000" frameborder="0" scrolling="no"></iframe>
 	            </div>  
-	            <div class="tab_css" id="tab3_content" style="display: none;">  
-	                <iframe id="tab3Iframe" src="<%=basePath%>/html/ammeter.html" width="4000" height="4000" frameborder="0" scrolling="no"></iframe>
-	            </div>                    
+<!-- 	            <div class="tab_css" id="tab3_content" style="display: none;">   -->
+<%-- 	                <iframe id="tab3Iframe" src="<%=basePath%>/html/ammeter.html" width="4000" height="4000" frameborder="0" scrolling="no"></iframe> --%>
+<!-- 	            </div>                     -->
             </div>
         </div>
         <!--动态数据结束/-->
@@ -257,24 +257,22 @@
 </div>
 <!--主体结束/-->
 </body>
-</html>
 <!--弹层开始-->
-<div class="wapp-layer" id="message">
+<div class="wapp-layer"  id="messageAmmeter" >
 	<div class="box tips">
-    	<h4>提示信息<span class="close-js" onclick="$('#message').hide();">关闭</span></h4>
-    		<form id="boxRoleForm">
+    	<h4><label id='tableBoxName'></label><span class="close-js" onclick="$('#messageAmmeter').hide();">关闭</span></h4>
         <div class="edit">
             <p><sapn id="statusSpan"></sapn></p>
-
+			<iframe id="tab3Iframe" src="<%=basePath%>/html/ammeter.html" width="4000" height="4000" frameborder="0" scrolling="no"></iframe>
             <div class="but-nav">
                 <span class="but" onclick="updatestatus();">确&nbsp;&nbsp;定</span>
-                <span class="but miss close-js" onclick="$('#message').hide();">取&nbsp;&nbsp;消</span>
+                <span class="but miss close-js" onclick="$('#messageAmmeter').hide();">取&nbsp;&nbsp;消</span>
             </div>
         </div>
-        </form>
     </div>
 </div>
 <!--弹层结束/-->
+</html>
 
 <!-- 	<div class="actions"> -->
 <!-- 		<label style="color: RED;">红色图标表示汇总负荷超过线柜负荷15%</label><br/> -->
