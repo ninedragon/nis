@@ -285,6 +285,7 @@ function showTop(rowId){
 		 		    	    	    				              var tableBoxId = parent.$("#tableBoxId").val();//获取箱变根ID
 		 		    	    	    				              //只有电表TAB可以执行此动作
 			    	    	    				            	  iframeID.contentWindow.showTop(rowId,tableBoxId);
+			    	    	    				            	  parent.$("#messageAmmeter").show();
 		 		    	    	    						});
 		 		    	    	    						//表箱分割备注
 		 		    	    		    		        	splitRemarks(layerSnap,"tableBoxID","表箱",45,(ammeterY + 40),"fText",20);
