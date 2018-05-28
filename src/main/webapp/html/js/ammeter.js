@@ -262,6 +262,16 @@ function showTop(rowId,tableBoxId){
 	    		        			splitRemarks(layerSnap,"idTxt" + x_rowId,x_name,ammeterTxtX,ammeterTxtY,"fText",12);
 	    		        			//电表分割备注
 	 		    		        	splitRemarks(layerSnap,"ammeterTxtID","电表",45,(ammeterY + 40),"fText",20);
+	 		    		        	 createLineEl(layerSnap, {
+	 	    		        			id :"idLine" + x_rowId,
+	 	    		        			dash:"true"
+	 	    		        		}, {
+	 	    		        			x: 4000,//下宽度
+	 	    		        			y: ammeterY + 200,//下高
+	 	    		        			x2: 0,//上宽度
+	 	    		        			y2: ammeterY + 200,//上高
+	 	    		        			scale: 1
+	 	    		        		});
 	 		    		        	 //引入电表与分支箱线
 	    		        			 createLineEl(layerSnap, {
 			    		        			id :"idLine" + x_rowId,
@@ -309,16 +319,27 @@ function showTop(rowId,tableBoxId){
     			 		//没有数据的电表 -end
 	    				cabinetsX = branchBoxX;
 	    		         cabinetsY = branchBoxY - cabinetsDifference ;
+	    		         if(tempBranchBoxX == 0){return false;}
 	    		       //表箱
 	    		         setCreateUseEl(layerSnap,"id" + i_epuParentId, "TableBox",tempBranchBoxX -35,cabinetsY);
 	    		         //文本内容
 	    		         var tableBoTxtX = tempBranchBoxX + 10;
 	    		         var tableBoTxtY = cabinetsY + 35;
-	    		         splitRemarks(layerSnap,"idTxt" + x_rowId,x_json["epuName"],tableBoTxtX,tableBoTxtY,"fText",12);
+	    		         splitRemarks(layerSnap,"idTxt" + i_epuParentId,i_json["epuName"],tableBoTxtX,tableBoTxtY,"fText",12);
 	    		         //table
 	    		         setCabinetsXTable(layerSnap,i_epuParentId,tempBranchBoxX+30,cabinetsY + 150);
 	    		        	//出线柜分割备注
 	    		        	splitRemarks(layerSnap,"cabinetsID","表箱",45,(cabinetsY+40),"fText",20);
+	    		        	 createLineEl(layerSnap, {
+	    		        			id :"idLine" + i_epuParentId,
+	    		        			dash:"true"
+	    		        		}, {
+	    		        			x: 4000,//下宽度
+	    		        			y: cabinetsY + 200,//下高
+	    		        			x2: 0,//上宽度
+	    		        			y2: cabinetsY + 200,//上高
+	    		        			scale: 1
+	    		        		});
 //	    		        		出线柜往下画线
 	    		        	var lowerCabinetsLineX = tempBranchBoxX;//下宽度（出线柜下处宽度）
 	    		        	var lowerCabinetsLineY = cabinetsY + 100;//下高（分线柜下处高度）
