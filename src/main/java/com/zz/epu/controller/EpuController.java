@@ -254,10 +254,13 @@ public class EpuController extends BaseController {
 	
 	@RequestMapping("delEpuInfo")
 	@ResponseBody
-	public Map<String,Object> delEpuInfo(String rowId, HttpServletRequest request){
+	public Map<String,Object> delEpuInfo(String rowId, String  epuType,HttpServletRequest request){
 		 Map<String, Object> retureMap=new HashMap<String,Object>();
 		try {
-			retureMap=epuService.delEpuInfo(rowId);
+			TEpuInfo tEpuInfo=new TEpuInfo();
+			tEpuInfo.setRowId(rowId);
+			tEpuInfo.setEpuType(epuType);
+			retureMap=epuService.delEpuInfo(tEpuInfo);
 			
 		} catch (Exception e) {
 			retureMap.put("status", 0);

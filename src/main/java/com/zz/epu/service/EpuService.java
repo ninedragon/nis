@@ -74,7 +74,7 @@ public interface EpuService {
 	 public Map<String, Object> updateEpuInfo(TEpuInfo tEpuInfo,String flag);
 	 
 		// 获取所有查询条件
-      public Map<String, Object> delEpuInfo(String rowId);
+      public Map<String, Object> delEpuInfo(TEpuInfo tEpuInfo);
       
       public List<TEpuInfo> selectEpuInfoByRowId(String rowId);
       public   List<TEpuInfo> selectEpuInfoByMark(TEpuInfo e);

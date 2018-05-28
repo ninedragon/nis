@@ -156,14 +156,14 @@
 			  so.editEpuInfo=function editEpuInfo(rowId) {				 
 				 window.location="<%=basePath%>/epu/editInit.shtml?rowId=" + rowId;
 			 };
-			 so.delEpuInfo=function delEpuInfo(rowId) {				
+			 so.delEpuInfo=function delEpuInfo(rowId,epuType) {				
 				if(confirm('确实要删除该内容吗?')){
 	   				  $("#loadingDiv").show();
 	   				 $.ajax({
 	   		  			    url:"<%=basePath%>/epu/delEpuInfo.shtml",
 	   		  			    type:'POST',
 	   		  			    dataType:'json',
-	   		  			    data:{rowId:rowId},
+	   		  			    data:{rowId:rowId,epuType:epuType},
 	   		  			    success:function(data){
 	   		  			    	if(data.error=="删除失败!"){
 	   		  			    	layer.msg(data.error,function(){});
@@ -240,7 +240,7 @@
 			                             }
 			                          
 			                            tbody += '<td align="center"><div></div></td>'; 
-			                            tbody += '<td><div><a href="javascript:epuEdit.saveShow(\''+epuList[i].rowId+'\');">编辑</a>&nbsp;&nbsp;<a href="javascript:so.delEpuInfo(\''+epuList[i].rowId+'\');">删除</a>';
+			                            tbody += '<td><div><a href="javascript:epuEdit.saveShow(\''+epuList[i].rowId+'\');">编辑</a>&nbsp;&nbsp;<a href="javascript:so.delEpuInfo(\''+epuList[i].rowId+'\',\''+epuList[i].epuType+'\');">删除</a>';
 			                           if(epuList[i].epuType=='M0001' && epuList[i].epuXscale!=''  && epuList[i].epuXscale!=null)
 			                           {
 			                              tbody += '&nbsp;&nbsp; <a href="javascript:epuEdit.epuEditMark(\''+epuList[i].rowId+'\');">位置</a></div></td>';
@@ -1380,7 +1380,6 @@
 										   epuEdit.lineId=epuInfo.lineId ;
 									  $("#saveDiv #epuType").attr("disabled", "disabled");
 								    $("#saveDiv").show();
-								     //$("#saveDiv #epuType").attr("disabled", "disabled");
 								    epuEdit.initPage();
 				                    epuEdit.registEvent();	
 				                     $("#loadingDiv").hide();							

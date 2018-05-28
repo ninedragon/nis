@@ -157,9 +157,9 @@ public class EpuServiceImpl extends BaseMybatisDao<TEpuInfoMapper> implements Ep
 		return map;
 	}
 	
-	public Map<String, Object> delEpuInfo(String rowId){
+	public Map<String, Object> delEpuInfo(TEpuInfo tEpuInfo){
 
-		int  i = epuInfoMapper.deleteByPrimaryKey(rowId);
+		int  i = epuInfoMapper.deleteByPrimaryKey(tEpuInfo);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("stauts", i);
 		return map;

@@ -13,7 +13,7 @@ public interface TEpuInfoMapper {
      *
      * @mbggenerated
      */
-    int deleteByPrimaryKey(String rowId);
+    int deleteByPrimaryKey(TEpuInfo record);
 
 
     /**
