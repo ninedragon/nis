@@ -253,13 +253,18 @@ function showTop(rowId,tableBoxId){
 	        			 			//展示电表
 	        			 			ammeterX = ammeterX + gird;
 	 	    						setCreateUseEl(layerSnap,"id" + x_rowId, "TableBox",ammeterX,ammeterY);
+	 	    						splitRemarks(layerSnap,"idTitle" + x_rowId,"电表",ammeterX + 50,ammeterY + 40,"fText",16);//电表标题
 	 	    						 //table
 	 	    						setammeterTable(layerSnap,x_rowId,ammeterX-65,ammeterY + 250);
 	 	    						//电表文本引入
 	    		        			 var ammeterTxtX = ammeterX + 70;
 	    		        			 var ammeterTxtY = ammeterY + 35;
 	    		        			 //x_json["epuName"]
-	    		        			splitRemarks(layerSnap,"idTxt" + x_rowId,x_name,ammeterTxtX,ammeterTxtY,"fText",12);
+	    		        			 if(x % 2 == 0){
+	    		        				 splitRemarks(layerSnap,"idTxt" + x_rowId,x_name,ammeterTxtX,ammeterTxtY - 50,"fText",12);//电表文本
+	    		        			 }else{
+	    		        				 splitRemarks(layerSnap,"idTxt" + x_rowId,x_name,ammeterTxtX,ammeterTxtY+50,"fText",12);//电表文本
+	    		        			 }
 	    		        			//电表分割备注
 	 		    		        	splitRemarks(layerSnap,"ammeterTxtID","电表",45,(ammeterY + 40),"fText",20);
 	 		    		        	 createLineEl(layerSnap, {
@@ -325,7 +330,8 @@ function showTop(rowId,tableBoxId){
 	    		         //文本内容
 	    		         var tableBoTxtX = tempBranchBoxX + 10;
 	    		         var tableBoTxtY = cabinetsY + 35;
-	    		         splitRemarks(layerSnap,"idTxt" + i_epuParentId,i_json["epuName"],tableBoTxtX,tableBoTxtY,"fText",12);
+	    		         splitRemarks(layerSnap,"idTitle" + i_epuParentId,"表箱",tableBoTxtX+5,tableBoTxtY+5,"fText",16);//标题
+	    		         splitRemarks(layerSnap,"idTxt" + i_epuParentId,i_json["epuName"],tableBoTxtX+5,tableBoTxtY- 40,"fText",12);//表箱文本内容
 	    		         //table
 	    		         setCabinetsXTable(layerSnap,i_epuParentId,tempBranchBoxX+30,cabinetsY + 150);
 	    		        	//出线柜分割备注

@@ -269,10 +269,16 @@ function showTop(rowId){
 	 		    		        			 			ammeterX = ammeterX + gird;
 	 		    		 	    						setCreateUseEl(layerSnap,"id" + x_rowId, "TableBox",ammeterX,ammeterY);
 	 		    		 	    						 var txtKey = (z_epuParentId +"_" + x_rowId);
-		 		    		    		        		 splitRemarks(layerSnap,"idTitle" + txtKey,"表箱",ammeterX + 50,ammeterY + 37,"fText",16);
+		 		    		    		        		 splitRemarks(layerSnap,"idTitle" + txtKey,"表箱",ammeterX + 50,ammeterY + 37,"fText",16);//表箱标题
+		 		    		    		        		 if(x % 2 == 0){
+		 		    		    		        			 splitRemarks(layerSnap,"idTxt" + txtKey,x_json["epuName"],ammeterX + 80 ,ammeterY + 70,"fText",12);
+		 		    		    		        		 }else{
+		 		    		    		        			 splitRemarks(layerSnap,"idTxt" + txtKey,x_json["epuName"],ammeterX + 80,ammeterY ,"fText",12);
+		 		    		    		        		 }
 		 		    		    		        		//给表箱绑定单击事件
 		 		    		    		        		$("#idTitle" + txtKey).attr("epuName",x_json["epuName"]);
-		 		    		    		        			$("#idTitle" + txtKey).bind("click",function(){
+		 		    		    		        		$("#idTxt" + txtKey).attr("epuName",x_json["epuName"]);
+		 		    		    		        			$("#idTitle" + txtKey+ ",#idTxt" + txtKey).bind("click",function(){
 		 		    	    	    							  var txtID = $(this).attr("id");//展示的文字ID
 		 		    	    	    							  txtID = txtID.replace("idTxt","");
 		 		    	    	    							  txtID = txtID.split("_")[1];//获取表箱ID
@@ -592,13 +598,13 @@ function showTop(rowId){
 		    		        			scale: 1
 		    		        		});
 	    		    		       //箱变与出线柜之间图形
-	    		    		        setCreateUseEl(layerSnap,"rootTempId" + i_epuParentId, "LoadBreakSwitch",rootX-32,rootY-42);
+//	    		    		        setCreateUseEl(layerSnap,"rootTempId" + i_epuParentId, "LoadBreakSwitch",rootX-32,rootY-42);
 		    		    		    createLineEl(layerSnap, {
 		    		        			id :"lowerTempLineID" + i_epuParentId,
 		    		        			type: "TableBox"
 		    		        		}, {
 		    		        			x: rootX,//下宽度
-		    		        			y: rootY - 20,//下高
+		    		        			y: rootY ,//下高
 		    		        			x2: rootX,//上宽度
 		    		        			y2: rootY- 100,//上高
 		    		        			scale: 1

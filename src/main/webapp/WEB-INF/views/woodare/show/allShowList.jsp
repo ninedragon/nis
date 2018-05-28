@@ -259,16 +259,15 @@
 </body>
 <!--弹层开始-->
 <div class="wapp-layer"  id="messageAmmeter" >
-	<div class="box tips">
+	<div class="box tips mrr">
     	<h4><label id='tableBoxName'></label><span class="close-js" onclick="$('#messageAmmeter').hide();">关闭</span></h4>
-        <div class="edit">
-            <p><sapn id="statusSpan"></sapn></p>
+        <div class="edit" style="position:absolute;top:40px;bottom:70px;height:auto;overflow:auto;margin:0px;">
 			<iframe id="tab3Iframe" src="<%=basePath%>/html/ammeter.html" width="4000" height="4000" frameborder="0" scrolling="no"></iframe>
-            <div class="but-nav">
-                <span class="but" onclick="updatestatus();">确&nbsp;&nbsp;定</span>
-                <span class="but miss close-js" onclick="$('#messageAmmeter').hide();">取&nbsp;&nbsp;消</span>
-            </div>
         </div>
+         <div class="but-nav" style="width: 100%;float: left;text-align:center;position: absolute;left: 0px;bottom: 0px;height: 50px;">
+<!--                 <span class="but" onclick="updatestatus();">确&nbsp;&nbsp;定</span> -->
+                <span class="but miss close-js" onclick="$('#messageAmmeter').hide();" style="height: 32px;display:inline-block; background-color: #CCC;color: #333;line-height: 32px;padding: 0px 20px;-webkit-border-radius:5px;">取&nbsp;&nbsp;消</span>
+         </div>
     </div>
 </div>
 <!--弹层结束/-->
