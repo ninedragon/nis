@@ -21,7 +21,12 @@ function createTextEl(layer, data, position) {
 	var size = position.size || 14;
 	var txtCls = position.txt || "fText";
 	var anchor = position.anchor || "end";
-	var txt = g.append('text').attr("text-anchor", anchor).attr("font-size", size).attr("stroke", "rgb(255,0,0)").attr("fill","rgb(255,0,0)").attr("x", x).attr("y", y).text(data.title).attr("class", txtCls).attr("transform","scale(" + position.scale + ") translate(0 0) rotate(" + position.rotate + " " + x + " " + y + ")");
+	var tspan = data.tspan || false;
+	if(tspan){
+		var txt = g.append('text').attr("text-anchor", anchor).attr("font-size", size).attr("stroke", "rgb(255,0,0)").attr("fill","rgb(255,0,0)").html(data.title).attr("class", txtCls).attr("transform","scale(" + position.scale + ") translate(0 0) rotate(" + position.rotate + " " + x + " " + y + ")");
+	}else{
+		var txt = g.append('text').attr("text-anchor", anchor).attr("font-size", size).attr("stroke", "rgb(255,0,0)").attr("fill","rgb(255,0,0)").attr("x", x).attr("y", y).text(data.title).attr("class", txtCls).attr("transform","scale(" + position.scale + ") translate(0 0) rotate(" + position.rotate + " " + x + " " + y + ")");
+	}
 }
 function createUseEl(layer, data, position) {
 	position.rotate= position.rotate||0;
@@ -254,17 +259,19 @@ function showTop(rowId,tableBoxId){
 	        			 			ammeterX = ammeterX + gird;
 	 	    						setCreateUseEl(layerSnap,"id" + x_rowId, "TableBox",ammeterX,ammeterY);
 	 	    						splitRemarks(layerSnap,"idTitle" + x_rowId,"电表",ammeterX + 50,ammeterY + 40,"fText",16);//电表标题
-	 	    						 //table
-	 	    						setammeterTable(layerSnap,x_rowId,ammeterX-65,ammeterY + 250);
 	 	    						//电表文本引入
 	    		        			 var ammeterTxtX = ammeterX + 70;
 	    		        			 var ammeterTxtY = ammeterY + 35;
-	    		        			 //x_json["epuName"]
-	    		        			 if(x % 2 == 0){
-	    		        				 splitRemarks(layerSnap,"idTxt" + x_rowId,x_name,ammeterTxtX,ammeterTxtY - 50,"fText",12);//电表文本
-	    		        			 }else{
-	    		        				 splitRemarks(layerSnap,"idTxt" + x_rowId,x_name,ammeterTxtX,ammeterTxtY+50,"fText",12);//电表文本
-	    		        			 }
+	    		        			 var textNewlineArr = textNewline(x_name,6,ammeterTxtX,ammeterTxtY + 20,20);
+	    		    		         splitRemarks(layerSnap,"idTxt" + x_rowId,textNewlineArr[0],0 ,0,"fText",12,true);//电表文本文本内容
+	    		    		         //table
+	    		    		         var table_ammeterY = textNewlineArr[1] + 180;
+	    		    		         setammeterTable(layerSnap,x_rowId,ammeterX-65,table_ammeterY);
+//	    		        			 if(x % 2 == 0){
+//	    		        				 splitRemarks(layerSnap,"idTxt" + x_rowId,x_name,ammeterTxtX,ammeterTxtY - 50,"fText",12);//电表文本
+//	    		        			 }else{
+//	    		        				 splitRemarks(layerSnap,"idTxt" + x_rowId,x_name,ammeterTxtX,ammeterTxtY+50,"fText",12);//电表文本
+//	    		        			 }
 	    		        			//电表分割备注
 	 		    		        	splitRemarks(layerSnap,"ammeterTxtID","电表",45,(ammeterY + 40),"fText",20);
 	 		    		        	 createLineEl(layerSnap, {
@@ -272,9 +279,9 @@ function showTop(rowId,tableBoxId){
 	 	    		        			dash:"true"
 	 	    		        		}, {
 	 	    		        			x: 4000,//下宽度
-	 	    		        			y: ammeterY + 200,//下高
+	 	    		        			y: table_ammeterY + 50,//下高
 	 	    		        			x2: 0,//上宽度
-	 	    		        			y2: ammeterY + 200,//上高
+	 	    		        			y2: table_ammeterY + 50,//上高
 	 	    		        			scale: 1
 	 	    		        		});
 	 		    		        	 //引入电表与分支箱线
@@ -331,7 +338,9 @@ function showTop(rowId,tableBoxId){
 	    		         var tableBoTxtX = tempBranchBoxX + 10;
 	    		         var tableBoTxtY = cabinetsY + 35;
 	    		         splitRemarks(layerSnap,"idTitle" + i_epuParentId,"表箱",tableBoTxtX+5,tableBoTxtY+5,"fText",16);//标题
-	    		         splitRemarks(layerSnap,"idTxt" + i_epuParentId,i_json["epuName"],tableBoTxtX+5,tableBoTxtY- 40,"fText",12);//表箱文本内容
+	    		         var i_epuName = i_json["epuName"]||"";
+	    		         var textNewlineArr = textNewline(i_epuName,6,tableBoTxtX+20,tableBoTxtY + 20,20);
+	    		         splitRemarks(layerSnap,"idTxt" + i_epuParentId,textNewlineArr[0],0 ,0,"fText",12,true);//表箱文本内容
 	    		         //table
 	    		         setCabinetsXTable(layerSnap,i_epuParentId,tempBranchBoxX+30,cabinetsY + 150);
 	    		        	//出线柜分割备注
@@ -341,9 +350,9 @@ function showTop(rowId,tableBoxId){
 	    		        			dash:"true"
 	    		        		}, {
 	    		        			x: 4000,//下宽度
-	    		        			y: cabinetsY + 200,//下高
+	    		        			y: textNewlineArr[1] + 50,//下高
 	    		        			x2: 0,//上宽度
-	    		        			y2: cabinetsY + 200,//上高
+	    		        			y2: textNewlineArr[1] + 50,//上高
 	    		        			scale: 1
 	    		        		});
 //	    		        		出线柜往下画线
@@ -448,10 +457,11 @@ function setCreateUseEl(layerSnap,id,type,x,y){
 /**
  * 分割备注
  * **/
-function splitRemarks(layerSnap,id,title,x,y,txt,size){
+function splitRemarks(layerSnap,id,title,x,y,txt,size,tspan){
 	createTextEl(layerSnap, {
 		id:id,
-		title : title
+		title : title,
+		tspan : tspan
 	}, {
 		x: x,
 		y: y,
@@ -621,5 +631,31 @@ function setammeterTable(layerSnap,id,cabinetsX,cabinetsY){
 	var idTableP1_Y = cabinetsY - pTemp_Y;
 	setCreateUseEl(layerSnap,"idTableU" + id, "tableList",idTableP1_X,idTableP1_Y);//i框
 	splitRemarks(layerSnap,"idTableUtxt" + id,"5.2",idTableP1_X + 60,idTableP1_Y+22,"fText",14);
+}
+
+/**
+ * 文本换行符转换
+ * strParam:传输的文本
+ * start:以多少字符为一组范围
+ * x:横向坐标
+ * y:纵向坐标
+ * number:y轴，累加数
+ * ***/
+function textNewline(strParam,start,x,y,number)
+{	var str='';
+	for(var i = 0;i < strParam.length;i ++){
+		var chaTxt = strParam[i];
+		 str += chaTxt;
+		 if(!((i+1) % start)){
+			str += 'woodare';
+		 }
+	}
+	var arrs = str.split("woodare");
+	var newStr = "";
+	for(var i = 0;i< arrs.length;i++){
+		y += number;
+		newStr += "<tspan x=\"" + x + "\" y=\"" + y + "\">" + arrs[i] + "</tspan>";
+	}
+	return [newStr,y];
 }
 

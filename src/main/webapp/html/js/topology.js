@@ -21,7 +21,13 @@ function createTextEl(layer, data, position) {
 	var size = position.size || 14;
 	var txtCls = position.txt || "fText";
 	var anchor = position.anchor || "end";
-	var txt = g.append('text').attr("text-anchor", anchor).attr("font-size", size).attr("stroke", "rgb(255,0,0)").attr("fill","rgb(255,0,0)").attr("x", x).attr("y", y).text(data.title).attr("class", txtCls).attr("transform","scale(" + position.scale + ") translate(0 0) rotate(" + position.rotate + " " + x + " " + y + ")");
+	var tspan = data.tspan || false;
+	if(tspan){
+		var txt = g.append('text').attr("text-anchor", anchor).attr("font-size", size).attr("stroke", "rgb(255,0,0)").attr("fill","rgb(255,0,0)").html(data.title).attr("class", txtCls).attr("transform","scale(" + position.scale + ") translate(0 0) rotate(" + position.rotate + " " + x + " " + y + ")");
+	}else{
+		var txt = g.append('text').attr("text-anchor", anchor).attr("font-size", size).attr("stroke", "rgb(255,0,0)").attr("fill","rgb(255,0,0)").attr("x", x).attr("y", y).text(data.title).attr("class", txtCls).attr("transform","scale(" + position.scale + ") translate(0 0) rotate(" + position.rotate + " " + x + " " + y + ")");
+	}
+	
 }
 function createUseEl(layer, data, position) {
 	position.rotate= position.rotate||0;
@@ -267,24 +273,21 @@ function showTop(rowId){
 	 		    	    	    						var x_rowId = x_json["rowId"];
 	 		    	    	    						//展示表箱
 	 		    		        			 			ammeterX = ammeterX + gird;
-	 		    		 	    						setCreateUseEl(layerSnap,"id" + x_rowId, "TableBox",ammeterX,ammeterY);
-	 		    		 	    						 var txtKey = (z_epuParentId +"_" + x_rowId);
+	 		    		        			 			var txtKey = (z_epuParentId +"_" + x_rowId);
+	 		    		 	    						setCreateUseEl(layerSnap,"ammeterId" + txtKey, "TableBox",ammeterX,ammeterY);
 		 		    		    		        		 splitRemarks(layerSnap,"idTitle" + txtKey,"表箱",ammeterX + 50,ammeterY + 37,"fText",16);//表箱标题
-		 		    		    		        		 if(x % 2 == 0){
-		 		    		    		        			 splitRemarks(layerSnap,"idTxt" + txtKey,x_json["epuName"],ammeterX + 80 ,ammeterY + 70,"fText",12);
-		 		    		    		        		 }else{
-		 		    		    		        			 splitRemarks(layerSnap,"idTxt" + txtKey,x_json["epuName"],ammeterX + 80,ammeterY ,"fText",12);
-		 		    		    		        		 }
+		 		    		    		        		 var x_epuName = x_json["epuName"] ||"";
+		 		    		    		        		 var textNewlineArr =  textNewline(x_epuName,6,ammeterX + 60,ammeterY + 55,20);
+		 		    		    		        		 splitRemarks(layerSnap,"idTxt" + txtKey,textNewlineArr[0],0 ,0,"fText",12,true);
 		 		    		    		        		//给表箱绑定单击事件
-		 		    		    		        		$("#idTitle" + txtKey).attr("epuName",x_json["epuName"]);
-		 		    		    		        		$("#idTxt" + txtKey).attr("epuName",x_json["epuName"]);
-		 		    		    		        			$("#idTitle" + txtKey+ ",#idTxt" + txtKey).bind("click",function(){
+		 		    		    		        		$("#idTitle" + txtKey + ",#idTxt" + txtKey+",#ammeterId" + txtKey).attr("epuName",x_json["epuName"]);
+		 		    		    		        		$("#idTitle" + txtKey + ",#idTxt" + txtKey+",#ammeterId" + txtKey).bind("click",function(){
 		 		    	    	    							  var txtID = $(this).attr("id");//展示的文字ID
 		 		    	    	    							  txtID = txtID.replace("idTxt","");
 		 		    	    	    							  txtID = txtID.split("_")[1];//获取表箱ID
 		 		    	    	    							  parent.$("#tableBoxId").val(txtID.replace("idTxt",""));//当前表箱ID
 		 		    	    	    							  var textValue = $(this).attr("epuName");//展示的文字内容
-		 		    	    	    							  parent.$("#tableBoxName").html(textValue + "单线图");//TAB
+		 		    	    	    							  parent.$("#tableBoxName").text(textValue + "单线图");//TAB
 		 		    	    	    							  
 		 		    	    	    							  var rowId = parent.$("#rowId").val();//获取箱变根ID
 		 		    	    	    				              var iframeID  = parent.$("#tab3Iframe")[0];//获取iframe的ID
@@ -459,7 +462,7 @@ function showTop(rowId){
 	 	    		    		        cabinetsY = cabinetsY_branchBoxY - cabinetsDifference ;
 //	 	    		    		        alert(cabinetsList.length+"=="+tempBranchBoxX+"==="+cabinetsY)
 	 	    		    		       //出线柜
-	 	    		    		        setCreateUseEl(layerSnap,"id" + j_epuParentId, "LoadBreakSwitchRed",cabinetsX,cabinetsY);
+	 	    		    		        setCreateUseEl(layerSnap,"cabinetsId" + j_epuParentId, "LoadBreakSwitchRed",cabinetsX,cabinetsY);
 	 	    		    		       //table
 	 	    		    		       jCountTempX = jCountTempX - 30;
 	 	    		    		      jCountTempY = jCountTempY - 10;
@@ -678,10 +681,11 @@ function setCreateUseEl(layerSnap,id,type,x,y){
 /**
  * 分割备注
  * **/
-function splitRemarks(layerSnap,id,title,x,y,txt,size){
+function splitRemarks(layerSnap,id,title,x,y,txt,size,tspan){
 	createTextEl(layerSnap, {
 		id:id,
-		title : title
+		title : title,
+		tspan : tspan
 	}, {
 		x: x,
 		y: y,
@@ -816,3 +820,28 @@ function setCabinetsXTable(layerSnap,id,cabinetsX,cabinetsY){
 	splitRemarks(layerSnap,"idTableUtxt" + id,"111",idTableCP_X + 55,idTableCP_Y+22,"kV110",14);//P文字
 }
 
+/**
+ * 文本换行符转换
+ * strParam:传输的文本
+ * start:以多少字符为一组范围
+ * x:横向坐标
+ * y:纵向坐标
+ * number:y轴，累加数
+ * ***/
+function textNewline(strParam,start,x,y,number)
+{	var str='';
+	for(var i = 0;i < strParam.length;i ++){
+		var chaTxt = strParam[i];
+		 str += chaTxt;
+		 if(!((i+1) % start)){
+			str += 'woodare';
+		 }
+	}
+	var arrs = str.split("woodare");
+	var newStr = "";
+	for(var i = 0;i< arrs.length;i++){
+		y += number;
+		newStr += "<tspan x=\"" + x + "\" y=\"" + y + "\">" + arrs[i] + "</tspan>";
+	}
+	return [newStr,y];
+}

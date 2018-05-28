@@ -256,7 +256,6 @@
     <!--实时监控结束/-->
 </div>
 <!--主体结束/-->
-</body>
 <!--弹层开始-->
 <div class="wapp-layer"  id="messageAmmeter" >
 	<div class="box tips mrr">
@@ -265,23 +264,12 @@
 			<iframe id="tab3Iframe" src="<%=basePath%>/html/ammeter.html" width="4000" height="4000" frameborder="0" scrolling="no"></iframe>
         </div>
          <div class="but-nav" style="width: 100%;float: left;text-align:center;position: absolute;left: 0px;bottom: 0px;height: 50px;">
-<!--                 <span class="but" onclick="updatestatus();">确&nbsp;&nbsp;定</span> -->
                 <span class="but miss close-js" onclick="$('#messageAmmeter').hide();" style="height: 32px;display:inline-block; background-color: #CCC;color: #333;line-height: 32px;padding: 0px 20px;-webkit-border-radius:5px;">取&nbsp;&nbsp;消</span>
          </div>
     </div>
 </div>
 <!--弹层结束/-->
+</body>
 </html>
-
-<!-- 	<div class="actions"> -->
-<!-- 		<label style="color: RED;">红色图标表示汇总负荷超过线柜负荷15%</label><br/> -->
-<!-- 		<label style="color: blue;">蓝色图标表示汇总低于出线负荷15%</label><br/> -->
-<!-- 		<label >白色图标表示正常情况</label><br/> -->
-<!-- 		<label>&nbsp;</label><br/> -->
-<!-- 		<label style="font-size: 14px;color:#000000;">说明：</label><br/> -->
-<!-- 		<label  style="font-size: 14px;color:#000000;">电压单位V;</label><br/> -->
-<!-- 		<label   style="font-size: 14px;color:#000000;">电流单位A;</label><br/> -->
-<!-- 		<label   style="font-size: 14px;color:#000000;">功率单位KW;</label><br/> -->
-<!-- 	</div> -->
   </body>
 </html>
