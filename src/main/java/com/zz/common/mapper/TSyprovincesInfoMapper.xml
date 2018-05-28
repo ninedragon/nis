@@ -24,7 +24,7 @@
 		<include refid="Base_Column_List" />
 		FROM
 			T_SY_PROVINCES_INFO a
-		INNER JOIN t_epu_info b ON a.PROVINCE_ID = b.epu_province
+		INNER JOIN view_epu_info b ON a.PROVINCE_ID = b.epu_province
 		WHERE
 			1 = 1  and b.DEL_FLAG='0'
 		ORDER BY
