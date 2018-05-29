@@ -98,7 +98,7 @@
 						</a>
 						<ul class="dropdown-menu">
 						
-								<li><a href="${basePath}/epu/showList.shtml">设备信息列表</a></li>
+								<li><a href="${basePath}/epu/showList.shtml">箱变信息列表</a></li>
 								<li><a href="${basePath}/ammeter/showAmList.shtml">电表信息列表</a></li>								
 						</ul>
 					</li>	

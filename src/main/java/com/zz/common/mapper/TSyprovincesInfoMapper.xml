@@ -26,7 +26,7 @@
 			T_SY_PROVINCES_INFO a
 		INNER JOIN view_epu_info b ON a.PROVINCE_ID = b.epu_province
 		WHERE
-			1 = 1  and b.DEL_FLAG='0'
+			1 = 1  and b.DEL_FLAG='0' and  b.epu_type = 'M0001' and b.epu_xscale is not null
 		ORDER BY
 	PROVINCE_NAME_CN
 	</select>

@@ -7,6 +7,14 @@ $(function() {
 				$(this).hide();
 			});
 			
+			//消息下拉
+			$(".wapp-head .info").click(function(){
+				$(this).next().show();
+			});
+			$(".wapp-head .lay").click(function(){
+				$(this).hide();
+			});
+			
 			//菜单选择
 			$(".left-nav li.big-js").click(function(){
 				$(".left-nav li.big-js").removeClass("on");

@@ -50,15 +50,7 @@ public class EpuController extends BaseController {
 	EpuService epuService;
 	@Autowired
 	AmmeterService ammeterService;
-	
-/*	@RequestMapping(value="showList")
-	public ModelAndView showList(ModelMap map,Integer pageNo,String findContent){
-		
-		map.put("findContent", findContent);
-		Pagination<TEpuInfo> page = epuService.findByPage(map,pageNo,1);
-		map.put("page", page);
-		return new ModelAndView("epu/showList");
-	}*/
+
 	/**
 	 * 查询设备列表管理
 	 * @return
@@ -77,14 +69,46 @@ public class EpuController extends BaseController {
 		return mapReturn;
 	}
 	
-	@RequestMapping(value="mapMark")
+/*	@RequestMapping(value="mapMark")
 	public ModelAndView mapMark(ModelMap map){		
 		return new ModelAndView("epu/mapMark");
-	}
-	@RequestMapping(value="showList")
-	public ModelAndView showList(ModelMap map){	
+	}*/
+	@RequestMapping(value="showSubstainList")
+	public ModelAndView showSubstainList(ModelMap map){	
 		
-		ModelAndView modelAndView = new  ModelAndView("woodare/epu/showList");
+		ModelAndView modelAndView = new  ModelAndView("woodare/substain/showList");
+		modelAndView.addObject("leftMenuview", "4");//显示左侧菜单 0 个人中心 1用户中心 2 权限管理 3用电曲线数据 4设备管理 5实时监控
+		UUser token =  userService.selectByPrimaryKey(TokenManager.getToken().getId());
+		modelAndView.addObject("token", token);//左侧上方管理员信息
+		return modelAndView;
+	}
+	
+	@RequestMapping(value="showOutgoingcabinetList")
+	public ModelAndView showOutgoingcabinetList(ModelMap map){	
+		
+		ModelAndView modelAndView = new  ModelAndView("woodare/outgoingcabinet/showList");
+		modelAndView.addObject("leftMenuview", "4");//显示左侧菜单 0 个人中心 1用户中心 2 权限管理 3用电曲线数据 4设备管理 5实时监控
+		UUser token =  userService.selectByPrimaryKey(TokenManager.getToken().getId());
+		modelAndView.addObject("token", token);//左侧上方管理员信息
+		return modelAndView;
+	}
+	
+	
+	@RequestMapping(value="showBranchboxList")
+	public ModelAndView showBranchboxList(ModelMap map){	
+		
+		ModelAndView modelAndView = new  ModelAndView("woodare/branchbox/showList");
+		modelAndView.addObject("leftMenuview", "4");//显示左侧菜单 0 个人中心 1用户中心 2 权限管理 3用电曲线数据 4设备管理 5实时监控
+		UUser token =  userService.selectByPrimaryKey(TokenManager.getToken().getId());
+		modelAndView.addObject("token", token);//左侧上方管理员信息
+		return modelAndView;
+	}
+	
+	
+	@RequestMapping(value="showMeterboxList")
+	public ModelAndView showMeterboxList(ModelMap map){	
+		
+		ModelAndView modelAndView = new  ModelAndView("woodare/meterbox/showList");
 		modelAndView.addObject("leftMenuview", "4");//显示左侧菜单 0 个人中心 1用户中心 2 权限管理 3用电曲线数据 4设备管理 5实时监控
 		UUser token =  userService.selectByPrimaryKey(TokenManager.getToken().getId());
 		modelAndView.addObject("token", token);//左侧上方管理员信息
@@ -101,19 +125,19 @@ public class EpuController extends BaseController {
 		return modelAndView;
 	}
 	
-	@RequestMapping(value="add")
+/*	@RequestMapping(value="add")
 	public ModelAndView addEpu(ModelMap map){
 		ModelAndView modelAndView = new  ModelAndView("epu/add");
 		modelAndView.addObject("leftMenuview", "4");//显示左侧菜单 0 个人中心 1用户中心 2 权限管理 3用电曲线数据 4设备管理 5实时监控
 		return  modelAndView;
-	}
+	}*/
 	
-	@RequestMapping("linkMap")
+/*	@RequestMapping("linkMap")
 	public String linkMap(ModelMap map,HttpServletRequest request,HttpSession session,String rowId) {
 		List <TEpuInfo> epuInfos= epuService.selectEpuInfoByRowId(rowId);
 		map.put("epuInfo", epuInfos.get(0));
 		return "epu/edit";
-	}
+	}*/
 	
 	@RequestMapping("editInit")
 	@ResponseBody

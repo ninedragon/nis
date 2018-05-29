@@ -24,8 +24,11 @@
     </ul>
     <li class="<c:if test="${leftMenuview eq 4 }">  on </c:if> big-js">设备管理</li>	
     <ul class="side-nav" <c:if test="${leftMenuview eq 4 }">  style="display:block" </c:if>>
-    	<li onClick="location.href='<%=basePath%>/epu/showList.shtml'">设备信息列表</li>
-    	<li onClick="location.href='<%=basePath%>/ammeter/showAmList.shtml'">电表信息列表</li>
+    <li onClick="location.href='<%=basePath%>/epu/showSubstainList.shtml'">箱变信息列表</li>
+    <li onClick="location.href='<%=basePath%>/epu/showOutgoingcabinetList.shtml'">出线柜信息列表</li>
+    <li onClick="location.href='<%=basePath%>/epu/showBranchboxList.shtml'">分支箱信息列表</li>
+    <li onClick="location.href='<%=basePath%>/epu/showMeterboxList.shtml'">表箱信息列表</li>
+    <li onClick="location.href='<%=basePath%>/ammeter/showAmList.shtml'">电表信息列表</li>
     </ul>
      <li class="<c:if test="${leftMenuview eq 1 }">  on </c:if>  big-js">用户中心</li>
     <ul class="side-nav" <c:if test="${leftMenuview eq 1 }">  style="display:block" </c:if>>

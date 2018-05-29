@@ -19,13 +19,13 @@
     </style>
     <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=Y076LYaIrrQ7HOjk4Tcn6FDMipRoDtVm"></script>
     <script>
-        function addMarker(id, name, x, y) {
+        function addMarker(id, name,epuLocal, x, y) {
             var p = new BMap.Point(x, y);
             var marker = new BMap.Marker(p);//, px = map.pointToPixel(p);
             M.addOverlay(marker);
             marker.enableDragging();
             // marker.setTitle(id);
-            marker.setTitle(name);
+            // marker.setTitle(name);
 /*             var label = new BMap.Label(name, { offset: new BMap.Size(25, 0) });
             label.setStyles({
                 border: "solid 1px #00f",
@@ -33,7 +33,17 @@
                 padding: "0 5px"
             });
             marker.setLabel(label); */
-
+             var opts = {  
+                         /*   width: $('#describe').width(),     // 信息窗口宽度  
+                           height: $('#describe').height()     // 信息窗口高度   */
+                          // width: 100,     // 信息窗口宽度  
+                           //height: 20     // 信息窗口高度  
+                          
+                        }  
+                        var infoWindow = new BMap.InfoWindow("位置：" + epuLocal + "<br>" + "名称：" + name, opts);  // 创建信息窗口对象  
+                        marker.addEventListener("click", function () {  
+                            M.openInfoWindow(infoWindow, p); //开启信息窗口  
+                        });
             var iconPath=$("#basePath").val()+'/image/point.gif';
             var icon = new BMap.Icon(iconPath,  new BMap.Size(20, 20), {
                 anchor: new BMap.Size(10, 22)
@@ -180,7 +190,7 @@
 						success : function(data) {
 							if(data.epuInfos.length>0)
 							{
-                             addMarker(data.epuInfos[0].rowId,data.epuInfos[0].epuName, data.epuInfos[0].epuXscale,data.epuInfos[0].epuYscale);
+                             addMarker(data.epuInfos[0].rowId,data.epuInfos[0].epuName, data.epuInfos[0].epuLocal, data.epuInfos[0].epuXscale,data.epuInfos[0].epuYscale);
                              map.centerAndZoom(new BMap.Point(data.epuInfos[0].epuXscale, data.epuInfos[0].epuYscale), 13);						   
                              $("#cityName").val(data.epuInfos[0].epuCityName);
                            }						
@@ -207,7 +217,7 @@
 						var len =data.epuInfos.length;
 				         for(var i=0;i<len;i++)
 				         {					   
-                            addMarker(data.epuInfos[i].rowId,data.epuInfos[i].epuName, data.epuInfos[i].epuXscale,data.epuInfos[i].epuYscale);
+                            addMarker(data.epuInfos[i].rowId,data.epuInfos[i].epuName,data.epuInfos[0].epuLocal, data.epuInfos[i].epuXscale,data.epuInfos[i].epuYscale);
                           }						
 						},
 						error: function (data) 

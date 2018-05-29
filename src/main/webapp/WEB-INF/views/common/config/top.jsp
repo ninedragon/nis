@@ -25,7 +25,7 @@
 						个人中心<span class="caret"></span>
 					</a>
 					<ul class="dropdown-menu">
-						<li><a href="<%=basePath%>/user/index.shtml">个人资料</a></li>
+						<li><a href="<%=basePath%>/user/index.shtml">个人资料11</a></li>
 						<li><a href="<%=basePath%>/user/updateSelf.shtml" >资料修改</a></li>
 						<li><a href="<%=basePath%>/user/updatePswd.shtml" >密码修改</a></li>
 						<li><a href="<%=basePath%>/role/mypermission.shtml">我的权限</a></li>

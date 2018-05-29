@@ -12,7 +12,7 @@
 <!-- <html> -->
   <head>
     <base href="<%=basePath%>">
-    <title>V2-设备信息列表</title>
+    <title>V2-分支箱信息列表</title>
    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
 	<meta name="apple-mobile-web-app-capable" content="yes">
@@ -43,19 +43,11 @@
 					return _delete(array);
 				}); */
 				so.initProvince();
-				so.initEpuType();
 				so.registEvent();
-				 initList();
-			/* 	var rowId= "${rowId}";
-				{
-				   if(rowId!=null && rowId!="")
-				     epuEdit.saveShow(rowId);
-				} */
-				
+				 initList();				
 			});
 			
-			so.initProvince= function () {
-			
+			so.initProvince= function () {			
 		            $.ajax({
 		                type: "post",
 		                url:  "<%=basePath%>/epu/getProvinces.shtml",
@@ -68,37 +60,13 @@
 		                },
 		                success: function (a) {
 		                    var length = a.length;
-		                    $('.search #epuProvince').html('<option value="">--请选择--</option>');
-		                    
+		                    $('.search #epuProvince').html('<option value="">--请选择--</option>');		                    
 		                    for (var i = 0; i < length; i++) {
-		                            $('.search #epuProvince').append('<option value="' + a[i].provinceId + '">' + a[i].provinceNameCn + '</option>');
-		                      
-		                        
+		                            $('.search #epuProvince').append('<option value="' + a[i].provinceId + '">' + a[i].provinceNameCn + '</option>');		                      		                        
 		                    }
 		                }
 		            });
-			};
-			 so.initEpuType= function initEpuType() {
-		            $.ajax({
-		                type: "post",
-		                url:  "<%=basePath%>/epu/chanceAllType.shtml",
-		                data: {
-		                },
-		                async:false,
-		                dataType: "json",
-		                cache: false,
-		                error: function (a,b,c) {
-		                },
-		                success: function (a) {
-		                    var length = a.epuTypeBean.length;
-		                    $('.search  #epuType').html('<option value="">--请选择--</option>');
-		                    for (var i = 0; i < length; i++) {
-		                        $('.search  #epuType').append('<option value="' + a.epuTypeBean[i].code + '">' + a.epuTypeBean[i].codeName + '</option>');
-		                    }
-		                }
-		            });
-			};
-			
+			};			
 			  so.registEvent=function registEvent() {
 				  $('.search #epuProvince').change(function () {
 					  var i = $('#epuProvince option:selected').val();			
@@ -149,36 +117,32 @@
 										}
 									}
 								});
-							});
-				 
+							});			 
 			 };
 			 
 			  so.editEpuInfo=function editEpuInfo(rowId) {				 
 				 window.location="<%=basePath%>/epu/editInit.shtml?rowId=" + rowId;
 			 };
-			 so.delEpuInfo=function delEpuInfo(rowId,epuType) {				
+			 so.delEpuInfo=function delEpuInfo(rowId) {				
 				if(confirm('确实要删除该内容吗?')){
 	   				  $("#loadingDiv").show();
 	   				 $.ajax({
 	   		  			    url:"<%=basePath%>/epu/delEpuInfo.shtml",
 	   		  			    type:'POST',
 	   		  			    dataType:'json',
-	   		  			    data:{rowId:rowId,epuType:epuType},
+	   		  			    data:{rowId:rowId,epuType:'M0003'},
 	   		  			    success:function(data){
 	   		  			    	if(data.error=="删除失败!"){
 	   		  			    	layer.msg(data.error,function(){});
 	   		  			    	$("#loadingDiv").hide();
 	   		  			    	}else{ 
 	   		  			     	layer.msg("删除成功!",function(){});
-	   		  					 window.location="<%=basePath%>/epu/showList.shtml";
+	   		  					 window.location="<%=basePath%>/epu/showBranchboxList.shtml";
 	   		  			    	$("#loadingDiv").hide();
 	   		  			    	}
-	   		  			    }
-	   		  			    
+	   		  			    }	   		  			    
 	   		  			  });
 	   			  }
-				 
-
 			 };
 			  function initList(pageNo) {
 			    	 $("#loadingDiv").show(); 
@@ -192,7 +156,7 @@
 			            	epuProvince: $(".search #epuProvince").val(),
 			            	epuCity: $(".search #epuCity").val(),
 			            	epuDistrict: $(".search #epuDistrict").val(),
-			            	epuType: $(".search #epuType").val(),
+			            	epuType: 'M0003',
 			            	epuName: $(".search #epuName").val(),
 			            	districtId: $(".search #districtId").val(),
 			            	pageNo:pageNo,
@@ -206,10 +170,8 @@
 			                    if (epuList!=null && epuList.length>0) {
 			                    	 var tbody = '';
 			                        for (var i = 0; i < epuList.length; i++) {
-			                             var epuXscale=epuList[i].epuXscale==null?"":epuList[i].epuXscale;
-			                             var epuYscale=epuList[i].epuYscale==null?"":epuList[i].epuYscale;
+			                          
 			                             var epuLocal=epuList[i].epuLocal==null?"":epuList[i].epuLocal;
-			                             var markName =(epuList[i].epuXscale==null||epuList[i].epuXscale=='')?"否":"是";
 			                             var  districtId=epuList[i].districtId;
 			                             if(districtId==null || districtId=='' || districtId==undefined || districtId=="null")
 			                             {
@@ -217,7 +179,7 @@
 			                             }
 			                             else
 			                             {
-			                            districtId= epuList[i].districtId+"-" +epuList[i].channelId+"-" +epuList[i].channelId;
+			                            districtId= epuList[i].districtId+"-" +epuList[i].addressId+"-" +epuList[i].channelId;
 			                             }
 			                            tbody += '<tr>';
 			                           //	tbody += '<td align="center"></td>';		             
@@ -227,28 +189,11 @@
 			                            tbody += '<td align="center"><div>' + epuList[i].epuLocal + '</div></td>';
 			                            
 			                            tbody += '<td align="center"><div>' + epuList[i].epuName+ '</div></td>';
-			                            tbody += '<td align="center"><div>' + epuList[i].epuTypeName + '</div></td>';
 			                            tbody += '<td align="center"><div>' +epuList[i].epuParentName + '</div></td>';
-			                            tbody += '<td align="center"><div>'+districtId + '</div></td>';			                          
-			                             if(epuList[i].epuType=='M0001')
-			                             {
-			                               tbody += '<td align="center"><div>'+markName +'</div></td>'; 
-			                             }
-			                             else
-			                             {
-			                               tbody += '<td align="center"><div></div></td>'; 
-			                             }
-			                          
+			                            tbody += '<td align="center"><div>'+districtId + '</div></td>';	
+			                             tbody += '<td align="center"><div>'+epuList[i].lineId + '</div></td>';			                          		                          
 			                            tbody += '<td align="center"><div></div></td>'; 
-			                            tbody += '<td><div><a href="javascript:epuEdit.saveShow(\''+epuList[i].rowId+'\');">编辑</a>&nbsp;&nbsp;<a href="javascript:so.delEpuInfo(\''+epuList[i].rowId+'\',\''+epuList[i].epuType+'\');">删除</a>';
-			                           if(epuList[i].epuType=='M0001' && epuList[i].epuXscale!=''  && epuList[i].epuXscale!=null)
-			                           {
-			                              tbody += '&nbsp;&nbsp; <a href="javascript:epuEdit.epuEditMark(\''+epuList[i].rowId+'\');">位置</a></div></td>';
-			                           }
-			                           else
-			                           {
-			                           	tbody += '<td align="center"></td>';	
-			                           }		                     			                            
+			                            tbody += '<td><div><a href="javascript:epuEdit.saveShow(\''+epuList[i].rowId+'\');">编辑</a>&nbsp;&nbsp;<a href="javascript:so.delEpuInfo(\''+epuList[i].rowId+'\');">删除</a>';			                            			                            
 			                            tbody += '</tr>';			                            
 			                        }
 			                        $("#epuListTable").html(tbody);
@@ -309,30 +254,30 @@
 		                }
 		            });
 			};
-			 epAdd.initEpuType=function initEpuType() {
-		            $.ajax({
-		                type: "post",
-		                url:  "<%=basePath%>/epu/chanceAllType.shtml",
-		                data: {
-		                },
-		                async:false,
-		                dataType: "json",
-		                cache: false,
-		                error: function (a,b,c) {
-		                },
-		                success: function (a) {
-		                    var length = a.epuTypeBean.length;
-		                    $('#saveDiv #epuType').html('<option value="">--请选择--</option>');
-		                    $('#saveDiv #parentEpuType').html('<option value="">--请选择--</option>');
-		                    for (var i = 0; i < length; i++) {
-		                        $('#saveDiv #epuType').append('<option value="' + a.epuTypeBean[i].code + '">' + a.epuTypeBean[i].codeName + '</option>');
-		                        $('#saveDiv #parentEpuType').append('<option value="' + a.epuTypeBean[i].code + '">' + a.epuTypeBean[i].codeName + '</option>');
-		                    }
-		                }
-		            });
-			};
 			
 			 epAdd.registEvent= function registEvent() {
+			 
+                    $.ajax({
+  			                type: "post",
+  			                url:  "<%=basePath%>/epu/selectDistrictId.shtml",
+  			                data: {
+  			                   
+  			                },
+  			                dataType: "json",
+  			                async:false,
+  			                cache: false,
+  			                error: function (a,b,c) {
+  			                },
+  			                success: function (a) {
+  			                    var epuInfoList = a.epuInfoList;
+  			            
+  			                    $('#saveDiv #districtId').html('<option value="">--请选择--</option>');
+  			                    for (var i = 0; i < epuInfoList.length; i++) {
+  			                        $('#saveDiv #districtId').append('<option value="' + epuInfoList[i].districtId + '">' + epuInfoList[i].districtId + '</option>');
+  			                    }
+  			  
+  			                }			                
+               	   });
 				  $('#saveDiv #epuProvince').change(function () {
 					  var i = $('#saveDiv #epuProvince option:selected').val();			
 				  $.ajax({
@@ -383,129 +328,15 @@
 									}
 								});
 							});
-					
-					  $('#saveDiv #epuType').change(function () {
-						  var epuType = $('#saveDiv #epuType option:selected').val();	
-						  if(epuType=='M0001' )
-					        {
-		                    	  $("#saveDiv #hiddenParent").attr("style","display:none;");
-		                    	  $("#saveDiv #parentEpuType").val("");
-		                    	  $("#saveDiv #epuParentId").val("");
-		                    	  
-		                    	  $("#saveDiv #isMapMarkDiv").attr("style","display:table-row;");
-					        }
-		                    else
-		                    {
-		                    	  $("#saveDiv #hiddenParent").attr("style","display:table-row;");
-		                    	  $("#saveDiv #isMapMarkDiv").attr("style","display:none;");
-		                    }
-	                       if( epuType=='M0003' )
-					        {
-		                    	  $("#saveDiv #hiddenDev").attr("style","display:table-row;");
-		                    
-					        }
-		                    else
-		                    {
-		                    	  $("#saveDiv #hiddenDev").attr("style","display:none;");
-		                    	
-		                    	  $("#saveDiv #districtId").val("");
-		                    	  $("#saveDiv #addressId").val("");
-		                    	  $("#saveDiv #channelId").val("");
-		                    	  $("#saveDiv #lineId").val("");
-		                    	  
-		                    }
-					  $.ajax({
-			                type: "post",
-			                url:  "<%=basePath%>/epu/getEpuCodeByCode.shtml",
-			                data: {
-			                    "code": epuType
-			                },
-			                dataType: "json",
-			                async:false,
-			                cache: false,
-			                error: function (a,b,c) {
-			                },
-			                success: function (a) {
-			                    var epuTypeBean = a.epuTypeBean;
-			                   if(epuTypeBean!=null && epuTypeBean!=undefined )
-			                	   {
-				                	   if(epuTypeBean.parentCode!=null){
-				                		   $("#saveDiv #parentEpuType").val(epuTypeBean.parentCode);
-				                		   $("#saveDiv #hiddenParent").attr("style","display:table-row;");
-				                		   
-				                		   $.ajax({
-				   			                type: "post",
-				   			                url:  "<%=basePath%>/epu/getParentEpu.shtml",
-				   			                data: {
-				   			                    "epuType": epuTypeBean.parentCode,
-				   			                    "epuDistrict": $('#saveDiv #epuDistrict').val()
-				   			                    
-				   			                },
-				   			                dataType: "json",
-				   			                async:false,
-				   			                cache: false,
-				   			                error: function (a,b,c) {
-				   			                },
-				   			                success: function (a) {
-				   			                    var epuParentList = a.epuParentList;
-				   			            
-				   			                    $('#saveDiv #epuParentId').html('<option value="">--请选择--</option>');
-				   			                    for (var i = 0; i < epuParentList.length; i++) {
-				   			                        $('#saveDiv #epuParentId').append('<option value="' + epuParentList[i].rowId + '">' + epuParentList[i].epuName + '</option>');
-				   			                    }
-				   			                   
-				   			                }
-				   				    });
-				   				 
-				                		  
-				                	   }			                	  
-				                	    else			                		   
-				                	   {
-				                	    	$("#saveDiv #hiddenParent").attr("style","display:none;");
-				                	   }
-			                		}
-			                   //关联终端的只有分支箱
-			                   if(epuType=='M0003' )
-			                	   {
-			                	   $.ajax({
-			   			                type: "post",
-			   			                url:  "<%=basePath%>/epu/selectDistrictId.shtml",
-			   			                data: {
-			   			                   
-			   			                },
-			   			                dataType: "json",
-			   			                async:false,
-			   			                cache: false,
-			   			                error: function (a,b,c) {
-			   			                },
-			   			                success: function (a) {
-			   			                    var epuInfoList = a.epuInfoList;
-			   			            
-			   			                    $('#saveDiv #districtId').html('<option value="">--请选择--</option>');
-			   			                    for (var i = 0; i < epuInfoList.length; i++) {
-			   			                        $('#saveDiv #districtId').append('<option value="' + epuInfoList[i].districtId + '">' + epuInfoList[i].districtId + '</option>');
-			   			                    }
-			   			  
-			   			                }			                
-			                	   });
-			                	   
-			                	
-			                	   }
-			                      
-			                   
-			                }
-				    });
-				 });
-				 
 					  
-					  $('#saveDiv #parentEpuType').change(function () {
-						  var i = $('#saveDiv #parentEpuType option:selected').val();			
+					  $('#saveDiv #epuDistrict').change(function () {
+						  var epuDistrict = $('#saveDiv #epuDistrict option:selected').val();			
 					  $.ajax({
 			                type: "post",
 			                url:  "<%=basePath%>/epu/getParentEpu.shtml",
 			                data: {
-			                    "epuType": i,
-			                     "epuDistrict": $('#saveDiv #epuDistrict').val()
+			                    "epuType": 'M0002',
+			                     "epuDistrict": epuDistrict
 			                },
 			                dataType: "json",
 			                async:false,
@@ -577,13 +408,6 @@
 				 });				  
 			 };
 				 
-/* 				 function guid() {
-					    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-					        var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
-					        return v.toString(16);
-					    });
-					}
-			  */
 			 epAdd.submitFun=function submitFun(flag){
 				var errorMsg="";
 /* 				if (flag=="1")
@@ -640,8 +464,7 @@
 					var rowId=$("#saveDiv #rowId").val();
 					var epuProvince=$("#saveDiv #epuProvince").val();
 					var epuCity=$("#saveDiv #epuCity").val();
-					var epuDistrict=$("#saveDiv #epuDistrict").val();					
-					var epuType=$("#saveDiv #epuType").val();					
+					var epuDistrict=$("#saveDiv #epuDistrict").val();									
 					var epuName=$("#saveDiv #epuName").val();
 					var epuLocal=$("#saveDiv #epuLocal").val();
 					var epuParentId=$("#saveDiv #epuParentId").val();
@@ -661,14 +484,13 @@
 							data : {						
 								epuDistrict:epuDistrict,						
 								epuName:epuName,
-								epuType:epuType
+								epuType:'M0003'
 							
 							},
 							success : function(data) {
 								  if(data.stauts!='0' && data.stauts!='')
 								  {
 								  layer.msg('同区域下的设备,名称不能重复，请修改!',function(){});
-								  //alert('同区域下的设备,名称不能重复，请修改!');
 								  returnFlag=false;
 								  }
 							
@@ -690,7 +512,7 @@
 							epuProvince:epuProvince,
 							epuCity:epuCity,
 							epuDistrict:epuDistrict,
-							epuType:epuType,
+							epuType:'M0003',
 							epuName:epuName,
 							epuLocal:epuLocal,
 							epuParentId:epuParentId,
@@ -702,18 +524,12 @@
 						success : function(data) {
 							   $("#loadingDiv").hide();
 							   $('#saveDiv').hide();
-								window.location="<%=basePath%>/epu/showList.shtml";
+								window.location="<%=basePath%>/epu/showBranchboxList.shtml";
 						
 						}
 			
 					});
 					} 
-			
-					
-					<%-- function returnBack(){
-					   
-						window.location="<%=basePath%>/epu/showList.shtml";
-					} --%>
 			}
 			
 			  epAdd.saveShow=function saveShow(){
@@ -722,7 +538,6 @@
 					$("#saveDiv #epuProvince").val('');
 				$("#saveDiv #epuCity").val('');
 					$("#saveDiv #epuDistrict").val('');					
-					$("#saveDiv #epuType").val('');					
 					$("#saveDiv #epuName").val('');
 					$("#saveDiv #epuLocal").val('');
 					$("#saveDiv #epuParentId").val('');
@@ -732,60 +547,21 @@
 				$("#saveDiv #lineId").val('');
 				$("#saveDiv").show();
 				  epAdd.initProvince();
-				  epAdd.initEpuType();
 				  epAdd.registEvent();
 			}
 		</script>
 		<script type="text/javascript">
-		/* 	.init(function(){
-				
-				   initPage();
-				   registEvent();			
-			}); */
    var epuEdit={};
     epuEdit.epuProvince;
     epuEdit.epuCity;
      epuEdit.epuDistrict;
-   epuEdit.epuType;
-    epuEdit.parentEpuType;
     epuEdit.epuParentId;
    epuEdit.districtId;
    epuEdit.addressId;
   epuEdit.channelId;
    epuEdit.lineId;
-
-   
 			//初始化页面数据
-			    epuEdit.initPage= function initPage() {
-				
-	                    if(epuEdit.epuType=='M0001' )
-				        {
-	                    	  $("#saveDiv #hiddenParent").attr("style","display:none;");
-	                    	  $("#saveDiv #parentEpuType").val("");
-	                    	  $("#saveDiv #epuParentId").val("");
-	                    	  $("#saveDiv #isMapMarkDiv").attr("style","display:table-row;");
-				        }
-	                    else
-	                    {
-	                    	  $("#saveDiv #hiddenParent").attr("style","display:table-row;");
-	                    	  $("#saveDiv #isMapMarkDiv").attr("style","display:none;");
-	                    }
-                       if( epuEdit.epuType=='M0003' )
-				        {
-	                    	  $("#saveDiv #hiddenDev").attr("style","display:table-row;");
-	                    
-				        }
-	                    else
-	                    {
-	                    	  $("#saveDiv #hiddenDev").attr("style","display:none;");
-	                    
-	                    	  $("#saveDiv #districtId").val("");
-	                    	  $("#saveDiv #addressId").val("");
-	                    	  $("#saveDiv #channelId").val("");
-	                    	  $("#saveDiv #lineId").val("");
-	                    	  
-	                    }
-	                    
+			    epuEdit.initPage= function initPage() { 
 				// 省份
 		            $.ajax({
 		                type: "post",
@@ -799,19 +575,15 @@
 		                },
 		                success: function (a) {
 		                    var length = a.length;
-		                    $('#epuProvince').html('<option value="">--请选择--</option>');
-		                  
-		                   
+		                    $('#epuProvince').html('<option value="">--请选择--</option>');		                  		                   
 		                    for (var i = 0; i < length; i++) {
 		                    	if(epuEdit.epuProvince==a[i].provinceId)
 		                    		{
 		                    		   $('#saveDiv #epuProvince').append('<option value="' + a[i].provinceId + '" selected="selected">' + a[i].provinceNameCn + '</option>');
-		                    		}else
-		                    			
+		                    		}else		                    			
 		                    		{
-		                    			   $('#saveDiv #epuProvince').append('<option value="' + a[i].provinceId + '">' + a[i].provinceNameCn + '</option>');
-		                    		}
-		                     
+		                    		 $('#saveDiv #epuProvince').append('<option value="' + a[i].provinceId + '">' + a[i].provinceNameCn + '</option>');
+		                    		}		                     
 		                    }
 		                }
 		            });
@@ -874,53 +646,12 @@
 							}
 						}
 					});
-		         
-		         //设备类型和上级设备类型
-		           $.ajax({
-		                type: "post",
-		                url:  "<%=basePath%>/epu/chanceAllType.shtml",
-		                data: {
-		                },
-		                async:false,
-		                dataType: "json",
-		                cache: false,
-		                error: function (a,b,c) {
-		                },
-		                success: function (a) {
-		                    var length = a.epuTypeBean.length;
-		                    $('#saveDiv #epuType').html('<option value="">--请选择--</option>');
-		                    $('#saveDiv #parentEpuType').html('<option value="">--请选择--</option>');
-		                   
-		                    
-		                    for (var i = 0; i < length; i++) {
-		                    	if(epuEdit.epuType==a.epuTypeBean[i].code)
-		                    	{
-		                    		  $('#saveDiv #epuType').append('<option value="' + a.epuTypeBean[i].code + '" selected="selected">' + a.epuTypeBean[i].codeName + '</option>');
-		                    	}
-		                    	else
-		                    	{
-		                    		  $('#saveDiv #epuType').append('<option value="' + a.epuTypeBean[i].code + '">' + a.epuTypeBean[i].codeName + '</option>');
-		                    	}
-		                    	
-		                    	if(epuEdit.parentEpuType==a.epuTypeBean[i].code)
-	                    		{
-		                    		$('#saveDiv #parentEpuType').append('<option value="' + a.epuTypeBean[i].code + '" selected="selected">' + a.epuTypeBean[i].codeName + '</option>');
-	                    		}
-	                    	   else
-	                    	   {
-	                    		   $('#saveDiv #parentEpuType').append('<option value="' + a.epuTypeBean[i].code + '">' + a.epuTypeBean[i].codeName + '</option>');
-	                    	   }
-                  
-		                     
-		                    }
-		                }
-		            });
-		         
-		         //上级设备名称
+					
+							         //上级设备名称
 		          $.ajax({ type: "post",
 				   			                url:  "<%=basePath%>/epu/getParentEpu.shtml",
 				   			                data: {
-				   			                    epuType:epuEdit.parentEpuType,
+				   			                    epuType:'M0002',
 				   			                    epuDistrict: epuEdit.epuDistrict
 				   			                },
 				   			                dataType: "json",
@@ -946,6 +677,7 @@
 				   			                   
 				   			                }
 				   				    });
+				   				    
 		         //关联终端bcd编号
 		     
 			                	   $.ajax({
@@ -1027,8 +759,7 @@
 						                    	{
 						                    		 $('#saveDiv #channelId').append('<option value="' + epuInfoList[i].channelId + '" selected="selected">' + epuInfoList[i].channelId + '</option>');
 						                    	}
-						                    	else
-						                    		
+						                    	else						                    		
 						                    	{
 						                    		 $('#saveDiv #channelId').append('<option value="' + epuInfoList[i].channelId + '">' + epuInfoList[i].channelId + '</option>');
 						                    	}		   			          
@@ -1036,10 +767,9 @@
 			   			  
 			   			                }			                
 			                	   }); 		            
-			};
+			};		
+			 epuEdit.registEvent=function registEvent() {			 
 
-			
-			 epuEdit.registEvent=function registEvent() {
 				  $('#saveDiv #epuProvince').change(function () {
 					  var i = $('#saveDiv #epuProvince option:selected').val();			
 				  $.ajax({
@@ -1090,127 +820,15 @@
 									}
 								});
 							});
-					
-					  $('#saveDiv #epuType').change(function () {
-						  var epuType = $('#saveDiv #epuType option:selected').val();
-						  if(epuType=='M0001' )
-					        {
-		                    	  $("#saveDiv #hiddenParent").attr("style","display:none;");
-		                    	  $("#saveDiv #parentEpuType").val("");
-		                    	  $("#saveDiv #epuParentId").val("");
-		                    	  $("#saveDiv #isMapMarkDiv").attr("style","display:table-row;");
-					        }
-		                    else
-		                    {
-		                    	  $("#saveDiv #hiddenParent").attr("style","display:table-row;");
-		                    	  $("#saveDiv #isMapMarkDiv").attr("style","display:none;");
-		                    }
-	                       if( epuType=='M0003' )
-					        {
-		                    	  $("#saveDiv #hiddenDev").attr("style","display:table-row;");
-		                    	
-					        }
-		                    else
-		                    {
-		                    	  $("#saveDiv #hiddenDev").attr("style","display:none;");
-		                    	 
-		                    	  $("#saveDiv #districtId").val("");
-		                    	  $("#saveDiv #addressId").val("");
-		                    	  $("#saveDiv #channelId").val("");
-		                    	  $("#saveDiv #lineId").val("");
-		                    	  
-		                    }
-
-					  $.ajax({
-			                type: "post",
-			                url:  "<%=basePath%>/epu/getEpuCodeByCode.shtml",
-			                data: {
-			                    "code": epuType
-			                },
-			                dataType: "json",
-			                async:false,
-			                cache: false,
-			                error: function (a,b,c) {
-			                },
-			                success: function (a) {
-			                    var epuTypeBean = a.epuTypeBean;
-			                   if(epuTypeBean!=null && epuTypeBean!=undefined )
-			                	   {
-				                	   if(epuTypeBean.parentCode!=null){
-				                		   $("#saveDiv #parentEpuType").val(epuTypeBean.parentCode);
-				                		   $("#saveDiv #hiddenParent").attr("style","display:table-row;");
-				                		   
-				                		   $.ajax({
-				   			                type: "post",
-				   			                url:  "<%=basePath%>/epu/getParentEpu.shtml",
-				   			                data: {
-				   			                    "epuType": epuTypeBean.parentCode,
-				   			                    "epuDistrict": $('#saveDiv #epuDistrict').val()
-				   			                },
-				   			                dataType: "json",
-				   			                async:false,
-				   			                cache: false,
-				   			                error: function (a,b,c) {
-				   			                },
-				   			                success: function (a) {
-				   			                    var epuParentList = a.epuParentList;
-				   			            
-				   			                    $('#saveDiv #epuParentId').html('<option value="">--请选择--</option>');
-				   			                    for (var i = 0; i < epuParentList.length; i++) {
-				   			                        $('#saveDiv #epuParentId').append('<option value="' + epuParentList[i].rowId + '">' + epuParentList[i].epuName + '</option>');
-				   			                    }
-				   			                   
-				   			                }
-				   				    });
-				   				 
-				                		   $("#saveDiv #hiddenParent").attr("style","display:table-row;");
-				                	   }			                	  
-				                	    else			                		   
-				                	   {
-				                	    	$("#saveDiv #hiddenParent").attr("style","display:none;");
-				                	   }
-			                		}
-			                   //关联终端的只有表箱有
-			                   if(epuType=='M0003' )
-			                	   {
-			                	   $.ajax({
-			   			                type: "post",
-			   			                url:  "<%=basePath%>/epu/selectDistrictId.shtml",
-			   			                data: {
-			   			                   
-			   			                },
-			   			                dataType: "json",
-			   			                async:false,
-			   			                cache: false,
-			   			                error: function (a,b,c) {
-			   			                },
-			   			                success: function (a) {
-			   			                    var epuInfoList = a.epuInfoList;
-			   			            
-			   			                    $('#saveDiv #districtId').html('<option value="">--请选择--</option>');
-			   			                    for (var i = 0; i < epuInfoList.length; i++) {
-			   			                        $('#saveDiv #districtId').append('<option value="' + epuInfoList[i].districtId + '">' + epuInfoList[i].districtId + '</option>');
-			   			                    }
-			   			                }			                
-			                	   });
-			                	   
-			                	  
-			                	   }
-			                     
-			                   
-			                }
-				    });
-				 });
-				 
-					  
-					  $('#saveDiv #parentEpuType').change(function () {
-						  var i = $('#saveDiv #parentEpuType option:selected').val();			
+									  
+					  $('#saveDiv #epuDistrict').change(function () {
+						  var epuDistrict = $('#saveDiv #epuDistrict option:selected').val();			
 					  $.ajax({
 			                type: "post",
 			                url:  "<%=basePath%>/epu/getParentEpu.shtml",
 			                data: {
-			                    "epuType": i,
-			                    "epuDistrict": $('#saveDiv #epuDistrict').val()
+			                    "epuType": 'M0002',
+			                    "epuDistrict": epuDistrict
 			                },
 			                dataType: "json",
 			                async:false,
@@ -1284,69 +902,6 @@
 					  
 					  
 			 };
-	/* 		   epuEdit.guid=function guid() {
-					    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-					        var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
-					        return v.toString(16);
-					    });
-					} */
-				epuEdit.linkMap=function linkMap() {
-					 var rowId=$('#saveDiv #rowId').val();
-					var cityName=$("#saveDiv #epuCity").find("option:selected").text();
-					/*   if(rowId=='' || rowId==null || rowId==undefined )
-					 	 {
-						rowId=  epuEdit.guid();
-						$('#rowId').val(rowId);
-						 }   */
-						var epuProvince=$("#saveDiv #epuProvince").val();
-						var epuCity=$("#saveDiv #epuCity").val();
-						var epuDistrict=$("#saveDiv #epuDistrict").val();					
-						var epuType=$("#saveDiv #epuType").val();					
-						var epuName=$("#saveDiv #epuName").val();
-						var epuLocal=$("#saveDiv #epuLocal").val();
-				/*		var epuParentId=$("#saveDiv #epuParentId").val();
-					 	var districtId=$("#saveDiv #districtId").val();
-						var addressId=$("#saveDiv #addressId").val();
-						var channelId=$("#saveDiv #channelId").val();
-						var lineId=$("#saveDiv #lineId").val(); */
-						var url="<%=basePath%>/html/mapMark.html";
-						url+="?rowId=" + rowId+"&cityName="+encodeURI(cityName)+"&epuProvince="+epuProvince+"&epuCity="+epuCity;
-						url+="&epuDistrict=" + epuDistrict+"&epuType="+epuType+"&epuName="+encodeURI(epuName)+"&epuLocal="+encodeURI(epuLocal);
-						//url+="&epuParentId=" + epuParentId+"&districtId="+districtId+"&addressId="+addressId+"&channelId="+channelId+"&lineId="+encodeURI(lineId);
-					 window.location=url;
-				 };
-				 epuEdit.epuEditMark=function(rowId)		 
-			 {
-			   var url= "<%=basePath%>/epu/queryEpu.shtml";
-		 	     $.ajax({
-						url :url,
-						type : 'POST',
-						data :{
-						rowId:rowId
-					
-						},						
-						success : function(data) {
-							if(data.epuInfos.length>0)
-							{
-					    var cityName=data.epuInfos[0].epuCityName;
-						var epuProvince=data.epuInfos[0].epuProvince;
-						var epuCity=data.epuInfos[0].epuCity;
-						var epuDistrict=data.epuInfos[0].epuDistrict;				
-						var epuType=data.epuInfos[0].epuType;				
-						var epuName=data.epuInfos[0].epuName;
-						var epuLocal=data.epuInfos[0].epuLocal;
-						url="<%=basePath%>/html/mapMark.html";
-						url+="?rowId=" + rowId+"&cityName="+encodeURI(cityName)+"&epuProvince="+epuProvince+"&epuCity="+epuCity;
-						url+="&epuDistrict=" + epuDistrict+"&epuType="+epuType+"&epuName="+encodeURI(epuName)+"&epuLocal="+encodeURI(epuLocal);
-					    window.location=url;
-                           }						
-						},
-						error: function (data) 
-						{
-						   layer.msg(data,function(){});
-				   	    }			
-					}); 				
-				 	};
 				 
 		          epuEdit.saveShow=function saveShow(rowId){
 			  
@@ -1371,14 +926,11 @@
 										  epuEdit.epuProvince=epuInfo.epuProvince;
 										    epuEdit.epuCity=epuInfo.epuCity;
 										     epuEdit.epuDistrict=epuInfo.epuDistrict;
-										   epuEdit.epuType=epuInfo.epuType;
-										    epuEdit.parentEpuType=epuInfo.epuParentType;
 										    epuEdit.epuParentId=epuInfo.epuParentId;
 										   epuEdit.districtId=epuInfo.districtId;
 										   epuEdit.addressId=epuInfo.addressId;
 										  epuEdit.channelId=epuInfo.channelId;
 										   epuEdit.lineId=epuInfo.lineId ;
-									  $("#saveDiv #epuType").attr("disabled", "disabled");
 								    $("#saveDiv").show();
 								    epuEdit.initPage();
 				                    epuEdit.registEvent();	
@@ -1404,7 +956,7 @@
 <div class="wapp-main">
 		<form method="post" action="" id="formId" class="form-inline">
 		
-	<h4>设备信息列表</h4>	
+	<h4>分支箱信息列表</h4>	
     <!--搜索开始-->
 	<div class="search">
 	   <lable>
@@ -1424,15 +976,7 @@
             <select id="epuDistrict" name="epuDistrict" >
             	
             </select>
-    	</lable>
-    	 <lable>
-        	<span>设备类型</span>
-            <select id="epuType" name="epuType" >
-            	
-            </select>
-    	</lable>
-    	
-    	
+    	</lable>	
         <lable>       
         	<span>设备名称 </span>
             <input  id="epuName" name ="epuName" type="text"  value="">
@@ -1469,10 +1013,9 @@
 							<th>区县</th>
 							<th>所在位置</th>
 							<th>设备名称</th>
-							<th>设备类型</th>
 							<th>上级设备</th>
-							<th>终端设备</th>							
-							<th>是否标注</th>
+							<th>终端设备</th>
+							<th>线缆号</th>
 							<th>状态</th>
 							<th>操作</th>
 				
@@ -1494,11 +1037,11 @@
 </html>
 <!--弹层开始-->
 <div class="wapp-layer"  id="saveDiv">
-    <div class="box">
-	<h4>新增设备<span class="close-js"  onclick="$('#saveDiv').hide();">关闭</span></h4>
+        <div class="box" style="height:auto">
+	<h4>新增分支箱<span class="close-js"  onclick="$('#saveDiv').hide();">关闭</span></h4>
 	  <input name="rowId" type="hidden" id="rowId"  value="">
 	    <input name="epuNameBefore" type="hidden" id="epuNameBefore"  value="">
-        <div class="edit">
+        <div class="edit" style="height:auto">
              <lable>
                 <span>省份</span>
                 <select name="epuProvince" id="epuProvince" class="text requiredSelect" title="省份"></select>
@@ -1510,49 +1053,20 @@
             </lable>
             <lable>
                 <span>区县</span>
-                <select name="epuDistrict" id="epuDistrict" class="text requiredSelect" title="区县">
-								</select>
-            </lable>
-            
-            <lable>
-                <span>设备类型</span>
-                
-                <select name="epuType" id="epuType" class="text requiredSelect" title="设备类型"></select>
-            </lable>
-            
-            
-            <lable>
-                <span>设备名称</span>
-                <input name="epuName" id="epuName"   type="text" class="text request" title="设备名称" maxlength="100">
-            </lable>
-            
-            
-            <lable>
-                <span>设备位置</span>
-                <input name="epuLocal"  id="epuLocal" type="text" class="text request" title="设备位置" maxlength="100">
-                          
-            </lable>
-              
-	             <lable>
-	              <div id='isMapMarkDiv' >             
-	  			    <span>地图标注</span>
-	                 <a href="javascript:epuEdit.linkMap();" class="but02"  id="butadd" >地图标注</a>
-	                   </div>
-				</lable>
-           
-            <div id='hiddenParent'>
-            <lable>
-                <span>上级设备类型</span>
-                <select name="parentEpuType" id="parentEpuType" class="text requiredSelect" title="上级设备类型" disabled="disabled">
-				</select>
-            </lable>
-            
+                <select name="epuDistrict" id="epuDistrict" class="text requiredSelect" title="区县"></select>
+            </lable>     
             <lable>
                 <span>上级设备名称</span>
                 <select name="epuParentId" id="epuParentId" class="text requiredSelect" title="上级设备名称"></select>
+            </lable>     
+            <lable>
+                <span>设备名称</span>
+                <input name="epuName" id="epuName"   type="text" class="text request" title="设备名称" maxlength="100">
+            </lable>        
+            <lable>
+                <span>设备位置</span>
+                <input name="epuLocal"  id="epuLocal" type="text" class="text request" title="设备位置" maxlength="100">                         
             </lable>
-            </div>
-            <div id='hiddenDev'>
             <lable>
                 <span>关联终端编号</span>
                 <select name="districtId" id="districtId" class="text requiredSelect" title="关联终端编号"></select>
@@ -1571,10 +1085,7 @@
                 <span>线缆号</span>
                 <input name="lineId" id="lineId"   type="text" class="text request" title="线缆号" maxlength="100">
             </lable>
-           
-              </div>
-    	
-            <div class="but-nav">
+             <div class="but-nav" style="margin:0px 0px 20px 0px">
                 <span class="but" onclick="javascript:epAdd.submitFun('1');">保&nbsp;&nbsp;存</a></span>
                 <span class="but miss close-js" onclick="$('#saveDiv').hide();">取&nbsp;&nbsp;消</span>
             </div>

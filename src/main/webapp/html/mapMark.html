@@ -21,13 +21,13 @@
     <script>
 
    
-        function addMarker(id, name, x, y) {
+        function addMarker(id, name,epuLocal, x, y) {
             var p = new BMap.Point(x, y);
             var marker = new BMap.Marker(p);//, px = map.pointToPixel(p);
             M.addOverlay(marker);
             marker.enableDragging();
             // marker.setTitle(id);
-            marker.setTitle(name);
+           // marker.setTitle(name);
 
 /*             var label = new BMap.Label(name, { offset: new BMap.Size(25, 0) });
             label.setStyles({
@@ -36,7 +36,18 @@
                 padding: "0 5px"
             });
             marker.setLabel(label); */
-
+           // $('#describe').html("位置：" + epuLocal + "<br>" + "名称：" + name);
+                     var opts = {  
+                         /*   width: $('#describe').width(),     // 信息窗口宽度  
+                           height: $('#describe').height()     // 信息窗口高度   */
+                         //  width: 100,     // 信息窗口宽度  
+                          //  height: 20     // 信息窗口高度  
+                          
+                        }  
+                        var infoWindow = new BMap.InfoWindow("位置：" + epuLocal + "<br>" + "名称：" + name, opts);  // 创建信息窗口对象  
+                        marker.addEventListener("click", function () {  
+                            M.openInfoWindow(infoWindow, p); //开启信息窗口  
+                        });  
             var iconPath=$("#basePath").val()+'/image/point.gif';
             var icon = new BMap.Icon(iconPath,  new BMap.Size(20, 20), {
                 anchor: new BMap.Size(10, 22)
@@ -116,7 +127,7 @@
 	}; */
 	
 	function back() {	
-	  window.location= $("#basePath").val()+"/epu/showList.shtml?rowId=" + $("#rowId").val();
+	  window.location= $("#basePath").val()+"/epu/showSubstainList.shtml?rowId=" + $("#rowId").val();
 	}
         function save() {
               var data = [];
@@ -158,10 +169,9 @@
 						data :param,
 						success : function(data) {
 						        alert('保存成功');
-						         window.location= $("#basePath").val()+"/epu/showList.shtml?rowId=" + data.rowId;						
+						         window.location= $("#basePath").val()+"/epu/showSubstainList.shtml?rowId=" + data.rowId;						
 						}			
-					});
-      
+					});      
         }
 
 /*         function rename(i) { //重命名
@@ -212,7 +222,6 @@
    		var epuProvince=GetArgsFromHref(window.location.href,"epuProvince");
    	    var epuCity=GetArgsFromHref(window.location.href,"epuCity");
    	     var  epuDistrict=GetArgsFromHref(window.location.href,"epuDistrict");
-   	    var epuType=GetArgsFromHref(window.location.href,"epuType");
    	    var epuName=decodeURI(GetArgsFromHref(window.location.href,"epuName"), "UTF-8");
    	    var epuLocal=decodeURI(GetArgsFromHref(window.location.href,"epuLocal"), "UTF-8");
    	   /*  var epuParentId=GetArgsFromHref(window.location.href,"epuParentId");
@@ -226,7 +235,6 @@
    		$("#epuProvince").val(epuProvince);
    		$("#epuCity").val(epuCity);
    		$("#epuDistrict").val(epuDistrict);
-   		$("#epuType").val(epuType);
    		$("#epuName").val(epuName);
     		$("#epuLocal").val(epuLocal);
 /*    		$("#epuParentId").val(epuParentId);
@@ -270,7 +278,7 @@
                   text: '在此添加标注',
                   callback: function (p) {
                   var name =($("#epuName").val()==null||$("#epuName").val())==''?'未命名':$("#epuName").val();
-                      addMarker($("#rowId").val(), name, p.lng, p.lat);
+                      addMarker($("#rowId").val(), name,epuLocal, p.lng, p.lat);
                   }
               }
             ];
@@ -306,7 +314,7 @@
 						         if(x!=null)
 						         	{						        
 						         	  //  map.centerAndZoom($("#city").val(), 13);
-                               			addMarker(data.epuInfos[0].rowId,data.epuInfos[0].epuName, data.epuInfos[0].epuXscale,data.epuInfos[0].epuYscale);
+                               			addMarker(data.epuInfos[0].rowId,data.epuInfos[0].epuName, data.epuInfos[0].epuLocal,data.epuInfos[0].epuXscale,data.epuInfos[0].epuYscale);
                                		     map.centerAndZoom(new BMap.Point(data.epuInfos[0].epuXscale, data.epuInfos[0].epuYscale), 13);               // 创建Map实例
                                		}else
                                		{
@@ -331,6 +339,7 @@
 </head>
 <body>
     <div id="allmap"></div>
+     <!-- <div id="describe"></div> -->
     <div id="bar">
         城市：<input type="text" id="cityName" value="上海" /> <input type="button" id="begin" value="定位" />
         <input type="button" id="save" value="保存" onclick="save()" />
@@ -340,11 +349,10 @@
     	<form method="post" action="" id="formId" class="form-inline">
     	<input  type="hidden" id="rowId" name="rowId"  value="">
          <input type="hidden" id="basePath" name="basePath"  value=""/>
-         
+           <input type="hidden" id="epuType" name="epuType"  value="M0001"/>
          <input  type="hidden" id="epuProvince" name="epuProvince"  value="">
          <input type="hidden" id="epuCity" name="epuCity"  value=""/>
          <input  type="hidden" id="epuDistrict" name="epuDistrict"  value="">
-         <input type="hidden" id="epuType" name="epuType"  value=""/>
          <input  type="hidden" id="epuName" name="epuName"  value="">
          <input  type="hidden" id="epuXscale" name="epuXscale"  value="">
            <input  type="hidden" id="epuYscale" name="epuYscale"  value="">

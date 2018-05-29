@@ -1123,18 +1123,16 @@
     <!--表格开始-->
     <div class="table-box">
         <table width="100%">
-            <tr>
-             		
+            <tr>             		
                 <th><input  type="checkbox" id="checkAll"></th>                         
-							<th>省份</th>
-							<th>城市</th>
-							<th>区县</th>
-							<th>设备名称</th>
-							<th>上级设备</th>
-							<th>终端设备</th>												
-							<th>状态</th>
-							 <th>操作</th>
-			
+				<th>省份</th>
+				<th>城市</th>
+				<th>区县</th>
+				<th>设备名称</th>
+				<th>上级设备</th>
+				<th>终端设备</th>												
+				<th>状态</th>
+				<th>操作</th>			
             </tr>
            <tbody id="epuListTable"></tbody>
         </table>
@@ -1160,10 +1158,10 @@
 </html>
 <!--弹层开始-->
 <div class="wapp-layer"  id="amDiv">
-	<div class="box">
-	<h4>新增设备<span class="close-js"  onclick="$('#amDiv').hide();">关闭</span></h4>
+	    <div class="box" style="height:auto">
+	<h4>新增电表<span class="close-js"  onclick="$('#amDiv').hide();">关闭</span></h4>
 	  <input name="rowId" type="hidden" id="rowId"  value="">
-        <div class="edit">
+       <div class="edit" style="height:auto">
              <lable>
                 <span>省份</span>
                 <select name="epuProvince" id="epuProvince" class="text requiredSelect" title="省份"></select>
@@ -1183,9 +1181,7 @@
                <span>所属表箱</span>
                <select name="epuId" id="epuId" class="text requiredSelect" title="所属表箱">
 								</select>
-            </lable>
-            
-            
+            </lable>       
             <lable>
                <span>电表名称</span>
                 <input name="ammeterName" id="ammeterName"   type="text" class="text request" title="电表名称" maxlength="100">
@@ -1203,11 +1199,8 @@
             
             <lable>
                <span>相别</span>
-               <input name="phaseRemark"  id="phaseRemark" type="text" class="text request" title="电表号" maxlength="100">
-                          
-            </lable>
-        
-           
+               <input name="phaseRemark"  id="phaseRemark" type="text" class="text request" title="电表号" maxlength="100">                         
+            </lable>      
             <lable>
                 <span>关联终端编号</span>
                 <select name="districtId" id="districtId" class="text requiredSelect" title="关联终端编号"></select>
@@ -1223,7 +1216,7 @@
 								</select>
             </lable>
            	
-            <div class="but-nav">
+             <div class="but-nav" style="margin:0px 0px 20px 0px">
                 <span class="but" onclick="javascript:amAdd.submitFun('1');">保&nbsp;&nbsp;存</a></span>
                 <span class="but miss close-js" onclick="$('#amDiv').hide();">取&nbsp;&nbsp;消</span>
             </div>

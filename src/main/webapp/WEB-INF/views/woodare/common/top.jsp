@@ -17,7 +17,7 @@
 						<c:when test="${token.status eq '1'}">
 							<span class="caret"></span></a>
 							<ul userid="${(empty token.id)? '' : token.id}">
-								<li><a href="<%=basePath%>/user/index.shtml">个人资料</a></li>
+								<li><a href="<%=basePath%>/user/index.shtml">个人资料11</a></li>
 								<li><a href="<%=basePath%>/role/mypermission.shtml">我的权限</a></li>
 								<li><a onclick="logout();">退出登录</a></li>
 							</ul>

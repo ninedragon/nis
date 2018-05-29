@@ -36,6 +36,12 @@ img{ cursor:pointer; border:0;}
 .wapp-head .lay ul li{ width:100%; height:30px; line-height:30px; float:left; font-size:14px; text-indent:10%; color:#333; text-align:left; padding:0px; cursor:pointer;}
 .wapp-head .lay ul li:hover{ background-color:#EEE;}
 
+/* 消息提示
+---------------------------------------- */
+.wapp-head .info{ float:right; margin:0px 25px 0px 0px; font-size:14px; color:#FFF; background:url(../image/icon19.png) no-repeat left center; background-size:20px; text-indent:30px; cursor:pointer; position:relative;}
+.wapp-head .info span.caret{ width:15px; height:15px; line-height:15px; background-color:#FFF; -webkit-border-radius:50%; color:#F00; font-size:12px; float:right; text-indent:0px; margin:13px 0px 0px 5px;}
+.wapp-head .lay ul li.mrr{ width:90%; height:auto; line-height:normal; padding:5px 5%; text-indent:0px; border-bottom:1px solid #CCC; font-size:12px;}
+.wapp-head .lay ul li.mrr:last-child{ border:0px;}
 
 /* 宸︿晶瀵艰埅
 ---------------------------------------- */
@@ -131,10 +137,12 @@ ul.left-nav ul.side-nav li:last-child{ border:0px;}
 .wapp-layer{ display:none; width:100%; height:100%; position:fixed; left:0px; top:0px; z-index:999; background-color:rgba(0,0,0,.5);}
 .wapp-layer .box{ width:500px; height:510px; position:absolute; left:50%; top:50%; margin:-265px 0px 0px -250px; background-color:#FFF; -webkit-border-radius:5px; overflow:hidden; box-shadow:0 6px 12px rgba(0,0,0,.175);}
 .wapp-layer .box.tips{ height:220px; margin:-100px 0px 0px -250px;}
+.wapp-layer .box.tips.mrr{ height:90%; width:90%; margin:0px; left:5%; top:5%;}
 .wapp-layer .box.checkbox{ height:300px; margin:-150px 0px 0px -250px;}
 .wapp-layer .box h4{ width:100%; height:40px; line-height:40px; float:left; background-color:#00796a; font-size:16px; color:#FFF; text-indent:5%;}
 .wapp-layer .box h4 span{ width:40px; height:40px; float:right; background:url(../image/icon10.png) no-repeat center center; background-size:15px; text-indent:-999px; overflow:hidden; cursor:pointer;}
 .wapp-layer .edit{ width:100%; height:430px; float:left; margin:20px 0px 0px 0px; overflow-x:hidden; overflow-y:auto}
+.wapp-layer .edit.mrr{ width:100%; position: absolute; left:0px; top:20px; bottom:60px; overflow:auto; height:auto}
 .wapp-layer .edit p{ width:80%; float:left; margin:20px 0px 20px 10%; text-align:center; font-size:18px;}
 .wapp-layer .edit lable{ width:90%; float:left; height:32px; line-height:32px; margin:10px 20px 0px 10%;}
 .wapp-layer .edit lable span{ width:100px; float:left; font-size:14px; color:#333; text-align:left; font-weight:bold; margin:0px 10px 0px 0px;}
@@ -144,10 +152,10 @@ ul.left-nav ul.side-nav li:last-child{ border:0px;}
 .wapp-layer .edit lable input.checkbox{ width:auto; height:auto; float:left; margin:10px 5px 0px 0px;}
 .wapp-layer .edit lable input.other{ width:220px;}
 .wapp-layer .edit lable font{ height:auto; line-height:normal; font-size:13px; color:#00796a; float:left; border-bottom:1px solid #00796a; margin:5px 0px 0px 5px; cursor:pointer;}
-.wapp-layer .edit .but-nav{ width:100%; float:left; margin:0px 0px 0px 0px; text-align:center;}
-.wapp-layer .edit .but-nav span.but{ display:inline-block; height:32px; line-height:32px; font-size:13px; color:#FFF; text-align:center; -webkit-border-radius:5px; background-color:#169274; padding:0px 20px; cursor:pointer; margin:20px 10px 0px 0px;}
-.wapp-layer .edit .but-nav span.but:hover{ background-color:#00796a;}
-.wapp-layer .edit .but-nav span.but.miss{ background-color:#CCC; color:#333;}
+.wapp-layer .but-nav{ width:100%; float:left; margin:0px 0px 0px 0px; text-align:center;}
+.wapp-layer .but-nav span.but{ display:inline-block; height:32px; line-height:32px; font-size:13px; color:#FFF; text-align:center; -webkit-border-radius:5px; background-color:#169274; padding:0px 20px; cursor:pointer; margin:20px 10px 0px 0px;}
+.wapp-layer .but-nav span.but:hover{ background-color:#00796a;}
+.wapp-layer .but-nav span.but.miss{ background-color:#CCC; color:#333;}
 
 /* 鍔ㄦ�佷俊鎭�
 ---------------------------------------- */

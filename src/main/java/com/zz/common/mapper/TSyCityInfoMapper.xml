@@ -29,7 +29,8 @@
 			T_SY_CITY_INFO a
 		INNER JOIN view_epu_info b ON a.CITY_CODE = b.epu_city
 		WHERE
-			1 = 1  and  PROVINCE_ID=#{provinceId} and DISTRICT_FLAG=#{districtFlag} and b.DEL_FLAG='0'
+			1 = 1  and  PROVINCE_ID=#{provinceId} and DISTRICT_FLAG=#{districtFlag} and b.DEL_FLAG='0'    
+			and b.epu_type = 'M0001' and b.epu_xscale is not null
 		ORDER BY
 			a.CITY_NAME_CN
    </select>
@@ -68,6 +69,8 @@
 			<if test="epuCity != null and epuCity !=''">
           and b.epu_city = #{epuCity,jdbcType=VARCHAR} 
           </if>
+          and b.epu_type = 'M0001'  
+          and b.epu_xscale is not null
 		ORDER BY
 			a.CITY_NAME_CN
   </select>
