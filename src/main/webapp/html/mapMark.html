@@ -45,7 +45,7 @@
                           
                         }  
                         var infoWindow = new BMap.InfoWindow("位置：" + epuLocal + "<br>" + "名称：" + name, opts);  // 创建信息窗口对象  
-                        marker.addEventListener("click", function () {  
+                        marker.addEventListener("click", function () {
                             M.openInfoWindow(infoWindow, p); //开启信息窗口  
                         });  
             var iconPath=$("#basePath").val()+'/image/point.gif';
