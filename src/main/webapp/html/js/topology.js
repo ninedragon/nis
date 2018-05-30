@@ -3,7 +3,8 @@ d3.namespace("xmlns:cge","http://iec.ch/TC57/2005/SVG-schema#");
 
 var lbss = [];
 var svgSnap = d3.select("body").append("svg");
-svgSnap.attr("width", 3975)
+var svg_width = 10000;
+svgSnap.attr("width", svg_width - 25)
    .attr("height", 3960)
    .attr("xmlns", "http://www.w3.org/2000/svg")
    .attr("xmlns:xlink", "http://www.w3.org/1999/xlink")
@@ -331,7 +332,7 @@ function showTop(rowId){
 		 						    		        			id :"idLine" + j_epuParentId,
 		 						    		        			dash:"true"
 		 						    		        		}, {
-		 						    		        			x: 4000,//下宽度
+		 						    		        			x: svg_width,//下宽度
 		 						    		        			y: ammeterY + 200,//下高
 		 						    		        			x2: 0,//上宽度
 		 						    		        			y2: ammeterY + 200,//上高
@@ -358,7 +359,7 @@ function showTop(rowId){
 		 						    		        			id :"idLine" + z_epuParentId,
 		 						    		        			dash:"true"
 		 						    		        		}, {
-		 						    		        			x: 4000,//下宽度
+		 						    		        			x: svg_width,//下宽度
 		 						    		        			y: branchBoxY +70,//下高
 		 						    		        			x2: 0,//上宽度
 		 						    		        			y2: branchBoxY+70,//上高
@@ -417,7 +418,7 @@ function showTop(rowId){
 						    		        			id :"idLine" + j_epuParentId,
 						    		        			dash:"true"
 						    		        		}, {
-						    		        			x: 4000,//下宽度
+						    		        			x: svg_width,//下宽度
 						    		        			y: cabinetsY + 100,//下高
 						    		        			x2: 0,//上宽度
 						    		        			y2: cabinetsY + 100,//上高
@@ -544,7 +545,7 @@ function showTop(rowId){
 	    		        			id :"idLine" + i_epuParentId,
 	    		        			dash:"true"
 	    		        		}, {
-	    		        			x: 4000,//下宽度
+	    		        			x: svg_width,//下宽度
 	    		        			y: (rootY + 80) ,//下高
 	    		        			x2: 0,//上宽度
 	    		        			y2: (rootY + 80),//上高

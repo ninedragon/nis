@@ -3,7 +3,8 @@ d3.namespace("xmlns:cge","http://iec.ch/TC57/2005/SVG-schema#");
 
 var lbss = [];
 var svgSnap = d3.select("body").append("svg");
-svgSnap.attr("width", 3975)
+var svg_width = 10000;
+svgSnap.attr("width", svg_width - 25)
    .attr("height", 3960)
    .attr("xmlns", "http://www.w3.org/2000/svg")
    .attr("xmlns:xlink", "http://www.w3.org/1999/xlink")
@@ -278,7 +279,7 @@ function showTop(rowId,tableBoxId){
 	 	    		        			id :"idLine" + x_rowId,
 	 	    		        			dash:"true"
 	 	    		        		}, {
-	 	    		        			x: 4000,//下宽度
+	 	    		        			x: svg_width,//下宽度
 	 	    		        			y: table_ammeterY + 50,//下高
 	 	    		        			x2: 0,//上宽度
 	 	    		        			y2: table_ammeterY + 50,//上高
@@ -349,7 +350,7 @@ function showTop(rowId,tableBoxId){
 	    		        			id :"idLine" + i_epuParentId,
 	    		        			dash:"true"
 	    		        		}, {
-	    		        			x: 4000,//下宽度
+	    		        			x: svg_width,//下宽度
 	    		        			y: textNewlineArr[1] + 50,//下高
 	    		        			x2: 0,//上宽度
 	    		        			y2: textNewlineArr[1] + 50,//上高

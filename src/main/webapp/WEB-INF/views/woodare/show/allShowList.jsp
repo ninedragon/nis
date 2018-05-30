@@ -244,7 +244,7 @@
 	               <iframe  id="tab1Iframe" src="<%=basePath%>/html/showMapMark.html" frameborder="0" scrolling="no"></iframe> 
 	            </div>  
 	            <div class="tab_css" id="tab2_content"  style="display: none;">  
-	                 <iframe id="tab2Iframe" src="<%=basePath%>/html/topologyHtml.html" width="4000" height="4000" frameborder="0" scrolling="no"></iframe>
+	                 <iframe id="tab2Iframe" src="<%=basePath%>/html/topologyHtml.html" width="10000" height="4000" frameborder="0" scrolling="no"></iframe>
 	            </div>  
 <!-- 	            <div class="tab_css" id="tab3_content" style="display: none;">   -->
 <%-- 	                <iframe id="tab3Iframe" src="<%=basePath%>/html/ammeter.html" width="4000" height="4000" frameborder="0" scrolling="no"></iframe> --%>
@@ -263,7 +263,7 @@
     	<h4><label id='tableBoxName'></label><span class="close-js" onclick="$('#messageAmmeter').hide();">关闭</span></h4>
         <div class="edit mrr">
             <p><sapn id="statusSpan"></sapn></p>
-			<iframe id="tab3Iframe" src="<%=basePath%>/html/ammeter.html" width="4000" height="4000" frameborder="0" scrolling="no"></iframe>
+			<iframe id="tab3Iframe" src="<%=basePath%>/html/ammeter.html" width="10000" height="4000" frameborder="0" scrolling="no"></iframe>
             
         </div>
         <div class="but-nav" style=" position: absolute; left:0px; bottom:30px; height:32px;">
