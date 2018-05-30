@@ -164,6 +164,14 @@ function getSymbolByType(type) {
 			r: [0, 90]
 		};
 		break;
+	case 'tableList1':
+		data = {
+			id: "TableBox_PD_列表01",
+			x: 12,
+			y: 12,
+			r: [0, 90]
+		};
+		break;
 	default:
 		break;
 	}
@@ -210,70 +218,90 @@ function showTop(rowId){
 	         success: function (data) {
 	        	 if(data){
 	        		 if(null != data && data.length > 0){
-	        			 var rootList  = getRootData("M0001",rowId,data);//箱变
+	        			 var rootList = getRootData("M0001",rowId,data);//箱变
 	        			 if(null != rootList && rootList.length > 0){
-        					var branchBoxDifference = 100;//差值
-         	        		var branchBoxRelative = 100;//没有表箱的分支箱相对位置
-         	        	   	var gird = 80;
-         		        	var mergeBranchBoxXAll = null;//每组合并时候取中间值
-         		        	var ammeterX = 200;//电表X绝对位置
-        	     		    var ammeterY = 600;//电表Y绝对位置	
-        	     			var branchBoxX = ammeterX;//分支箱X绝对位置
-         	        		var branchBoxY = ammeterY;//分支箱Y绝对位置    
+	        				var gird = 100;
+        				 	var ammeterX = 200;//表箱X绝对位置
+        	     		    var ammeterY = 1000;//表箱Y绝对位置
+        	     			var branchBoxX = ammeterX;//分支箱开关X绝对位置
+         	        		var branchBoxY = ammeterY;//分支箱开关Y绝对位置   
         	     		         
-         	        		var cabinetsX = branchBoxX;//出线柜X绝对位置
-         	        		var cabinetsY = branchBoxY;//出现柜Y绝对位置
-         	        		var cabinetsDifference = 150;//设置出线柜相对分支箱高度
-         	        		var cabinetsDifferenceTemp = 150;//设置出线柜与箱变之间图形的相对分支箱高度
+         	        		var cabinetsX = branchBoxX;//出线柜开关X绝对位置
+         	        		var cabinetsY = branchBoxY;//出现柜开关Y绝对位置
+         	        		var cabinetsDifference = 200;//分支箱开关合并组与出线柜开关高度y值
          	        		
-         	        		var mergeCabinetsXAll = null;
+           	        		var rootSwitchX = cabinetsX;//箱变开关X绝对位置
+         	        		var rootSwitchY = cabinetsY;//箱变开关Y绝对位置
+         	        		var rootSwitchDifference = 200;//出线柜开关合并组与箱变开关高度y值
+         	        		
+         	        		var branchBoxDifference = 100;//分支箱开关与表箱高度y差值
+         	        		
+         	        		var rootX = rootSwitchX;//箱变X绝对位置
+         	        		var rootY = rootSwitchY;//箱变Y绝对位置
+         	        		var rootDifference = 200;//出线柜合并组与箱变高度y值
+         	        		
+         	        		
+    						var cabinetsCount = 0;//统计箱变合并的出线柜的组中位数
+	    					var tempRootX = 0;//获取到箱变合并的出线柜的下宽度
+	          		        var tempRootY = 0;//获取到箱变合并的出线柜的下高
+	          		        var tempRootLineX = 0;//获取到箱变合并的出线柜的上宽度
+	          		        var tempRootLineY = 0;//获取到箱变合并的出线柜的上高
+	          		        
 	        				 //箱变循环- begin
 	        				 for(var i= 0; i < rootList.length; i++){
         						var i_json = rootList[i];
 	 	    					var i_epuParentId = i_json["rowId"];
 	 	    					var cabinetsList  = new Array();//出线柜
-	 	    					var lsitBranchBoxXY = new Array();//定义出线柜的上处划线的上宽度 上高度
 	 	    					getNextData("M0002",i_epuParentId,data,cabinetsList);
-	 	    					var tempCabinetsCount = 0;//获取出现柜的组中位数
-    	    					 var tempCabinetsX = 0;//获取到出现柜的下宽度
-    	          		         var tempCabinetsY = 0;//获取到出现柜的下高
-    	          		         var tempCabinetsLineX = 0;//获取到出现柜的上宽度
-    	          		         var tempCabinetsLineY = 0;//获取到出现柜的上高
 	 	    					//出线柜循环 -begin
-	 	    					if(null != cabinetsList && cabinetsList.length > 0){	
-	 	    						tempCabinetsCount = (cabinetsList.length-1) / 2;
-	 	    						var jCountTempX = 115;//table相对X
-	 	    						var jCountTempY = 0;//table相对y
+	 	    					if(null != cabinetsList && cabinetsList.length > 0){
+	 	    						cabinetsCount = cabinetsList.length - 1 / 2;
+	 	    						var branchBoxCount = 0;//统计出线柜开关的组中位数
+ 	    	    					var tempCabinetsX = 0;//获取到出线柜开关的下宽度
+ 	    	          		        var tempCabinetsY = 0;//获取到出线柜开关的下高
+ 	    	          		        var tempCabinetsLineX = 0;//获取到出线柜开关的上宽度
+ 	    	          		        var tempCabinetsLineY = 0;//获取到出线柜开关的上高
+	 	    						
+	 	    						var mergeRootXAll = null;//箱变下出线柜X合并
+	 	    						
 	 	    						for(var j= 0; j < cabinetsList.length; j++){
 	 	    							var j_json = cabinetsList[j];
 	 	    	    					var j_epuParentId = j_json["rowId"];
 	 	    							var branchBoxList  = new Array();//分支箱
 	 	    	    					getNextData("M0003",j_epuParentId,data,branchBoxList);
-	 	    	    					//分支箱循环-begin
-	 	    	    					var cabinetsX_branchBoxX = 0;//计算合并后的具体位置值
-	 	    	    					var cabinetsY_branchBoxY = 0;//计算合并后的具体位置值
-	 	    	    					
-	 	    	    					 var tempCount = 0;//获取分线箱的组中位数
-	 	    	    					 var tempBranchBoxX = 0;//获取到分线箱的下宽度
-	 	    	          		         var tempBranchBoxY = 0;//获取到分线箱的下高
-	 	    	          		         var tempBranchBoxLineX = 0;//获取到分线箱的上宽度
-	 	    	          		         var tempBranchBoxLineY = 0;//获取到分线箱的上高
+	 	    	          		        //分支箱循环-begin
 	 	    	    					if(null != branchBoxList && branchBoxList.length > 0){
-	 	    	    						tempCount = (branchBoxList.length-1) / 2;
+	 	    	    						branchBoxCount = branchBoxList.length - 1 / 2;
+	 	    	    						
+	 	    	    						var tableBoxCount = 0;//统计分线箱开关的组中位数
+		 	    	    					var tempBranchBoxX = 0;//获取到分线箱开关的下宽度
+		 	    	          		        var tempBranchBoxY = 0;//获取到分线箱开关的下高
+		 	    	          		        var tempBranchBoxLineX = 0;//获取到分线箱开关的上宽度
+		 	    	          		        var tempBranchBoxLineY = 0;//获取到分线箱开关的上高
+		 	    	          		        
+		 	    	          		        var groupBranchBoxXNum = 50;//每组分支箱开关的X间距
+		 	    	          		        
+		 	    	          		        var mergeBranchBoxXAll = null;//出线柜每组开关X合并
 	 	    	    						for(var z = 0; z < branchBoxList.length; z++){
 	 	    	    	    					var z_json = branchBoxList[z];
 	 	    	    	    					var z_epuParentId = z_json["rowId"];
 	 	    	    	    					 var z_epuStatus = z_json["epuStatus"];
 	 	    	    	    					 var tableBoxList  = new Array();//表箱
+	 	    	    	    					ammeterX = ammeterX + groupBranchBoxXNum;//每组分支箱开关X间距些距离(包含表箱也是)
 	 	    	    	    					getNextData("M0004",z_epuParentId,data,tableBoxList);
+	 	    	    	    					var mergeTableBoxXAll = null; //分支箱每组开关X合并
 	 	    	    	    					//表箱循环-begin
+//	 	    	    	    					alert(branchBoxList.length+"=="+tableBoxList.length+"==="+z_epuParentId+"==="+rowId)
 	 	    	    	    					if(null != tableBoxList && tableBoxList.length > 0){//有表箱集合的
+	 	    	    	    						tableBoxCount = tableBoxList.length - 1 / 2;
 	 		    	    	    					for(var x= 0; x < tableBoxList.length; x ++){
 	 		    	    	    						var x_json = tableBoxList[x];
 	 		    	    	    						var x_rowId = x_json["rowId"];
 	 		    	    	    						//展示表箱
-	 		    		        			 			ammeterX = ammeterX + gird;
-	 		    		        			 			var txtKey = (z_epuParentId +"_" + x_rowId);
+	 		    		        			 			ammeterX = ammeterX + gird ;
+//	 		    		        			 			var txtKey = (z_epuParentId +"_" + x_rowId);
+//	 		    		 	    						setCreateUseEl(layerSnap,"ammeterId" + txtKey, "TableBox",ammeterX,ammeterY);
+	 		    		 	    						var txtKey = (z_epuParentId +"_" + x_rowId);
 	 		    		 	    						setCreateUseEl(layerSnap,"ammeterId" + txtKey, "TableBox",ammeterX,ammeterY);
 		 		    		    		        		 splitRemarks(layerSnap,"idTitle" + txtKey,"表箱",ammeterX + 50,ammeterY + 37,"fText",16);//表箱标题
 		 		    		    		        		 var x_epuName = x_json["epuName"] ||"";
@@ -295,20 +323,21 @@ function showTop(rowId){
 		 		    	    	    				              //只有电表TAB可以执行此动作
 			    	    	    				            	  iframeID.contentWindow.showTop(rowId,tableBoxId);
 			    	    	    				            	  parent.$("#messageAmmeter").show();
-		 		    	    	    						});
-		 		    	    	    						//表箱分割备注
-		 		    	    		    		        	splitRemarks(layerSnap,"tableBoxID","表箱",45,(ammeterY + 40),"fText",20);
-		 		    	    		    		        	 createLineEl(layerSnap, {
-			 						    		        			id :"idLine" + j_epuParentId,
-			 						    		        			dash:"true"
-			 						    		        		}, {
-			 						    		        			x: 4000,//下宽度
-			 						    		        			y: ammeterY + 200,//下高
-			 						    		        			x2: 0,//上宽度
-			 						    		        			y2: ammeterY + 200,//上高
-			 						    		        			scale: 1
-			 						    		        		});
-		 		    		    		        		 //引入表箱与分支箱线
+		 		    	    	    					});
+	 		    	    	    						//表箱分割备注
+	 		    	    		    		        	splitRemarks(layerSnap,"tableBoxID","表箱",45,(ammeterY + 40),"fText",20);
+	 		    	    		    		        	//虚线
+	 		    	    		    		        	createLineEl(layerSnap, {
+		 						    		        			id :"idLine" + j_epuParentId,
+		 						    		        			dash:"true"
+		 						    		        		}, {
+		 						    		        			x: 4000,//下宽度
+		 						    		        			y: ammeterY + 200,//下高
+		 						    		        			x2: 0,//上宽度
+		 						    		        			y2: ammeterY + 200,//上高
+		 						    		        			scale: 1
+		 						    		        	});
+	 		    		 	    						 //引入表箱与分支箱开关线(一对一)
 	 		    		    		        			 createLineEl(layerSnap, {
 	 		    				    		        			id :"idLine" + x_rowId,
 	 		    				    		        			type: "TableBox"
@@ -319,313 +348,208 @@ function showTop(rowId){
 	 		    				    		        			y2: ammeterY - 58,//上高
 	 		    				    		        			scale: 1
 	 		    				    		        		});
-	 		    		    		        			 //展示分支箱图形（正常）
+//	 		    		    		        			 //展示一个分支箱一个开关图形（正常）
 	 		    		 	    						 branchBoxX = ammeterX;
 	 		    		 	    		        		 branchBoxY = ammeterY- branchBoxDifference;
 	 		    		 	    		        		 setCreateUseEl(layerSnap,"branchBoxid" + z_epuParentId, "LoadBreakSwitch",branchBoxX,branchBoxY);
 	 		    		 	    		        		  //分支箱分割备注
 	 		    		 	    		        		 splitRemarks(layerSnap,"branchBoxID","分支箱",65,(branchBoxY + 40),"fText",20);
 	 		    		 	    		        		 createLineEl(layerSnap, {
-	 						    		        			id :"idLine" + j_epuParentId,
-	 						    		        			dash:"true"
-	 						    		        		}, {
-	 						    		        			x: 4000,//下宽度
-	 						    		        			y: branchBoxY +70,//下高
-	 						    		        			x2: 0,//上宽度
-	 						    		        			y2: branchBoxY+70,//上高
-	 						    		        			scale: 1
-	 						    		        		});
-	 		    		 	    		        		 //合并分支箱
-	 		    		 		    		        	 branchBoxLineX = branchBoxX + 32;//下宽度
-	 		    		 		    		        	 branchBoxLineY = branchBoxY + 22;//下高
-	 		    		 		    		        	 branchBoxLineX2 = branchBoxX + 32;//上宽度
-	 		    		 		    		        	 branchBoxLineY2 = branchBoxY - 80;//上高
-	 		    		 		    		        	 if (!mergeBranchBoxXAll) {
-	 		    		 		    		        		 cabinetsX_branchBoxX = branchBoxX;//计算合并后的具体位置值
-	 		    		 		    		       			 cabinetsY_branchBoxY = branchBoxY;//计算合并后的具体位置值
-	 		    		     		        				 mergeBranchBoxXAll = branchBoxLineX + (tableBoxList.length -1) * gird / 2;
+		 						    		        			id :"idLine" + z_epuParentId,
+		 						    		        			dash:"true"
+		 						    		        		}, {
+		 						    		        			x: 4000,//下宽度
+		 						    		        			y: branchBoxY +70,//下高
+		 						    		        			x2: 0,//上宽度
+		 						    		        			y2: branchBoxY+70,//上高
+		 						    		        			scale: 1
+		 						    		        		});
+	 		    		 	    		        		 //将一个分支箱下的所有开关合并
+	 		    		 		    		        	var branchBoxLineX = branchBoxX + 32;//下宽度
+	 		    		 		    		        	var branchBoxLineY = branchBoxY + 22;//下高
+	 		    		 		    		        	var branchBoxLineX2 = branchBoxX + 32;//上宽度
+	 		    		 		    		        	var branchBoxLineY2 = branchBoxY - 50;//上高
+	 		    		 		    		        	 if (!mergeTableBoxXAll) {
+	 		    		 		    		       			 mergeTableBoxXAll = branchBoxLineX + (tableBoxList.length -1) * gird / 2;
 	 		    		     		        			 }
 	 		    		     		        			 pos={
-	 		    		  		    		        			x: mergeBranchBoxXAll,//下宽度
+	 		    		  		    		        			x: mergeTableBoxXAll,//下宽度
 	 		    		  		    		        			y: branchBoxLineY2,//下高
 	 		    		  		    		        			x2: branchBoxLineX,//上宽度
 	 		    		  		    		        			y2: branchBoxLineY,//上高
 	 		    		  		    		        			scale: 1
 	 		    		  		    		        		};
 	 		    		     		        			 setPos(layerSnap,pos);
-	 		    		     		        			if(branchBoxList.length == 1){
-	 		    		     		        				  tempBranchBoxX = branchBoxLineX - 32 ;//下宽度
-		 		    		   		          		          tempBranchBoxY = branchBoxLineY;//下高
-		 		    		   		          		          tempBranchBoxLineX = branchBoxLineX2;//上宽度
-		 		    		   		          		          tempBranchBoxLineY = branchBoxLineY2;///上高
-	 		    		     		        			}else if(tempCount >= z && tempCount < ( z + 1)){
-		 		    		   		        				  tempBranchBoxX = branchBoxLineX + 20;//下宽度
+	 		    		     		        			if(tableBoxCount >x && tableBoxCount < ( x + 1)){
+		 		    		   		        				  tempBranchBoxX = mergeTableBoxXAll;//下宽度
 		 		    		   		          		          tempBranchBoxY = branchBoxLineY;//下高
 		 		    		   		          		          tempBranchBoxLineX = branchBoxLineX2;//上宽度
 		 		    		   		          		          tempBranchBoxLineY = branchBoxLineY2;///上高
 		 		    		     		        		}
+	 		    		     		        			
 	 		    	    	    					}
-	 	    	    	    					}else{
-	 	    	    	    						//分支箱没有循环的-begin
-//	 	    	    	    						alert("表箱");
-	 	    	    	    						//展示表箱
- 		    		        			 			ammeterX = ammeterX + gird;
- 		    		 	    						 var txtKey = (z_epuParentId +"_");
-	 		    		    		        		 //引入表箱与分支箱线
- 		    		    		        			 createLineEl(layerSnap, {
- 		    				    		        			id :"idLine" + txtKey,
- 		    				    		        			type: "TableBox"
- 		    				    		        		}, {
- 		    				    		        			x: ammeterX + 33,//下宽度
- 		    				    		        			y: ammeterY + 13,//下高
- 		    				    		        			x2: ammeterX + 32,//上宽度
- 		    				    		        			y2: ammeterY - 58,//上高
- 		    				    		        			scale: 1
- 		    				    		        		});
- 		    		    		        			 //展示分支箱图形（正常）
- 		    		 	    						 branchBoxX = ammeterX;
- 		    		 	    		        		 branchBoxY = ammeterY- branchBoxDifference;
- 		    		 	    		        		 setCreateUseEl(layerSnap,"branchBoxid" + z_epuParentId, "LoadBreakSwitch",branchBoxX,branchBoxY);
- 		    		 	    		        		 //合并分支箱
- 		    		 		    		        	 branchBoxLineX = branchBoxX + 32;//下宽度
- 		    		 		    		        	 branchBoxLineY = branchBoxY + 22;//下高
- 		    		 		    		        	 branchBoxLineX2 = branchBoxX + 32;//上宽度
- 		    		 		    		        	 branchBoxLineY2 = branchBoxY - 80;//上高
- 		    		 		    		        	 if (!mergeBranchBoxXAll) {
- 		    		 		    		        		 cabinetsX_branchBoxX = branchBoxX;//计算合并后的具体位置值
- 		    		 		    		       			 cabinetsY_branchBoxY = branchBoxY;//计算合并后的具体位置值
- 		    		     		        				 mergeBranchBoxXAll = branchBoxLineX;
- 		    		     		        			 }
- 		    		     		        			 pos={
- 		    		  		    		        			x: mergeBranchBoxXAll,//下宽度
- 		    		  		    		        			y: branchBoxLineY2,//下高
- 		    		  		    		        			x2: branchBoxLineX,//上宽度
- 		    		  		    		        			y2: branchBoxLineY,//上高
- 		    		  		    		        			scale: 1
- 		    		  		    		        		};
- 		    		     		        			 setPos(layerSnap,pos);
-	    		     		        				  tempBranchBoxX = branchBoxLineX - 32 ;//下宽度
-		    		   		          		          tempBranchBoxY = branchBoxLineY;//下高
-		    		   		          		          tempBranchBoxLineX = branchBoxLineX2;//上宽度
-		    		   		          		          tempBranchBoxLineY = branchBoxLineY2;///上高
 	 	    	    	    					}
+	 	    	    	    					mergeTableBoxXAll = null;
 	 	    	    	    					//表箱循环-end
-	 	    	    						}
-	 	    	    						mergeBranchBoxXAll = null;//只有一组的时候才合并
-	 	    	    					}
-	 	    	    					//分支箱循环-end
-	 	    	    					else{
-	 	    	    						//分支箱没有循环的-begin
-//	 	    	    						alert("分支箱");
-	 	    	    						//展示表箱
-	    		        			 			ammeterX = ammeterX + gird;
-	    		 	    						 var txtKey = (z_epuParentId +"_");
-		    		    		        		 //引入表箱与分支箱线
-//	    		    		        			 createLineEl(layerSnap, {
-//	    				    		        			id :"idLine" + txtKey,
-//	    				    		        			type: "TableBox"
-//	    				    		        		}, {
-//	    				    		        			x: ammeterX + 33,//下宽度
-//	    				    		        			y: ammeterY + 13,//下高
-//	    				    		        			x2: ammeterX + 32,//上宽度
-//	    				    		        			y2: ammeterY - 58,//上高
-//	    				    		        			scale: 1
-//	    				    		        		});
-	    		    		        			 //展示分支箱图形（正常）
-	    		 	    						 branchBoxX = ammeterX;
-	    		 	    		        		 branchBoxY = ammeterY - branchBoxDifference;
-//	    		 	    		        		 setCreateUseEl(layerSnap,"branchBoxid" + z_epuParentId, "LoadBreakSwitch",branchBoxX,branchBoxY);
-	    		 	    		        		 //合并分支箱
-	    		 		    		        	 branchBoxLineX = branchBoxX + 32;//下宽度
-	    		 		    		        	 branchBoxLineY = branchBoxY + 22;//下高
-	    		 		    		        	 branchBoxLineX2 = branchBoxX + 32;//上宽度
-	    		 		    		        	 branchBoxLineY2 = branchBoxY - 100;//上高
+	 	    	    	    					cabinetsY = branchBoxY - cabinetsDifference;//一个出线柜开关Y轴坐标(相对分支箱往上位置 = 分支箱开关Y绝对位置  - 分支箱开关合并组与出线柜开关高度y值)
+	 	    	    	    					//一组分支箱的中间X向上画线
+					    	    		        var lowerBranchBoxX = tempBranchBoxX;//下宽度
+			    	 	    		        	var lowerBranchBoxY = tempBranchBoxLineY;//下高
+			    	 	    		        	var lowerBranchBoxX1 = tempBranchBoxX;//上宽度 (分线箱上处宽度)
+			    	 	    		        	var lowerBranchBoxY1 = cabinetsY + 100;//上高 (分线箱上处高度)
+			    	 	    		            createLineEl(layerSnap, {
+							    		        	id :"idLines" + z_epuParentId,
+							    		        	type: "TableBox"
+							    		        }, {
+							    		        	x: lowerBranchBoxX,//下宽度
+							    		        	y: lowerBranchBoxY,//下高
+							    		        	x2: lowerBranchBoxX1,//上宽度
+							    		        	y2: lowerBranchBoxY1 ,//上高
+							    		        	scale: 1
+							    		        });
+			    	 	    		            
+	 	    	    	    					cabinetsX = tempBranchBoxX - 32;//一个出线柜开关X轴坐标
+					    	    		        //展示一个出线柜下一个开关图形（正常）
+					    	    		        setCreateUseEl(layerSnap,"id" + j_epuParentId, "LoadBreakSwitch",cabinetsX,cabinetsY);
+			    	 	    		        	//出线柜分割备注
+			    	 	    		        	splitRemarks(layerSnap,"cabinetsID","出线柜",65,(cabinetsY+40),"fText",20);
+			    	 	    		        	 createLineEl(layerSnap, {
+						    		        			id :"idLine" + j_epuParentId,
+						    		        			dash:"true"
+						    		        		}, {
+						    		        			x: 4000,//下宽度
+						    		        			y: cabinetsY + 100,//下高
+						    		        			x2: 0,//上宽度
+						    		        			y2: cabinetsY + 100,//上高
+						    		        			scale: 1
+						    		        		});
+				    	 	    		        //出线柜开关往下画线
+				    	 	    		        var lowerCabinetsLineX = cabinetsX + 32;//下宽度（出线柜开关下处宽度）
+				    	 	    		        var lowerCabinetsLineY = cabinetsY + 50;//下高（出线柜开关下处高度）
+				    	 	    		        var lowerCabinetsLineX1 = cabinetsX + 32;//上宽度
+				    	 	    		        var lowerCabinetsLineY1 = cabinetsY + 42;//上高
+				    	 	    		        createLineEl(layerSnap, {
+							    		        		id :"lowerCabinetsID" + z_epuParentId,
+							    		        		type: "TableBox"
+							    		        }, {
+							    		        		x: lowerCabinetsLineX,//下宽度
+							    		        		y: lowerCabinetsLineY,//下高
+							    		        		x2: lowerCabinetsLineX1,//上宽度
+							    		        		y2: lowerCabinetsLineY1,//上高
+							    		        		scale: 1
+							    		        });
+				    	 	    		        //将每组分支箱与出线柜开关连线 
+			    	 	    		        	pos = {
+		 	 	     		    		        	x: lowerBranchBoxX1,//下宽度 (分线箱上处宽度)
+		 	 	     		    		        	y: lowerBranchBoxY1,//下高(分线箱上处高度)
+		 	 	     		    		        	x2: lowerCabinetsLineX,//上宽度（出线柜开关下处宽度）
+		 	 	     		    		        	y2: lowerCabinetsLineY,//上高（出线柜开关下处高度）
+		 	 	     		    		        	scale: 1
+		 	 	     		    		        };
+		 	 	        		        		setPos(layerSnap,pos);
+		 	 	        		        		//将一个出线柜下的开关合并
+		 	 	        		        		var cabinetsLineX = cabinetsX + 32;//下宽度
+		 	 	        		        		var cabinetsLineY = cabinetsY + 22;//下高
+		 	 	        		        		var cabinetsLineX2 = cabinetsX + 32;//上宽度
+		 	 	        		        		var cabinetsLineY2 = cabinetsY - 50;//上高
 	    		 		    		        	 if (!mergeBranchBoxXAll) {
-	    		 		    		        		 cabinetsX_branchBoxX = branchBoxX;//计算合并后的具体位置值
-	    		 		    		       			 cabinetsY_branchBoxY = branchBoxY;//计算合并后的具体位置值
+	    		     		        				 mergeBranchBoxXAll = cabinetsLineX + (branchBoxList.length - 1) * gird / 2;
+	    		     		        				 //table
+	    			 	    	    				 setCabinetsXTable(layerSnap,j_epuParentId,mergeBranchBoxXAll,cabinetsY - 50);//相对分线柜开关中位线显示table
 	    		     		        			 }
 	    		     		        			 pos={
-	    		  		    		        			x: branchBoxLineX,//下宽度
-	    		  		    		        			y: branchBoxLineY2,//下高
-	    		  		    		        			x2: branchBoxLineX,//上宽度
-	    		  		    		        			y2: branchBoxLineY,//上高
+	    		  		    		        			x: mergeBranchBoxXAll,//下宽度
+	    		  		    		        			y: cabinetsLineY2,//下高
+	    		  		    		        			x2: cabinetsLineX,//上宽度
+	    		  		    		        			y2: cabinetsLineY,//上高
 	    		  		    		        			scale: 1
 	    		  		    		        		};
-//	    		     		        			 setPos(layerSnap,pos);
-		     		        				  tempBranchBoxX = branchBoxLineX - 32 ;//下宽度
-    		   		          		          tempBranchBoxY = branchBoxLineY;//下高
-    		   		          		          tempBranchBoxLineX = branchBoxLineX2;//上宽度
-    		   		          		          tempBranchBoxLineY = branchBoxLineY2;///上高
-	 	    	    						//分支箱没有循环的-end
+	    		     		        			 setPos(layerSnap,pos);
+	    		     		        			if(branchBoxCount > z && branchBoxCount < ( z + 1)){
+		    		   		        				  tempCabinetsX = mergeBranchBoxXAll;//下宽度
+		    		   		        				  tempCabinetsY = cabinetsLineY;//下高
+		    		   		        				  tempCabinetsLineX = cabinetsLineX2;//上宽度
+		    		   		        				  tempCabinetsLineY = cabinetsLineY2;///上高
+		    		     		        		}
+	 	    	    						}
 	 	    	    					}
-	 	    	    					cabinetsX = tempBranchBoxX;
-	 	    		    		        cabinetsY = cabinetsY_branchBoxY - cabinetsDifference ;
-//	 	    		    		        alert(cabinetsList.length+"=="+tempBranchBoxX+"==="+cabinetsY)
-	 	    		    		       //出线柜
-	 	    		    		        setCreateUseEl(layerSnap,"cabinetsId" + j_epuParentId, "LoadBreakSwitchRed",cabinetsX,cabinetsY);
-	 	    		    		       //table
-	 	    		    		       jCountTempX = jCountTempX - 30;
-	 	    		    		      jCountTempY = jCountTempY - 10;
-	 	    		    		        if(j % 2 == 0){
-	    	    	    		         setCabinetsXTable(layerSnap,j_epuParentId,cabinetsX - jCountTempX,cabinetsY+jCountTempY);
-	 	    		    		        }else{
-	 	    		    		        	setCabinetsXTable(layerSnap,j_epuParentId,cabinetsX-jCountTempX,cabinetsY + 115);
-	 	    		    		        }
-	    	 	    		        	//出线柜分割备注
-	    	 	    		        	splitRemarks(layerSnap,"cabinetsID","出线柜",65,(cabinetsY+40),"fText",20);
-	    	 	    		        	 createLineEl(layerSnap, {
-				    		        			id :"idLine" + j_epuParentId,
-				    		        			dash:"true"
-				    		        		}, {
-				    		        			x: 4000,//下宽度
-				    		        			y: cabinetsY + 100,//下高
-				    		        			x2: 0,//上宽度
-				    		        			y2: cabinetsY + 100,//上高
-				    		        			scale: 1
-				    		        		});
-	 	    		    		        //合并出线柜
-	 	    		    		        branchBoxLineX = cabinetsX + 32;//下宽度
-	 	    		    		        branchBoxLineY = cabinetsY + 22;//下高
-	 	    		    		        branchBoxLineX2 = cabinetsX + 32;//上宽度
-	 	    		    		        branchBoxLineY2 = cabinetsY - 80;//上高
- 		 		    		        	 if (!mergeCabinetsXAll) {
- 		 		    		        		mergeCabinetsXAll = branchBoxLineX + (cabinetsList.length -1) * gird / 2;
- 		     		        			 }
- 		     		        			 pos={
- 		  		    		        			x: mergeCabinetsXAll,//下宽度
- 		  		    		        			y: branchBoxLineY2,//下高
- 		  		    		        			x2: branchBoxLineX,//上宽度
- 		  		    		        			y2: branchBoxLineY,//上高
- 		  		    		        			scale: 1
- 		  		    		        		};
- 		     		        			 setPos(layerSnap,pos);
-		 	    		    		   	if(cabinetsList.length == 1){
-		 	    		    		   		tempCabinetsX = branchBoxLineX;//下宽度
-		 	    		    		   		tempCabinetsY = branchBoxLineY;//下高
-		 	    		    		   		tempCabinetsLineX = branchBoxLineX2;//上宽度
-		 	    		    		   		tempCabinetsLineY = branchBoxLineY2;///上高
-		     		        			}else if(tempCabinetsCount >= j && tempCabinetsCount < ( j + 1)){
-	     		        					tempCabinetsX = branchBoxLineX + 20;//下宽度
-	     		        					tempCabinetsY = branchBoxLineY;//下高
-	     		        					tempCabinetsLineX = branchBoxLineX2;//上宽度
-	     		        					tempCabinetsLineY = branchBoxLineY2;///上高
-			     		        		}
-		 	    		    		   	
- 	    	 	    		        	//出线柜往下画线
- 	    	 	    		        	var lowerCabinetsLineX = cabinetsX + 32;//下宽度（出线柜下处宽度）
- 	    	 	    		        	var lowerCabinetsLineY = cabinetsY + 50;//下高（分线柜下处高度）
- 	    	 	    		        	var lowerCabinetsLineX1 = cabinetsX + 32;//上宽度
- 	    	 	    		        	var lowerCabinetsLineY1 = cabinetsY + 42;//上高
- 	    	 	    		        	 createLineEl(layerSnap, {
- 				    		        			id :"lowerCabinetsID" + z_epuParentId,
- 				    		        			type: "TableBox"
- 				    		        		}, {
- 				    		        			x: lowerCabinetsLineX,//下宽度
- 				    		        			y: lowerCabinetsLineY,//下高
- 				    		        			x2: lowerCabinetsLineX1,//上宽度
- 				    		        			y2: lowerCabinetsLineY1,//上高
- 				    		        			scale: 1
- 				    		        		});
- 	    	 	    		        	  
- 	    	 	    		        	 if(branchBoxList.length > 0){//分线箱下面有表箱(有表箱，表箱与分纤箱一对一)的执行如下：
- 	    	 	    		        		var lowerBranchBoxX = lowerCabinetsLineX;//下宽度
- 	    	 	    		        		var lowerBranchBoxY = tempBranchBoxLineY;//下高
- 	    	 	    		        		 createLineEl(layerSnap, {
- 					    		        			id :"idLines" + j_epuParentId,
- 					    		        			type: "TableBox"
- 					    		        		}, {
- 	    	 	    		        			x: lowerBranchBoxX,//下宽度 (分线箱上处宽度)
-	     		    		        			y: lowerBranchBoxY,//下高(分线箱上处高度)
-	     		    		        			x2: lowerCabinetsLineX,//上宽度
-	     		    		        			y2: lowerCabinetsLineY,//上高
- 					    		        			scale: 1
- 					    		        		});
- 	    	 	    		        	 }
-		 	    					}
-	 	    					}else{
-	 	    						tempCabinetsX = ammeterX;
-	 	    						cabinetsY_branchBoxY = ammeterY;
-	 	    						//没有循环的出线柜
-//	 	    						alert("出线柜");
-	 	    						cabinetsX = tempCabinetsX-32;
- 	    		    		        cabinetsY = cabinetsY_branchBoxY  ;
- 	    		    		       //出线柜
- 	    		    		        setCreateUseEl(layerSnap,"id" + j_epuParentId, "LoadBreakSwitchRed",cabinetsX,cabinetsY);
-// 	    		    		       //table
- 	    		    		       if(j % 2 == 0){
-    	    	    		         setCabinetsXTable(layerSnap,j_epuParentId,cabinetsX,cabinetsY);
- 	    		    		        }else{
- 	    		    		        	setCabinetsXTable(layerSnap,j_epuParentId,cabinetsX,cabinetsY + 115);
- 	    		    		        }
-    	 	    		        	//出线柜分割备注
-    	 	    		        	splitRemarks(layerSnap,"cabinetsID","出线柜",65,(cabinetsY+40),"fText",20);
-    	 	    		        	 createLineEl(layerSnap, {
-			    		        			id :"idLine" + j_epuParentId,
-			    		        			dash:"true"
-			    		        		}, {
-			    		        			x: 4000,//下宽度
-			    		        			y: cabinetsY +70,//下高
-			    		        			x2: 0,//上宽度
-			    		        			y2: cabinetsY+70,//上高
-			    		        			scale: 1
-			    		        		});
- 	    		    		        //合并出线柜
- 	    		    		        branchBoxLineX = cabinetsX + 32;//下宽度
- 	    		    		        branchBoxLineY = cabinetsY + 22;//下高
- 	    		    		        branchBoxLineX2 = cabinetsX + 32;//上宽度
- 	    		    		        branchBoxLineY2 = cabinetsY - 80;//上高
-		 		    		        	 if (!mergeCabinetsXAll) {
-//		 		    		        		mergeCabinetsXAll = branchBoxLineX + (cabinetsList.length -1) * gird / 2;
+	 	    	    					mergeBranchBoxXAll = null;
+	 	    	    					//分支箱循环-end
+	 	    	    					rootSwitchY = cabinetsY - rootSwitchDifference;//一个箱变开关Y轴坐标(相对出线柜往上位置 = 出线柜开关Y绝对位置  - 出线柜开关合并组与箱变开关高度y值)
+	 	    	    					rootSwitchX = tempCabinetsX - 32;//一个出线柜开关X轴坐标
+	 	    	    					//一组出线柜的中间X向上画线
+			    	    		        var lowerCabinetsX = tempCabinetsX;//下宽度
+	    	 	    		        	var lowerCabinetsY = tempCabinetsLineY;//下高
+	    	 	    		        	var lowerCabinetsX1 = tempCabinetsX;//上宽度 (出现柜上处宽度)
+	    	 	    		        	var lowerCabinetsY1 = rootSwitchY + 100;//上高 (出现柜上处高度)
+	    	 	    		            createLineEl(layerSnap, {
+					    		        	id :"idLines" + j_epuParentId,
+					    		        	type: "TableBox"
+					    		        }, {
+					    		        	x: lowerCabinetsX,//下宽度
+					    		        	y: lowerCabinetsY,//下高
+					    		        	x2: lowerCabinetsX1,//上宽度
+					    		        	y2: lowerCabinetsY1 ,//上高
+					    		        	scale: 1
+					    		        });
+	    	 	    		            //将一个箱变下的开关合并
+ 	 	        		        		var cabinetsLineX = rootSwitchX + 32;//下宽度
+ 	 	        		        		var cabinetsLineY = rootSwitchY + 100;//下高
+ 	 	        		        		var cabinetsLineX2 = rootSwitchX + 32;//上宽度
+ 	 	        		        		var cabinetsLineY2 = rootSwitchY - 50;//上高
+		 		    		        	 if (!mergeRootXAll) {
+		 		    		        		 mergeRootXAll = cabinetsLineX + (cabinetsList.length - 1) * gird / 2;
 		     		        			 }
 		     		        			 pos={
-		  		    		        			x: branchBoxLineX,//下宽度
-		  		    		        			y: branchBoxLineY2,//下高
-		  		    		        			x2: branchBoxLineX,//上宽度
-		  		    		        			y2: branchBoxLineY,//上高
+		  		    		        			x: mergeRootXAll,//下宽度
+		  		    		        			y: cabinetsLineY2,//下高
+		  		    		        			x2: cabinetsLineX,//上宽度
+		  		    		        			y2: cabinetsLineY,//上高
 		  		    		        			scale: 1
 		  		    		        		};
 		     		        			 setPos(layerSnap,pos);
+		     		        			if(cabinetsCount > j && cabinetsCount < ( j + 1)){
+  		   		        				  tempRootX = mergeRootXAll;//下宽度
+  		   		        				  tempRootY = cabinetsLineY;//下高
+  		   		        				  tempRootLineX = cabinetsLineX2;//上宽度
+  		   		        				  tempRootLineY = cabinetsLineY2;///上高
+		     		        			}
+	 	    						}
+	 	    						mergeRootXAll = null;
 	 	    					}
 	 	    					//出线柜循环-end
-	 	    					mergeCabinetsXAll = null;//只有一组的时候才合并
-	 	    					var rootX = tempCabinetsX;
-	    		    		    var rootY = branchBoxLineY-145;
-	    		    		    createLineEl(layerSnap, {
-		    		        			id :"lowerTempID" + i_epuParentId,
-		    		        			type: "TableBox"
-		    		        		}, {
-		    		        			x: rootX,//下宽度
-		    		        			y: rootY,//下高
-		    		        			x2: rootX,//上宽度
-		    		        			y2: rootY+45,//上高
-		    		        			scale: 1
-		    		        		});
-	    		    		       //箱变与出线柜之间图形
-//	    		    		        setCreateUseEl(layerSnap,"rootTempId" + i_epuParentId, "LoadBreakSwitch",rootX-32,rootY-42);
-		    		    		    createLineEl(layerSnap, {
-		    		        			id :"lowerTempLineID" + i_epuParentId,
-		    		        			type: "TableBox"
-		    		        		}, {
-		    		        			x: rootX,//下宽度
-		    		        			y: rootY ,//下高
-		    		        			x2: rootX,//上宽度
-		    		        			y2: rootY- 100,//上高
-		    		        			scale: 1
-		    		        		});
-		    		    		    //箱变
-		    		    		    setCreateUseEl(layerSnap,"id" + i_epuParentId, "EnergyConsumer",rootX-32,rootY-155);
-		    		    		   //箱变分割备注
-	 	    						splitRemarks(layerSnap,"rootID","箱变",45,(rootY-155),"fText",20);
-	 	    						 createLineEl(layerSnap, {
-			    		        			id :"idLine" + i_epuParentId,
-			    		        			dash:"true"
-			    		        		}, {
-			    		        			x: 4000,//下宽度
-			    		        			y: rootY - 80,//下高
-			    		        			x2: 0,//上宽度
-			    		        			y2: rootY- 80,//上高
-			    		        			scale: 1
-			    		        		});
+	 	    					rootY = rootSwitchY - rootDifference;//一个箱变Y轴坐标(相对出线柜往上位置 = 出线柜中位Y绝对位置  - 出线柜合并组与箱变开关高度y值)
+	    	    				//一组分支箱的中间X向上画线
+	    	    		        var lowerRootX = tempRootX;//下宽度
+	 	    		        	var lowerRootY = tempRootLineY;//下高
+	 	    		        	var lowerRootX1 = tempRootX;//上宽度 (出线柜合并线上处宽度)
+	 	    		        	var lowerRootY1 = rootY + 53;//上高 (出线柜合并线上处高度)
+	 	    		            createLineEl(layerSnap, {
+			    		        	id :"idLines" + i_epuParentId,
+			    		        	type: "TableBox"
+			    		        }, {
+			    		        	x: lowerRootX,//下宽度
+			    		        	y: lowerRootY,//下高
+			    		        	x2: lowerRootX1,//上宽度
+			    		        	y2: lowerRootY1 ,//上高
+			    		        	scale: 1
+			    		        });
+	 	    		            
+	 	    		           rootX = tempRootX - 32;//一个出线柜开关X轴坐标
+	    	    		        //展示一个箱变
+	 	    		           setCreateUseEl(layerSnap,"id" + i_epuParentId, "EnergyConsumer",rootX,rootY);
+	 	    		          //箱变分割备注
+	    					   splitRemarks(layerSnap,"rootID","箱变",45,(rootY + 50),"fText",20);
+    						   createLineEl(layerSnap, {
+	    		        			id :"idLine" + i_epuParentId,
+	    		        			dash:"true"
+	    		        		}, {
+	    		        			x: 4000,//下宽度
+	    		        			y: (rootY + 80) ,//下高
+	    		        			x2: 0,//上宽度
+	    		        			y2: (rootY + 80),//上高
+	    		        			scale: 1
+	    		        		});
 	        				 }
 	        				 //箱变循环- end
 	        			 }
@@ -740,7 +664,7 @@ function setCabinetsXTable(layerSnap,id,cabinetsX,cabinetsY){
 //	
 	var idTableNull_X = cabinetsX;
 	var idTableNull_Y = cabinetsY - 150;
-//	setCreateUseEl(layerSnap,"idTableNull" + id, "tableList",idTableNull_X,idTableNull_Y);//空框
+	setCreateUseEl(layerSnap,"idTableNull" + id, "tableList1",idTableNull_X + 32,idTableNull_Y);//空框
 	
 	var idTableU_X = cabinetsX +58;
 	var idTableU_Y = cabinetsY -150;
@@ -766,7 +690,8 @@ function setCabinetsXTable(layerSnap,id,cabinetsX,cabinetsY){
 	setCreateUseEl(layerSnap,"idTableU" + id, "tableList",idTableAU_X,idTableAU_Y);//au框
 	splitRemarks(layerSnap,"idTableUtxt" + id,"5261.23",idTableAU_X + 55,idTableAU_Y+22,"fText",14);//I文字
 	
-	splitRemarks(layerSnap,"idTableUtxtz" + id,"A",idTableAU_X ,idTableAU_Y+22,"fText",18);//A
+	setCreateUseEl(layerSnap,"idTableUtxtzA" + id, "tableList1",idTableNull_X  + 32,idTableAU_Y);//空框
+	splitRemarks(layerSnap,"idTableUtxtz" + id,"A",idTableAU_X - 5 ,idTableAU_Y+22,"fText",18);//A
 	
 	var idTableAI_X = idTableAU_X +58;
 	var idTableAI_Y = idTableNull_Y+ 26;
@@ -786,7 +711,8 @@ function setCabinetsXTable(layerSnap,id,cabinetsX,cabinetsY){
 	setCreateUseEl(layerSnap,"idTableU" + id, "tableList",idTableBU_X,idTableBU_Y);//au框
 	splitRemarks(layerSnap,"idTableUtxt" + id,"1",idTableBU_X + 55,idTableBU_Y+22,"fText",14);//I文字
 	
-	splitRemarks(layerSnap,"idTableUtxtz" + id,"B",idTableBU_X ,idTableBU_Y+22,"fText",18);//B
+	setCreateUseEl(layerSnap,"idTableUtxtzB" + id, "tableList1",idTableNull_X + 32,idTableBU_Y);//空框
+	splitRemarks(layerSnap,"idTableUtxtz" + id,"B",idTableBU_X - 5,idTableBU_Y+22,"fText",18);//B
 	
 	var idTableBI_X = idTableBU_X +58;
 	var idTableBI_Y = idTableNull_Y+ 52;
@@ -807,7 +733,8 @@ function setCabinetsXTable(layerSnap,id,cabinetsX,cabinetsY){
 	setCreateUseEl(layerSnap,"idTableU" + id, "tableList",idTableCU_X,idTableCU_Y);//au框
 	splitRemarks(layerSnap,"idTableUtxt" + id,"1121",idTableCU_X + 55,idTableCU_Y+22,"fText",14);//I文字
 	
-	splitRemarks(layerSnap,"idTableUtxtz" + id,"C",idTableCU_X ,idTableCU_Y+22,"fText",18);//C
+	setCreateUseEl(layerSnap,"idTableUtxtzC" + id, "tableList1",idTableNull_X + 32,idTableCU_Y);//空框
+	splitRemarks(layerSnap,"idTableUtxtz" + id,"C",idTableCU_X - 5,idTableCU_Y+22,"fText",18);//C
 	
 	var idTableCI_X = idTableCU_X +58;
 	var idTableCI_Y = idTableNull_Y+ 78;
