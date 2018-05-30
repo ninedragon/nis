@@ -44,7 +44,8 @@
                           //  height: 20     // 信息窗口高度  
                           
                         }  
-                        var infoWindow = new BMap.InfoWindow("位置：" + epuLocal + "<br>" + "名称：" + name, opts);  // 创建信息窗口对象  
+                        var contentHtml = "<p style='font-size:16px;'>"+"位置：" + epuLocal + "<br>" + "名称：" + name+"</p>" ;  
+                        var infoWindow = new BMap.InfoWindow(contentHtml, opts);  // 创建信息窗口对象  
                         marker.addEventListener("click", function () {
                             M.openInfoWindow(infoWindow, p); //开启信息窗口  
                         });  
