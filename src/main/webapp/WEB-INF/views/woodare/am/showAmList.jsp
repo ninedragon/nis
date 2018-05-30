@@ -32,7 +32,7 @@
 			so.init(function(){
 				//全选
 				//so.checkBoxInit('#checkAll','[check=box]');
-				so.id('deleteAll').on('click',function(){
+			/* 	so.id('deleteAll').on('click',function(){
 					var checkeds = $('[check=box]:checked');
 					if(!checkeds.length){
 						return layer.msg('请选择要删除的选项。',so.default),!0;
@@ -42,7 +42,7 @@
 						array.push(this.value);
 					});
 					return so._delete(array);
-				});
+				}); */
 				so.initProvince();
 				so.registEvent();
 				initList();
@@ -192,7 +192,7 @@
 			                        for (var i = 0; i < epuList.length; i++) {			                            
 			       
 			                            tbody += '<tr>';
-			                           tbody += '<td align="center"><input value="'+epuList[i].rowId+'" check="box" type="checkbox" /></td>';             
+			                        /*    tbody += '<td align="center"><input value="'+epuList[i].rowId+'" check="box" type="checkbox" /></td>';   */           
 			                            tbody += '<td align="center"><div>' + epuList[i].epuProvinceName+ '</div></td>';
 			                            tbody += '<td align="center"><div>' + epuList[i].epuCityName + '</div></td>';
 			                            tbody += '<td align="center"><div>' + epuList[i].epuDistrictName+ '</div></td>';			                        			                            
@@ -1115,16 +1115,16 @@
 <!--         <div class="sec-box"> -->
 <!--         	<input name="" type="text"><span>搜索</span> -->
 <!--         </div> -->
-    	<div class="but-nav">
+    	<!-- <div class="but-nav">
             <span class="icon03" id="deleteAll">删除</span>
-        </div>
+        </div> -->
     </div>
     <!--其他操作结束/-->
     <!--表格开始-->
     <div class="table-box">
         <table width="100%">
             <tr>             		
-                <th><input  type="checkbox" id="checkAll"></th>                         
+               <!--  <th><input  type="checkbox" id="checkAll"></th>          -->                
 				<th>省份</th>
 				<th>城市</th>
 				<th>区县</th>
