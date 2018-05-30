@@ -199,7 +199,7 @@ function getRootPath_web() {
  * @param rowIdParam 箱变根
  * @param tableBoxId 表箱ID
  */
-function showTop(rowId,tableBoxId){
+function showTop(data,rowId,tableBoxId){
 	svgSnap.select("g[id='ammeter_Layer']").remove();
 	var layerSnap = svgSnap.append("g").attr("id","ammeter_Layer");
 //	 eupType ： 
@@ -208,18 +208,18 @@ function showTop(rowId,tableBoxId){
 //	 M0003 分支箱
 //	 M0004 表箱
 	if((null != rowId && "" != rowId ) && (null != tableBoxId && "" != tableBoxId )){
-		 $.ajax({
-             type: "post",
-             url:  getRootPath_web()+"/epu/getEupInfosTree.shtml",
-	         data: {
-	        	 rootId: rowId
-	         },
-             async:false,
-             dataType: "json",
-             cache: false,
-             error: function (a,b,c) {
-             },
-             success: function (data) {
+//		 $.ajax({
+//             type: "post",
+//             url:  getRootPath_web()+"/epu/getEupInfosTree.shtml",
+//	         data: {
+//	        	 rootId: rowId
+//	         },
+////             async:false,
+//             dataType: "json",
+//             cache: false,
+//             error: function (a,b,c) {
+//             },
+//             success: function (data) {
             	 if(null != data && data.length > 0){
      	         	var branchBoxDifference = 100;//差值
  	        		var branchBoxRelative = 100;//没有表箱的分支箱相对位置
@@ -263,7 +263,7 @@ function showTop(rowId,tableBoxId){
 	 	    						//电表文本引入
 	    		        			 var ammeterTxtX = ammeterX + 70;
 	    		        			 var ammeterTxtY = ammeterY + 35;
-	    		        			 var textNewlineArr = textNewline(x_name,6,ammeterTxtX,ammeterTxtY + 20,20);
+	    		        			 var textNewlineArr = textNewline(x_name,6,ammeterTxtX-20,ammeterTxtY + 20,20);
 	    		    		         splitRemarks(layerSnap,"idTxt" + x_rowId,textNewlineArr[0],0 ,0,"fText",12,true);//电表文本文本内容
 	    		    		         //table
 	    		    		         var table_ammeterY = textNewlineArr[1] + 180;
@@ -408,8 +408,8 @@ function showTop(rowId,tableBoxId){
 	 	    		        	 }
      			   }
             	}
-            }
-         });
+//            }
+//         });
 	}
 } 
 

@@ -170,7 +170,7 @@
           and  epu.row_id = #{rowId,jdbcType=VARCHAR} 
           </if>
             <if test="epuParentId != null and epuParentId !=''">
-          and  FIND_IN_SET(epu.row_id,getEpuChildrenList(#{epuParentId,jdbcType=VARCHAR}));
+          and  FIND_IN_SET(epu.row_id,getEpuChildrenList(#{epuParentId,jdbcType=VARCHAR}))
           </if>
            <if test="epuProvince != null and epuProvince !=''">
            and epu.epu_province=#{epuProvince,jdbcType=VARCHAR}     
@@ -184,6 +184,7 @@
           and  epu.epu_district=#{epuDistrict,jdbcType=VARCHAR}
              and epu.epu_type=#{epuType,jdbcType=VARCHAR}
           </if>
+          order by epu.UPDATE_TIME desc
   </select>
   
   

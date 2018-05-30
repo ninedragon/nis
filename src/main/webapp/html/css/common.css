@@ -1,30 +1,21 @@
-svg:not(.sample) {
-	
-	border: 2px solid;
-	
-}
-
-.hide {
+.sample {
 	display:none;
+}
+
+.error {
+	stroke:red;
+	fill:red;
 	
 }
-
-.actions {
-    position: fixed;
-    background: rgba(0,0,0,0.5);
-    padding: 8px 20px;
-    color: #FFF;
-    border-radius: 8px;
-    top: 10px;
-    left: 10px;
-	font-size: 18px;
+.error-box {
+	stroke:red;
 }
 
-.actions a {
-    color: #FFF;
-	display:block;
-	margin: 4px;
+.warning {
+	stroke:blue;
+	fill:blue;
+	
 }
-.actions a:hover {
-    color: red;
+.warning-box {
+	stroke:blue;
 }

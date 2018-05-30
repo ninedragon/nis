@@ -1,6 +1,10 @@
 package com.zz.epu.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +24,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.alibaba.druid.util.StringUtils;
 import com.zz.ammeter.service.AmmeterService;
 import com.zz.common.controller.BaseController;
+import  com.zz.common.model.Item;
 import com.zz.common.model.TAmmeterInfo;
 import com.zz.common.model.TEpuInfo;
 import com.zz.common.model.TSyCityInfoBean;
@@ -31,7 +36,6 @@ import com.zz.core.shiro.session.CustomSessionManager;
 import com.zz.core.shiro.token.manager.TokenManager;
 import com.zz.epu.service.EpuService;
 import com.zz.user.service.UUserService;
-import  com.zz.common.model.Item;
 
 @Controller
 @Scope(value = "prototype")
@@ -327,7 +331,29 @@ public class EpuController extends BaseController {
 		}
 		return retureMap;
 	}
-	
+/*	 private static void ListSort(List<Object> list) {
+	        Collections.sort(list, new Comparator<Object>() {
+	            @Override
+	            public int compare(Object o1, Object o2) {
+	                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+	                try {
+	                	
+	                    Date dt1 = format.parse(o1.updateTime);
+	                    Date dt2 = format.parse(o2.getBirthday());
+	                    if (dt1.getTime() > dt2.getTime()) {
+	                        return 1;
+	                    } else if (dt1.getTime() < dt2.getTime()) {
+	                        return -1;
+	                    } else {
+	                        return 0;
+	                    }
+	                } catch (Exception e) {
+	                    e.printStackTrace();
+	                }
+	                return 0;
+	            }
+	        });
+	    }*/
 	
 	@RequestMapping("getEupInfosTree")
 	@ResponseBody
