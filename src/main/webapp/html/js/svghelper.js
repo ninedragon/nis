@@ -104,6 +104,7 @@ function drawSvg(svgModelData, el) {
 			this._x = tmpX;
 			this._y = 200;
 			createBox(layerSnap, this.rowId, this._x, this._y,this.epuName, cids1);
+			setCabinetsXTable(layerSnap,this.rowId,this._x +280, this._y + 180);
 			x2 += Math.max( this.width, w3 );
 			x3 = Math.max(x2, x3);
 			x4 = Math.max(x4, x3);
@@ -305,7 +306,198 @@ function createLineEl(layer, position) {
 
 }
 
+
+
+
+function setCabinetsXTable(layerSnap,id,cabinetsX,cabinetsY){
+//	
+	var idTableNull_X = cabinetsX;
+	var idTableNull_Y = cabinetsY - 150;
+	setCreateUseEl(layerSnap,"idTableNull" + id, "tableList1",idTableNull_X + 32,idTableNull_Y);//空框
+	
+	var idTableU_X = cabinetsX +58;
+	var idTableU_Y = cabinetsY -150;
+	setCreateUseEl(layerSnap,"idTableU" + id, "tableList",idTableU_X,idTableU_Y);//u框
+	splitRemarks(layerSnap,"idTableUtxt" + id,"U",idTableU_X + 37,idTableU_Y+22,"fText",18);//U文字
+	setCreateUseEl(layerSnap,"idTableU" + id, "tableList",idTableU_X,idTableU_Y);//u框
+	
+	var idTableI_X = idTableU_X +58;
+	var idTableI_Y = cabinetsY -150;
+	setCreateUseEl(layerSnap,"idTableU" + id, "tableList",idTableI_X,idTableI_Y);//i框
+	splitRemarks(layerSnap,"idTableUtxt" + id,"I",idTableI_X + 37,idTableI_Y+22,"fText",18);//I文字
+	
+	var idTableP_X = idTableI_X +58;
+	var idTableP_Y = cabinetsY -150;
+	setCreateUseEl(layerSnap,"idTableU" + id, "tableList",idTableP_X,idTableP_Y);//P框
+	splitRemarks(layerSnap,"idTableUtxt" + id,"P",idTableP_X + 37,idTableP_Y+22,"fText",18);//P文字
+	
+	var idTableA_X = idTableNull_X;
+	var idTableA_Y = idTableNull_Y+ 26;
+	
+	var idTableAU_X = idTableA_X +58;
+	var idTableAU_Y = idTableNull_Y+ 26;
+	setCreateUseEl(layerSnap,"idTableU" + id, "tableList",idTableAU_X,idTableAU_Y);//au框
+	splitRemarks(layerSnap,"idTableUtxt" + id,"5261.23",idTableAU_X + 55,idTableAU_Y+22,"fText",14);//I文字
+	
+	setCreateUseEl(layerSnap,"idTableUtxtzA" + id, "tableList1",idTableNull_X  + 32,idTableAU_Y);//空框
+	splitRemarks(layerSnap,"idTableUtxtz" + id,"A",idTableAU_X - 5 ,idTableAU_Y+22,"fText",18);//A
+	
+	var idTableAI_X = idTableAU_X +58;
+	var idTableAI_Y = idTableNull_Y+ 26;
+	setCreateUseEl(layerSnap,"idTableU" + id, "tableList",idTableAI_X,idTableAI_Y);//au框
+	splitRemarks(layerSnap,"idTableUtxt" + id,"5261.23",idTableAI_X + 55,idTableAI_Y+22,"fText",14);//U文字
+	
+	var idTableAP_X = idTableAI_X +58;
+	var idTableAP_Y = idTableNull_Y+ 26;
+	setCreateUseEl(layerSnap,"idTableU" + id, "tableList",idTableAP_X,idTableAP_Y);//au框
+	splitRemarks(layerSnap,"idTableUtxt" + id,"5261.23",idTableAP_X + 55,idTableAP_Y+22,"kV110",14);//P文字
+
+	
+	
+	
+	var idTableBU_X = idTableA_X +58;
+	var idTableBU_Y = idTableNull_Y+ 52;
+	setCreateUseEl(layerSnap,"idTableU" + id, "tableList",idTableBU_X,idTableBU_Y);//au框
+	splitRemarks(layerSnap,"idTableUtxt" + id,"1",idTableBU_X + 55,idTableBU_Y+22,"fText",14);//I文字
+	
+	setCreateUseEl(layerSnap,"idTableUtxtzB" + id, "tableList1",idTableNull_X + 32,idTableBU_Y);//空框
+	splitRemarks(layerSnap,"idTableUtxtz" + id,"B",idTableBU_X - 5,idTableBU_Y+22,"fText",18);//B
+	
+	var idTableBI_X = idTableBU_X +58;
+	var idTableBI_Y = idTableNull_Y+ 52;
+	setCreateUseEl(layerSnap,"idTableU" + id, "tableList",idTableBI_X,idTableBI_Y);//au框
+	splitRemarks(layerSnap,"idTableUtxt" + id,"11",idTableBI_X + 55,idTableBI_Y+22,"fText",14);//U文字
+	
+	var idTableBP_X = idTableBI_X +58;
+	var idTableBP_Y = idTableNull_Y+ 52;
+	setCreateUseEl(layerSnap,"idTableU" + id, "tableList",idTableBP_X,idTableBP_Y);//au框
+	splitRemarks(layerSnap,"idTableUtxt" + id,"111",idTableBP_X + 55,idTableBP_Y+22,"kV110",14);//P文字
+
+	
+	
+	
+	
+	var idTableCU_X = idTableA_X +58;
+	var idTableCU_Y = idTableNull_Y+ 78;
+	setCreateUseEl(layerSnap,"idTableU" + id, "tableList",idTableCU_X,idTableCU_Y);//au框
+	splitRemarks(layerSnap,"idTableUtxt" + id,"1121",idTableCU_X + 55,idTableCU_Y+22,"fText",14);//I文字
+	
+	setCreateUseEl(layerSnap,"idTableUtxtzC" + id, "tableList1",idTableNull_X + 32,idTableCU_Y);//空框
+	splitRemarks(layerSnap,"idTableUtxtz" + id,"C",idTableCU_X - 5,idTableCU_Y+22,"fText",18);//C
+	
+	var idTableCI_X = idTableCU_X +58;
+	var idTableCI_Y = idTableNull_Y+ 78;
+	setCreateUseEl(layerSnap,"idTableU" + id, "tableList",idTableCI_X,idTableCI_Y);//au框
+	splitRemarks(layerSnap,"idTableUtxt" + id,"11",idTableCI_X + 55,idTableCI_Y+22,"fText",14);//U文字
+	
+	var idTableCP_X = idTableCI_X +58;
+	var idTableCP_Y = idTableNull_Y+ 78;
+	setCreateUseEl(layerSnap,"idTableU" + id, "tableList",idTableCP_X,idTableCP_Y);//au框
+	splitRemarks(layerSnap,"idTableUtxt" + id,"111",idTableCP_X + 55,idTableCP_Y+22,"kV110",14);//P文字
+}
+
+/**
+ * 分割备注
+ * **/
+function splitRemarks(layerSnap,id,title,x,y,txt,size,tspan){
+	createTextEl(layerSnap, {
+		id:id,
+		title : title,
+		tspan : tspan
+	}, {
+		x: x,
+		y: y,
+		scale: 1, 
+		rotate: 0,
+		txt: txt,//黑色字体样式
+		size:size
+	});
+}
+
+
+function getSymbolByType(type) {
+	var data = {
+		id: "",
+		x: "",
+		y: ""
+	};
+	var id = "";
+	switch(type) {
+	case 'tableList':
+		data = {
+			id: "TableBox_PD_列表",
+			x: 12,
+			y: 12,
+			r: [0, 90]
+		};
+		break;
+	case 'tableList1':
+		data = {
+			id: "TableBox_PD_列表01",
+			x: 12,
+			y: 12,
+			r: [0, 90]
+		};
+		break;
+	default:
+		break;
+	}
+	return data;
+}
+
+/**
+ * 引入图状
+ * **/
+function setCreateUseEl(layerSnap,id,type,x,y){
+	createUseEl(layerSnap, {
+		id :id,
+		type: type
+	}, {
+		x: x,
+		y: y,
+		scale: 1
+	});
+}
+function createTextEl(layer, data, position) {
+	position.rotate =position.rotate || 0;
+	var g = layer.append("g").attr("id", data.id);
+	var x = position.x;
+	var y = position.y;
+	var size = position.size || 14;
+	var txtCls = position.txt || "fText";
+	var anchor = position.anchor || "end";
+	var tspan = data.tspan || false;
+	if(tspan){
+		var txt = g.append('text').attr("text-anchor", anchor).attr("font-size", size).attr("stroke", "rgb(255,0,0)").attr("fill","rgb(255,0,0)").html(data.title).attr("class", txtCls).attr("transform","scale(" + position.scale + ") translate(0 0) rotate(" + position.rotate + " " + x + " " + y + ")");
+	}else{
+		var txt = g.append('text').attr("text-anchor", anchor).attr("font-size", size).attr("stroke", "rgb(255,0,0)").attr("fill","rgb(255,0,0)").attr("x", x).attr("y", y).text(data.title).attr("class", txtCls).attr("transform","scale(" + position.scale + ") translate(0 0) rotate(" + position.rotate + " " + x + " " + y + ")");
+	}
+	
+}
+
+function createUseEl(layer, data, position) {
+	var grid =64;
+	position.rotate= position.rotate||0;
+	data.id = data.id || "";
+	var g = layer.append("g").attr("id", data.id);
+	var symbol = getSymbolByType(data.type)
+	var x = position.x;
+	var y = position.y;
+	var transX = 0;
+	var transY = 0;
+	var rotate = position.rotate
+	var rotateX = x + grid / 2;
+	var rotateY = y + grid / 2;
+	var useage = g.append('use').attr("width", grid).attr("height", grid).attr("transform","scale(" + position.scale + ") translate(" + transX + " " + transY + ") rotate(" + position.rotate + " " + rotateX + " " + rotateY + ")").attr("xlink:href", "#" + symbol.id ).attr("x", x).attr("y", y).attr("class", data.cls);
+//	if (list && data.type == 'Disconnector') {
+//		var connect = g.append('use').attr("width", grid).attr("height", grid).attr("transform","scale(" + position.scale + ") translate(" + transX + " " + transY + ") rotate(" + position.rotate + " " + rotateX + " " + rotateY + ")").attr("xlink:href", "#Disconnector_PD_刀闸@1").attr("x", x).attr("y", y).attr("class", "hide");
+//		list.push([useage, connect ]);
+//	}
+}
+
 return {
 	drawSvg : drawSvg
 }
 })();
+
+

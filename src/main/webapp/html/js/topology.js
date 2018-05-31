@@ -72,3 +72,4 @@ function clickScale(param){
 		}
 	}
 }
+
