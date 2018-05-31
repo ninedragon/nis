@@ -189,7 +189,6 @@ function drawSvg(svgModelData, el) {
 		scale: function(zoom) {
 			var x = 0;
 			var y = 0;
-			
 			svgSnap.attr("transform","scale(" + zoom + " " + zoom + ") translate(" + x + " " + y + ")");
 		},
 		boxError: function(id) {

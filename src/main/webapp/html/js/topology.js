@@ -18,6 +18,7 @@ function getRootPath_web() {
 }  
 var mySvg = null;
 var scaleZoom = 1;
+var data = null;
 /**
  * 展示拓扑
  * **/
@@ -35,6 +36,7 @@ function showTop(rowId){
 	         success: function(allData){ 
 	        	 if(allData){
 	        		 mySvg = SVG_HELPER.drawSvg(allData, 'body');
+	        		 data = allData;
 	        		 /**
 	        		 以下方法 参数 都是 ID
 	        		 boxError: 出线柜/分支箱  整体状态 标红, 
@@ -60,10 +62,13 @@ function showTop(rowId){
 * 单击执行放大缩小
 **/
 function clickScale(param){
+	scaleZoom = scaleZoom || 1;
 	if(param == "max"){
-		if(scaleZoom < 1){
+		if(scaleZoom < 0.9){
 			scaleZoom = scaleZoom + 0.1;
 			mySvg.scale(scaleZoom);
+		}else if(scaleZoom >= 0.9){
+			 mySvg = SVG_HELPER.drawSvg(data, 'body');
 		}
 	}else if(param == "min"){
 		if(scaleZoom > 0.5){
