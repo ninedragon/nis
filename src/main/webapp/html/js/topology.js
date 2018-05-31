@@ -16,8 +16,8 @@ function getRootPath_web() {
 	 var projectName = pathName.substring(0, pathName.substr(1).indexOf('/') + 1);
 	 return (localhostPaht + projectName);
 }  
-
-var mySvg=null;
+var mySvg = null;
+var scaleZoom = 1;
 /**
  * 展示拓扑
  * **/
@@ -35,6 +35,21 @@ function showTop(rowId){
 	         success: function(allData){ 
 	        	 if(allData){
 	        		 mySvg = SVG_HELPER.drawSvg(allData, 'body');
+	        		 /**
+	        		 以下方法 参数 都是 ID
+	        		 boxError: 出线柜/分支箱  整体状态 标红, 
+	        		 boxWarning: 出线柜/分支箱  整体状态 标蓝,
+	        		 boxClear: 出线柜/分支箱  整体状态 恢复,
+	        		 kaiguanxianError: 开关线 标红,
+	        		 kaiguanxianWarning: 开关线 标蓝,
+	        		 kaiguanxianClear: 开关线 恢复
+	        		 **/
+	        		 var intervalObj = setInterval(function(){
+	        		 	if(mySvg){
+	        		 		mySvg.kaiguanxianError("0ce0ccf1-8049-4572-9ac3-709ad695cbf4");//表箱ID
+	        		 		mySvg.boxError("92f47bd1-649e-402c-91e8-c74301905edd");//出线柜ID
+	        		 	}
+	        		 },5000);//5秒
 	        	 }
 	        } 
 		});
@@ -42,17 +57,18 @@ function showTop(rowId){
 }
 
 /**
-以下方法 参数 都是 ID
-boxError: 出线柜/分支箱  整体状态 标红, 
-boxWarning: 出线柜/分支箱  整体状态 标蓝,
-boxClear: 出线柜/分支箱  整体状态 恢复,
-kaiguanxianError: 开关线 标红,
-kaiguanxianWarning: 开关线 标蓝,
-kaiguanxianClear: 开关线 恢复
+* 单击执行放大缩小
 **/
-var B = setInterval(function(){
-	if(mySvg){
-		mySvg.kaiguanxianError("0ce0ccf1-8049-4572-9ac3-709ad695cbf4");//表箱ID
-		mySvg.boxError("92f47bd1-649e-402c-91e8-c74301905edd");//出线柜ID
+function clickScale(param){
+	if(param == "max"){
+		if(scaleZoom < 1){
+			scaleZoom = scaleZoom + 0.1;
+			mySvg.scale(scaleZoom);
+		}
+	}else if(param == "min"){
+		if(scaleZoom > 0.5){
+			scaleZoom = scaleZoom - 0.1;
+			mySvg.scale(scaleZoom);
+		}
 	}
-},5000);//5秒
+}

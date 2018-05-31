@@ -157,6 +157,7 @@ function drawSvg(svgModelData, el) {
 		});
 	});
 	svgSnap.attr("width", w1 + leftPad + 100);
+	parent.$("#tab2Iframe").attr("width", w1 + leftPad + 100);//设置主体IFRAME的宽度
 	// 画左侧标识
 	
 	svgSnap.append('text').attr("font-size", "36").attr("stroke", "rgb(0,0,0)").attr("fill","rgb(0,0,0)").text("箱变").attr("x", 20 ).attr("y",100);

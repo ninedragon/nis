@@ -19,3 +19,24 @@
 .warning-box {
 	stroke:blue;
 }
+
+
+.actions {
+    position: fixed;
+    background: rgba(0,0,0,0.5);
+    padding: 8px 20px;
+    color: #FFF;
+    border-radius: 8px;
+    top: 10px;
+    left: 10px;
+	font-size: 20px;
+}
+
+.actions a {
+    color: #FFF;
+	display:block;
+	margin: 4px;
+}
+.actions a:hover {
+    color: red;
+}
