@@ -334,6 +334,6 @@
             <if test="epuId != null  and epuId !=''">
           and  am.meterBoxId = #{epuId,jdbcType=VARCHAR} 
           </if>                   
-           order by am.CREATE_TIME desc
+           order by am.UPDATE_TIME desc
   </select>
 </mapper>
