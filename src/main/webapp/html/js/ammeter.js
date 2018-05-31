@@ -681,7 +681,7 @@ function clickScale(param){
 			scaleZoom = scaleZoom - 0.1;
 			setScale(svgSnap,scaleZoom);
 		}
-	}
+	} 
 }
 
 function setScale(svgSnap,zoom){
