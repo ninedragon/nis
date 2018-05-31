@@ -223,6 +223,7 @@ function showTop(data,rowId,tableBoxId){
 //             error: function (a,b,c) {
 //             },
 //             success: function (data) {
+				setScale(svgSnap,1);
             	 if(null != data && data.length > 0){
      	         	var branchBoxDifference = 100;//差值
  	        		var branchBoxRelative = 100;//没有表箱的分支箱相对位置
@@ -673,7 +674,7 @@ function clickScale(param){
 		}else if(scaleZoom >= 0.9){
 			var rowId = parent.$("#rowId").val();
 			var tableBoxId = parent.$("#tableBoxId").val();
-			showTop(svgModelData,rowId,tableBoxId);
+			showTop(dataTemp,rowId,tableBoxId);
 		}
 	}else if(param == "min"){
 		if(scaleZoom > 0.2){
