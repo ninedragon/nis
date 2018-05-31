@@ -324,7 +324,7 @@
 	epu.epu_province_name,
 	epu.epu_city_name,
 	epu.epu_district_name
-	FROM  
+	FROM
 	t_meter am
 	LEFT JOIN view_epu_info epu ON am.meterBoxId = epu.row_id
 	where 1=1 and am.DEL_FLAG='0' and epu.DEL_FLAG='0'  
