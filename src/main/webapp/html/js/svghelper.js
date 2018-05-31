@@ -498,5 +498,3 @@ return {
 	drawSvg : drawSvg
 }
 })();
-
-
