@@ -317,7 +317,7 @@
 	am.C_AddressId as address_id,
 	am.C_ChannelNum as channel_id,
 	epu.epu_province,
-	epu.epu_city,
+	epu.epu_city, 
 	epu.epu_district,
 	epu.epu_name,
 	'M0005' as epu_type,
