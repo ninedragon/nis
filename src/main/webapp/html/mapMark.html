@@ -34,13 +34,20 @@
                 padding: "0 5px"
             });
             marker.setLabel(label); */
-           var opts = {
+         /*   var opts = {
                //  width: 100,     // 信息窗口宽度  
                 //  height: 20     // 信息窗口高度  
                 
               }  
              var contentHtml = "<p style='font-size:16px;'>"+"位置：" + epuLocal + "<br>" + "名称：" + name+"</p>" ;  
-             var infoWindow = new BMap.InfoWindow(contentHtml, opts);  // 创建信息窗口对象  
+             var infoWindow = new BMap.InfoWindow(contentHtml, opts);  // 创建信息窗口对象   */
+             	var contentHtml =
+	"<h4 style='margin:0 0 5px 0;padding:0.2em 0'>箱变信息</h4>" + 
+	"<p style='margin:0;line-height:1.5;font-size:13px;text-indent:2em'><strong>位置：</strong>" + epuLocal +"</p>" +
+	"<p style='margin:0;line-height:1.5;font-size:13px;text-indent:2em'><strong>名称：</strong>" + name+"</p>"
+            // var contentHtml = "<p style='font-size:16px;'>"+"位置：" + epuLocal + "<br>" + "名称：" + name+"</p>" ;  
+           // contentHtml+= '<p style="margin:0;line-height:1.5;font-size:13px;text-indent:2em;color:#ff0000;" ><strong><a href="javascript:linkEquInfo()">详细信息</a></strong></p>';            
+            var infoWindow = new BMap.InfoWindow(contentHtml);  // 创建信息窗口对象  
              marker.addEventListener("click", function () {
                  M.openInfoWindow(infoWindow, p); //开启信息窗口  
              });  
