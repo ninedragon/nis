@@ -7,7 +7,7 @@
 <script baseUrl="<%=basePath%>" src="<%=basePath%>/js/user.login.js"></script>
 <div class="wapp-head">
 	<span class="link"></span>
-	<div class="info">消息<span class="caret">12</span></div>
+	<div class="info">消息</div>
     <div class="lay" style="left:auto;right:0px;">
         <ul>
             <li class="mrr">江苏省南京市雨花台区1号变箱</li>
