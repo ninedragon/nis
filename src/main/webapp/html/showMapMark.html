@@ -18,56 +18,38 @@
         }
     </style>
     <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=Y076LYaIrrQ7HOjk4Tcn6FDMipRoDtVm"></script>
-    <script>
-    
-/*      function addMarker(point, index) {  
-                    var myIcon = new BMap.Icon("http://api.map.baidu.com/img/markers.png",  
-                        new BMap.Size(23, 25), {  
-                            offset: new BMap.Size(10, 25),  
-                            imageOffset: new BMap.Size(0, 0 -  index * 25)  
-                              
-                        });  
-                    var marker = new BMap.Marker(point, { icon: myIcon });  
-                    map.addOverlay(marker);  
-                    return marker;  
-                }    */ 
-                
-             
-		    function  linkEquInfo()
-		    {
-		    parent.tabClick(2);
-		    }
+    <script>             
+	    function  linkEquInfo()
+	    {
+	       parent.tabClick(2);
+	    }
         function addMarker(id, name,epuLocal, x, y) {
             var p = new BMap.Point(x, y);
             var marker = new BMap.Marker(p);//, px = map.pointToPixel(p);
             M.addOverlay(marker);
             marker.enableDragging();
-            // marker.setTitle(id);
-            // marker.setTitle(name);
-/*             var label = new BMap.Label(name, { offset: new BMap.Size(25, 0) });
+         // marker.setTitle(name);
+/*          var label = new BMap.Label(name, { offset: new BMap.Size(25, 0) });
             label.setStyles({
                 border: "solid 1px #00f",
                 color: "#00f",
                 padding: "0 5px"
             });
             marker.setLabel(label); */
-             var opts = {  
-                         /*   width: $('#describe').width(),     // 信息窗口宽度  
-                           height: $('#describe').height()     // 信息窗口高度   */
-                          // width: 100,     // 信息窗口宽度  
-                           //height: 20     // 信息窗口高度  
-                          
-                        } 
-                        var contentHtml = "<p style='font-size:16px;'>"+"位置：" + epuLocal + "<br>" + "名称：" + name+"</p>" ;  
-                       contentHtml+= '<span style="color:#ff0000;"><strong><a href="javascript:linkEquInfo()">详细信息</a></strong></span>';
-                        
-                        var infoWindow = new BMap.InfoWindow(contentHtml, opts);  // 创建信息窗口对象  
-                        marker.addEventListener("click", function () {  
-                            M.openInfoWindow(infoWindow, p); //开启信息窗口  
-                        });
+         var opts = {  
+                      // width: 100,     // 信息窗口宽度  
+                       //height: 20     // 信息窗口高度  
+                      
+                    } 
+            var contentHtml = "<p style='font-size:16px;'>"+"位置：" + epuLocal + "<br>" + "名称：" + name+"</p>" ;  
+           contentHtml+= '<span style="color:#ff0000;"><strong><a href="javascript:linkEquInfo()">详细信息</a></strong></span>';            
+            var infoWindow = new BMap.InfoWindow(contentHtml, opts);  // 创建信息窗口对象  
+            marker.addEventListener("click", function () {  
+                M.openInfoWindow(infoWindow, p); //开启信息窗口  
+            });
             var iconPath=$("#basePath").val()+'/image/point.gif';
             var icon = new BMap.Icon(iconPath,  new BMap.Size(20, 20), {
-                anchor: new BMap.Size(10, 22)
+                // anchor: new BMap.Size(10, 22)
             });
             marker.setIcon(icon);
             var markerMenu = new BMap.ContextMenu();
@@ -76,7 +58,6 @@
                 config.marker.remove(ci);
             }, 100)); */
             marker.addContextMenu(markerMenu);
-
             config.marker.add(marker);
         }
 

@@ -26,32 +26,27 @@
             var marker = new BMap.Marker(p);//, px = map.pointToPixel(p);
             M.addOverlay(marker);
             marker.enableDragging();
-            // marker.setTitle(id);
            // marker.setTitle(name);
-
-/*             var label = new BMap.Label(name, { offset: new BMap.Size(25, 0) });
+/*           var label = new BMap.Label(name, { offset: new BMap.Size(25, 0) });
             label.setStyles({
                 border: "solid 1px #00f",
                 color: "#00f",
                 padding: "0 5px"
             });
             marker.setLabel(label); */
-           // $('#describe').html("位置：" + epuLocal + "<br>" + "名称：" + name);
-                     var opts = {  
-                         /*   width: $('#describe').width(),     // 信息窗口宽度  
-                           height: $('#describe').height()     // 信息窗口高度   */
-                         //  width: 100,     // 信息窗口宽度  
-                          //  height: 20     // 信息窗口高度  
-                          
-                        }  
-                        var contentHtml = "<p style='font-size:16px;'>"+"位置：" + epuLocal + "<br>" + "名称：" + name+"</p>" ;  
-                        var infoWindow = new BMap.InfoWindow(contentHtml, opts);  // 创建信息窗口对象  
-                        marker.addEventListener("click", function () {
-                            M.openInfoWindow(infoWindow, p); //开启信息窗口  
-                        });  
+           var opts = {
+               //  width: 100,     // 信息窗口宽度  
+                //  height: 20     // 信息窗口高度  
+                
+              }  
+             var contentHtml = "<p style='font-size:16px;'>"+"位置：" + epuLocal + "<br>" + "名称：" + name+"</p>" ;  
+             var infoWindow = new BMap.InfoWindow(contentHtml, opts);  // 创建信息窗口对象  
+             marker.addEventListener("click", function () {
+                 M.openInfoWindow(infoWindow, p); //开启信息窗口  
+             });  
             var iconPath=$("#basePath").val()+'/image/point.gif';
             var icon = new BMap.Icon(iconPath,  new BMap.Size(20, 20), {
-                anchor: new BMap.Size(10, 22)
+                //anchor: new BMap.Size(10, 22)
             });
             marker.setIcon(icon);
 
