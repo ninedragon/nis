@@ -14,6 +14,8 @@ var grid = 64;
 var currentSnapX = grid * 1;
 var currentSnapY = grid * 1;
 
+var scaleZoom = 1;
+var dataTemp = null;
 function createTextEl(layer, data, position) {
 	position.rotate =position.rotate || 0;
 	var g = layer.append("g").attr("id", data.id);
@@ -202,6 +204,7 @@ function getRootPath_web() {
 function showTop(data,rowId,tableBoxId){
 	svgSnap.select("g[id='ammeter_Layer']").remove();
 	var layerSnap = svgSnap.append("g").attr("id","ammeter_Layer");
+	dataTemp = data;
 //	 eupType ： 
 //	 M0001 箱变
 //	 M0002 出线柜
@@ -275,16 +278,16 @@ function showTop(data,rowId,tableBoxId){
 //	    		        			 }
 	    		        			//电表分割备注
 	 		    		        	splitRemarks(layerSnap,"ammeterTxtID","电表",45,(ammeterY + 40),"fText",20);
-	 		    		        	 createLineEl(layerSnap, {
-	 	    		        			id :"idLine" + x_rowId,
-	 	    		        			dash:"true"
-	 	    		        		}, {
-	 	    		        			x: svg_width,//下宽度
-	 	    		        			y: table_ammeterY + 50,//下高
-	 	    		        			x2: 0,//上宽度
-	 	    		        			y2: table_ammeterY + 50,//上高
-	 	    		        			scale: 1
-	 	    		        		});
+//	 		    		        	 createLineEl(layerSnap, {
+//	 	    		        			id :"idLine" + x_rowId,
+//	 	    		        			dash:"true"
+//	 	    		        		}, {
+//	 	    		        			x: svg_width,//下宽度
+//	 	    		        			y: table_ammeterY + 50,//下高
+//	 	    		        			x2: 0,//上宽度
+//	 	    		        			y2: table_ammeterY + 50,//上高
+//	 	    		        			scale: 1
+//	 	    		        		});
 	 		    		        	 //引入电表与分支箱线
 	    		        			 createLineEl(layerSnap, {
 			    		        			id :"idLine" + x_rowId,
@@ -346,16 +349,16 @@ function showTop(data,rowId,tableBoxId){
 	    		         setCabinetsXTable(layerSnap,i_epuParentId,tempBranchBoxX+30,cabinetsY + 150);
 	    		        	//出线柜分割备注
 	    		        	splitRemarks(layerSnap,"cabinetsID","表箱",45,(cabinetsY+40),"fText",20);
-	    		        	 createLineEl(layerSnap, {
-	    		        			id :"idLine" + i_epuParentId,
-	    		        			dash:"true"
-	    		        		}, {
-	    		        			x: svg_width,//下宽度
-	    		        			y: textNewlineArr[1] + 50,//下高
-	    		        			x2: 0,//上宽度
-	    		        			y2: textNewlineArr[1] + 50,//上高
-	    		        			scale: 1
-	    		        		});
+//	    		        	 createLineEl(layerSnap, {
+//	    		        			id :"idLine" + i_epuParentId,
+//	    		        			dash:"true"
+//	    		        		}, {
+//	    		        			x: svg_width,//下宽度
+//	    		        			y: textNewlineArr[1] + 50,//下高
+//	    		        			x2: 0,//上宽度
+//	    		        			y2: textNewlineArr[1] + 50,//上高
+//	    		        			scale: 1
+//	    		        		});
 //	    		        		出线柜往下画线
 	    		        	var lowerCabinetsLineX = tempBranchBoxX;//下宽度（出线柜下处宽度）
 	    		        	var lowerCabinetsLineY = cabinetsY + 100;//下高（分线柜下处高度）
@@ -374,8 +377,6 @@ function showTop(data,rowId,tableBoxId){
 	    		        	 if(ammeterList.length > 0){//分线箱下面有表箱(有表箱，表箱与分纤箱一对一)的执行如下：
 	    		        		var lowerBranchBoxX = tempBranchBoxX;//下宽度
 	    		        		var lowerBranchBoxY = tempBranchBoxLineY;//下高
-//	    		        		var lowerBranchBoxX1 = tempBranchBoxLineX - 100;//上宽度 (分线箱上处宽度)
-//	    		        		var lowerBranchBoxY1 = cabinetsY + 100;//上高 (分线箱上处高度)
 	    		        		 createLineEl(layerSnap, {
 	    		        			id :"idLines" + i_epuParentId,
 	    		        			type: "TableBox"
@@ -660,3 +661,30 @@ function textNewline(strParam,start,x,y,number)
 	return [newStr,y];
 }
 
+/**
+* 单击执行放大缩小
+**/
+function clickScale(param){
+	scaleZoom = scaleZoom || 1;
+	if(param == "max"){
+		if(scaleZoom < 0.9){
+			scaleZoom = scaleZoom + 0.1;
+			setScale(svgSnap,scaleZoom);
+		}else if(scaleZoom >= 0.9){
+			var rowId = parent.$("#rowId").val();
+			var tableBoxId = parent.$("#tableBoxId").val();
+			showTop(svgModelData,rowId,tableBoxId);
+		}
+	}else if(param == "min"){
+		if(scaleZoom > 0.2){
+			scaleZoom = scaleZoom - 0.1;
+			setScale(svgSnap,scaleZoom);
+		}
+	}
+}
+
+function setScale(svgSnap,zoom){
+	var x = 0;
+	var y = 0;
+	svgSnap.attr("transform","scale(" + zoom + " " + zoom + ") translate(" + x + " " + y + ")");
+}

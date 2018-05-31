@@ -488,10 +488,6 @@ function createUseEl(layer, data, position) {
 	var rotateX = x + grid / 2;
 	var rotateY = y + grid / 2;
 	var useage = g.append('use').attr("width", grid).attr("height", grid).attr("transform","scale(" + position.scale + ") translate(" + transX + " " + transY + ") rotate(" + position.rotate + " " + rotateX + " " + rotateY + ")").attr("xlink:href", "#" + symbol.id ).attr("x", x).attr("y", y).attr("class", data.cls);
-//	if (list && data.type == 'Disconnector') {
-//		var connect = g.append('use').attr("width", grid).attr("height", grid).attr("transform","scale(" + position.scale + ") translate(" + transX + " " + transY + ") rotate(" + position.rotate + " " + rotateX + " " + rotateY + ")").attr("xlink:href", "#Disconnector_PD_刀闸@1").attr("x", x).attr("y", y).attr("class", "hide");
-//		list.push([useage, connect ]);
-//	}
 }
 
 return {
