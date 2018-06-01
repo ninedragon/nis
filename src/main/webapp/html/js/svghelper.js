@@ -104,7 +104,7 @@ function drawSvg(svgModelData, el) {
 			this._x = tmpX;
 			this._y = 200;
 			createBox(layerSnap, this.rowId, this._x, this._y,this.epuName, cids1);
-			setCabinetsXTable(layerSnap,this.rowId,this._x +280, this._y + 180);
+//			setCabinetsXTable(layerSnap,this.rowId,this._x +280, this._y + 180);
 			x2 += Math.max( this.width, w3 );
 			x3 = Math.max(x2, x3);
 			x4 = Math.max(x4, x3);
@@ -115,6 +115,9 @@ function drawSvg(svgModelData, el) {
 			var gird = 300 / (cids1.length + 1);
 			var half = cids1.length / 2 
 			var h = 20;
+			var tempX = this._x;
+			var tempY = this._y;
+			var tempCount = $(this.children).length;
 			$(this.children).each(function(index) {
 				if (this._x + 150 <= px + (index + 1) * gird || index < half) {
 					h = h + iv;
@@ -131,8 +134,85 @@ function drawSvg(svgModelData, el) {
 					y2: py + 180,
 					h: h
 				});
+				if(tempCount == 1){
+					setCabinetsXTable(layerSnap,this.rowId,tempX + 300, tempY + 200);
+				}else if(tempCount == 2){
+					switch((index+1)){
+						case 1:
+							setCabinetsXTable(layerSnap,this.rowId,tempX - 300, tempY + 200);
+							break;
+						case 2:
+							setCabinetsXTable(layerSnap,this.rowId,tempX + 300, tempY + 200);
+							break;
+					}
+				}else if(tempCount == 3){
+					switch((index+1)){
+						case 1:
+							setCabinetsXTable(layerSnap,this.rowId,tempX - 300, tempY + 200);
+							break;
+						case 2:
+							setCabinetsXTable(layerSnap,this.rowId,tempX + 10, tempY + 10);
+							break;
+						case 3:
+							setCabinetsXTable(layerSnap,this.rowId,tempX + 300, tempY + 200);
+							break;
+					}
+				}else if(tempCount == 4){
+					switch((index+1)){
+						case 1:
+							setCabinetsXTable(layerSnap,this.rowId,tempX - 300, tempY + 200);
+							break;
+						case 2:
+							setCabinetsXTable(layerSnap,this.rowId,tempX - 80, tempY + 10);
+							break;
+						case 3:
+							setCabinetsXTable(layerSnap,this.rowId,tempX + 150, tempY + 10);
+							break;
+						case 4:
+							setCabinetsXTable(layerSnap,this.rowId,tempX + 300, tempY + 200);
+							break;
+					}
+				}else if(tempCount == 5){
+					switch((index+1)){
+						case 1:
+							setCabinetsXTable(layerSnap,this.rowId,tempX - 350, tempY + 200);
+							break;
+						case 2:
+							setCabinetsXTable(layerSnap,this.rowId,tempX - 190, tempY + 10);
+							break;
+						case 3:
+							setCabinetsXTable(layerSnap,this.rowId,tempX + 30, tempY + 10);
+							break;
+						case 4:
+							setCabinetsXTable(layerSnap,this.rowId,tempX + 250, tempY + 10);
+							break;
+						case 5:
+							setCabinetsXTable(layerSnap,this.rowId,tempX + 350, tempY + 200);
+							break;
+					}
+				}else if(tempCount == 6){
+					switch((index+1)){
+					case 1:
+						setCabinetsXTable(layerSnap,this.rowId,tempX - 400, tempY + 200);
+						break;
+					case 2:
+						setCabinetsXTable(layerSnap,this.rowId,tempX - 350, tempY + 10);
+						break;
+					case 3:
+						setCabinetsXTable(layerSnap,this.rowId,tempX - 140, tempY + 10);
+						break;
+					case 4:
+						setCabinetsXTable(layerSnap,this.rowId,tempX + 70, tempY + 10);
+						break;
+					case 5:
+						setCabinetsXTable(layerSnap,this.rowId,tempX + 280, tempY + 10);
+						break;
+					case 6:
+						setCabinetsXTable(layerSnap,this.rowId,tempX + 350, tempY + 200);
+						break;
+					}
+				}
 			});
-				
 		});
 		//M0001
 		var tmpX = x1 + (w2 > this.width ? ((w2 - this.width) / 2) : 0);
