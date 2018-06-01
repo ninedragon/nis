@@ -26,7 +26,7 @@
             var p = new BMap.Point(x, y);
             var marker = new BMap.Marker(p);//, px = map.pointToPixel(p);
             M.addOverlay(marker);
-            marker.enableDragging();
+            // marker.enableDragging();
          // marker.setTitle(name);
 /*          var label = new BMap.Label(name, { offset: new BMap.Size(25, 0) });
             label.setStyles({
@@ -42,12 +42,11 @@
                     } 
                     
                     // 百度地图API功能
-	var contentHtml =
-	"<h4 style='margin:0 0 5px 0;padding:0.2em 0'>箱变信息</h4>" + 
-	"<p style='margin:0;line-height:1.5;font-size:13px;text-indent:2em'><strong>位置：</strong>" + epuLocal +"</p>" +
-	"<p style='margin:0;line-height:1.5;font-size:13px;text-indent:2em'><strong>名称：</strong>" + name+"</p>"
-            // var contentHtml = "<p style='font-size:16px;'>"+"位置：" + epuLocal + "<br>" + "名称：" + name+"</p>" ;  
-           contentHtml+= '<p style="margin:0;line-height:1.5;font-size:13px;text-indent:2em;color:#ff0000;" ><strong><a href="javascript:linkEquInfo()">详细信息</a></strong></p>';            
+	
+	var contentHtml ="<h4 style='margin:0 0 5px 0;padding:0.2em 0;color:#0000FF;'>"+$("#cityName").val()+"</h4>" + "<hr />";
+	contentHtml +="<p style='margin:0 0 5px 0;padding:0.2em 0;font-size:13px;'><strong>" + name+"</strong></p>";
+	contentHtml +="<p style='margin:0 0 5px 0;padding:0.2em 0;font-size:13px;'>位置：" + epuLocal +"</p>" ;	
+    contentHtml+= '<p style="margin:0 0 5px 0;padding:0.2em 0;font-size:13px;color:#0000FF;" ><strong><a href="javascript:linkEquInfo()">详细信息</a></strong></p>';            
             var infoWindow = new BMap.InfoWindow(contentHtml);  // 创建信息窗口对象  
             marker.addEventListener("click", function () {  
                 M.openInfoWindow(infoWindow, p); //开启信息窗口  
@@ -137,6 +136,7 @@
    		//默认城市上海
    		cityName=$("#cityName").val();
    		}
+   		$("#cityName").val(cityName);
             var w = $(window).width();
             var h = $(window).height();
           // var map = new BMap.Map("allmap"); 
@@ -145,12 +145,12 @@
              {  
              map.centerAndZoom($("#cityName").val(), 13);     // 初始化地图,设置中心点坐标和地图级别             
             }   */         
-            map.addControl(new BMap.NavigationControl());               // 添加平移缩放控件
-            map.addControl(new BMap.ScaleControl());                    // 添加比例尺控件
-            map.addControl(new BMap.OverviewMapControl());              //添加缩略地图控件
+           // map.addControl(new BMap.NavigationControl());               // 添加平移缩放控件
+           // map.addControl(new BMap.ScaleControl());                    // 添加比例尺控件
+            // map.addControl(new BMap.OverviewMapControl());              //添加缩略地图控件
             map.enableScrollWheelZoom();                            //启用滚轮放大缩小
             map.addControl(new BMap.MapTypeControl());          //添加地图类型控件
-            var contextMenu = new BMap.ContextMenu();//添加右键菜单
+          /*   var contextMenu = new BMap.ContextMenu();//添加右键菜单
             var txtMenuItem = [
               {
                   text: '放大',
@@ -176,7 +176,7 @@
                     contextMenu.addSeparator();
                 }
             }
-            map.addContextMenu(contextMenu);//设置的
+            map.addContextMenu(contextMenu);//设置的 */
 
             $('#begin').click(function () {　//
                 if (!document.getElementById('begin').disabled) {              
@@ -241,15 +241,15 @@
 </head>
 <body>
     <div id="allmap"></div>
-    <div id="bar">
+  <!--   <div id="bar">
         城市：<input type="text" id="cityName" value="上海" /> <input type="button" id="begin" value="定位" />
         <input type="button" id="save" value="保存" onclick="save()" />
         <input type="button" id="reset" value="复位" />
       
-    </div>
+    </div> -->
     	<form method="post" action="" id="formId" class="form-inline"> 
          <input type="hidden" id="basePath" name="basePath"  value=""/>
-
+         <input type="hidden" id="cityName" value="上海" />
     	</form>
 </body>
 </html>

@@ -120,8 +120,8 @@
         }
      */
       if (type == 3) {
-		   $("#cityName").val("");
-           $("#epuCity").val("");
+		   $("#cityName").val(treeNode.cityName);
+           $("#epuCity").val(treeNode.cityCode);
            $("#epuDistrict").val("");
            $("#rowId").val(treeNode.id);
            $("#xbName").html(treeNode.name);
@@ -172,12 +172,12 @@
                 var llis = $('.data-bar li');  
                 for(var i = 1; i <= llis.length; i++) {  
                 	if(i == v){
-                		$("#tab" + i ).css("background-color","orange");
+                		$("#tab" + i ).addClass("on");
 						$("#tab" + i ).attr("view","show");
                 		$("#tab" + i + "_content").css("display","block");
                 	}else{
                 		$("#tab" + i ).attr("view","none");
-                		$("#tab" + i ).css("background-color","white");
+                		$("#tab" + i ).removeClass("on");
                 		$("#tab" + i + "_content").css("display","none");
                 	}
                 }
@@ -249,7 +249,7 @@
         <!--动态数据开始-->
         <div class="data-bar">
             <ul class="tab-nav">
-                <li  id="tab1"  onclick="tabClick(1)" style="background-color: orange" view="show" >地图总览</li>                
+                <li  id="tab1"  onclick="tabClick(1)" view="show"  class="on">地图总览</li>                
                 <li  id="tab2" onclick="tabClick(2)" view="none"><div id='xbName'>箱变名称</div></li>
 <!--                 <li  id="tab3" onclick="tabClick(3)" view="none"><div id='tableBoxName'>表箱单线图</div></li> -->
             </ul>
