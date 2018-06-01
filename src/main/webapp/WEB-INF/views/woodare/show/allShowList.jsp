@@ -197,9 +197,22 @@
            	   	  iframeID.contentWindow.showTop(rowId);
               }else if( tabId == "tab3"){//只有电表TAB可以执行此动作
             	  var tableBoxId = $("#tableBoxId").val();//获取箱变根ID
-            	  iframeID.contentWindow.showTop(rowId,tableBoxId);
+            	  iframeID.showTop(rowId,tableBoxId);
               }
           }
+          $(function() {
+			  //绑定事件
+			 $("#tabShow").scroll(function(){
+			 	    var iframeID  = $("#tab2Iframe")[0];//获取iframe的ID
+	          		iframeID.contentWindow.$(".actions").css("top", ($(this).scrollTop() ));
+	          		iframeID.contentWindow.$(".actions").css("left", ($(this).scrollLeft() ));
+        	 });
+        	  $("#tableBoxDiv").scroll(function(){
+			 	    var iframeID  = $("#tab3Iframe")[0];//获取iframe的ID
+	          		iframeID.contentWindow.$(".actions").css("top", ($(this).scrollTop() ));
+	          		iframeID.contentWindow.$(".actions").css("left", ($(this).scrollLeft()));
+        	 });
+		  });
 </script>
   </head>
   <body>
@@ -220,6 +233,7 @@
 	<h4>实时监控展现</h4>
     <form method="post" action="" id="formId" class="form-inline">
         <input type="hidden" id="rowId" name="rowId"  value=""/>
+         <input type="hidden" id="lastRowId" name="lastRowId"  value=""/>
         <input type="hidden" id="epuCity" name="epuCity"  value=""/>
         <input type="hidden" id="cityName" name="cityName"  value=""/>
         <input type="hidden" id="epuDistrict" name="epuDistrict"  value=""/>
@@ -260,11 +274,9 @@
 <!--弹层开始-->
 <div class="wapp-layer"  id="messageAmmeter" >
 	<div class="box tips mrr">
-    	<h4><label id='tableBoxName'></label><span class="close-js" onclick="$('#messageAmmeter').hide();">关闭</span></h4>
-        <div class="edit mrr">
-            <p><sapn id="statusSpan"></sapn></p>
+    	<h4 style="text-indent:0%; "><label id='tableBoxName' ></label><span class="close-js" onclick="$('#messageAmmeter').hide();">关闭</span></h4>
+        <div class="edit mrr" id="tableBoxDiv">
 			<iframe id="tab3Iframe" src="<%=basePath%>/html/ammeter.html" width="10000" height="4000" frameborder="0" scrolling="no"></iframe>
-            
         </div>
         <div class="but-nav" style=" position: absolute; left:0px; bottom:30px; height:32px;">
             <span class="but" onclick="$('#messageAmmeter').hide();">关&nbsp;&nbsp;闭</span>
@@ -273,16 +285,5 @@
 </div>
 <!--弹层结束/-->
 </html>
-
-<!-- 	<div class="actions"> -->
-<!-- 		<label style="color: RED;">红色图标表示汇总负荷超过线柜负荷15%</label><br/> -->
-<!-- 		<label style="color: blue;">蓝色图标表示汇总低于出线负荷15%</label><br/> -->
-<!-- 		<label >白色图标表示正常情况</label><br/> -->
-<!-- 		<label>&nbsp;</label><br/> -->
-<!-- 		<label style="font-size: 14px;color:#000000;">说明：</label><br/> -->
-<!-- 		<label  style="font-size: 14px;color:#000000;">电压单位V;</label><br/> -->
-<!-- 		<label   style="font-size: 14px;color:#000000;">电流单位A;</label><br/> -->
-<!-- 		<label   style="font-size: 14px;color:#000000;">功率单位KW;</label><br/> -->
-<!-- 	</div> -->
   </body>
 </html>
