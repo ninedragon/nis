@@ -55,7 +55,7 @@ function drawSvg(svgModelData, el) {
 						  var txtID = $(this).attr("id");//展示的文字ID
 						  parent.$("#tableBoxId").val(txtID.replace("meterbox_",""));//当前表箱ID
 						  var textValue = $(this).attr("epuName");//展示的文字内容
-						  parent.$("#tableBoxName").text(textValue + "单线图");//TAB
+						  parent.$("#tableBoxName").attr("title",textValue + "单线图").text(textValue + "单线图");//TAB
 						  var rowId = parent.$("#rowId").val();//获取箱变根ID
 			              var iframeID  = parent.$("#tab3Iframe")[0];//获取iframe的ID
 			              var tableBoxId = parent.$("#tableBoxId").val();//获取箱变根ID
@@ -161,7 +161,15 @@ function drawSvg(svgModelData, el) {
 		});
 	});
 	svgSnap.attr("width", w1 + leftPad + 100);
-	parent.$("#tab2Iframe").attr("width", w1 + leftPad + 100);//设置主体IFRAME的宽度
+	var rowId = parent.$(".all li[class='on']").attr("id").replace("tab_","");
+	parent.$("#"+rowId+"Iframe").attr("height", svgSnap.attr("height"));//设置主体IFRAME的宽度
+	parent.$("#"+rowId+"Iframe").attr("width", w1 + leftPad + 100);//设置主体IFRAME的宽度
+	var wd = parseFloat($("#wd").val() || 1) ;
+	if(wd < 1){
+		wd = wd.toFixed(1);
+	}
+	$("#wd").val(wd);//文本框内容缩放级别值
+	svgSnap.attr("transform","scale(" + wd + " " + wd + ") translate(0 0)");
 	// 画左侧标识
 	
 	svgSnap.append('text').attr("font-size", "36").attr("stroke", "rgb(0,0,0)").attr("fill","rgb(0,0,0)").text("箱变").attr("x", 20 ).attr("y",100);

@@ -17,13 +17,13 @@ function getRootPath_web() {
 	 return (localhostPaht + projectName);
 }  
 var mySvg = null;
-var scaleZoom = 1;
 var dataTemp = null;
 /**
  * 展示拓扑
  * **/
 function showTop(rowId){
 	if(null != rowId && "" != rowId){
+		parent.$(".loading").show();//显示蒙层
 		$.ajax({ 
 			 type: "post",
 	         url:  getRootPath_web() + "/epu/getEupInfosTree.shtml",
@@ -34,17 +34,12 @@ function showTop(rowId){
 	         dataType: "json",
 	         cache: false,
 	         success: function(allData){ 
+	        	 parent.$(".loading").hide();//隐藏蒙层
 	        	 if(allData){
 	        		 mySvg = SVG_HELPER.drawSvg(allData, 'body');
 	        		 dataTemp = allData;
-	        		 var lastRowId = parent.$("#lastRowId").val();
-	        		 parent.$("#lastRowId").val(rowId);
-	        		 if(lastRowId != rowId){
-	        			 scaleZoom = 1;//每次单击菜单，缩放级别回归到1
-	        			 $("#wd").val(scaleZoom);//文本框内容缩放级别值
-	        		 }else{
-	        			 mySvg.scale(scaleZoom);
-	        		 }
+	        		 var wd = parseFloat($("#wd").val() || 1) ;
+	        		 mySvg.scale(wd);
 	        		 /**
 	        		 以下方法 参数 都是 ID
 	        		 boxError: 出线柜/分支箱  整体状态 标红, 
@@ -66,24 +61,28 @@ function showTop(rowId){
 	}
 }
 
+var obj =  parent.$(".all li[class='on']");
+var rowId = obj.attr("id").replace("tab_","");
+if(obj.attr("isShow") != "yes"){//如果是第一次，则加载
+	obj.attr("isShow","yes");
+	showTop(rowId);//初始化加载
+}
+
+
 /**
 * 单击执行放大缩小
 **/
 function clickScale(param){
-	scaleZoom = scaleZoom || 1;
+	var wd = parseFloat($("#wd").val()) || 1;
 	if(param == "max"){
-		if(scaleZoom < 0.9){
-			scaleZoom = scaleZoom + 0.1;
-			mySvg.scale(scaleZoom);
-		}else if(scaleZoom >= 0.9){
-			scaleZoom = 1;
-			$("#wd").val(scaleZoom);//文本框内容缩放级别值
-			 mySvg = SVG_HELPER.drawSvg(dataTemp, 'body');
+		if(wd < 1){
+			wd = wd + 0.1;
+			mySvg.scale(wd);
 		}
 	}else if(param == "min"){
-		if(scaleZoom > 0.2){
-			scaleZoom = scaleZoom - 0.1;
-			mySvg.scale(scaleZoom);
+		if(wd > 0.2){
+			wd = wd - 0.1;
+			mySvg.scale(wd);
 		}
 	}
 }
@@ -91,7 +90,9 @@ function clickScale(param){
 
 $(function() {
 	  //绑定事件
-	parent.$("#tabShow").scroll(function(){
+	var obj =  parent.$(".all li[class='on']");
+	var rowId = obj.attr("id").replace("tab_","");
+	parent.$("#" + rowId + "tabShow").scroll(function(){
 	 	    $(".gj").css("top", ($(this).scrollTop() ));
     		$(".gj").css("left", ($(this).scrollLeft() ));
 	 });

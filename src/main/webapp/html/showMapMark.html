@@ -18,9 +18,9 @@
     </style>
     <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=Y076LYaIrrQ7HOjk4Tcn6FDMipRoDtVm"></script>
     <script>             
-	    function  linkEquInfo()
+	    function  linkEquInfo(id, name)
 	    {
-	       parent.tabClick(2);
+	       parent.addTab(id,name);
 	    }
         function addMarker(id, name,epuLocal, x, y) {
             var p = new BMap.Point(x, y);
@@ -46,7 +46,7 @@
 	var contentHtml ="<h4 style='margin:0 0 5px 0;padding:0.2em 0;color:#0000FF;'>"+$("#cityName").val()+"</h4>" + "<hr />";
 	contentHtml +="<p style='margin:0 0 5px 0;padding:0.2em 0;font-size:15px;'><strong>" + name+"</strong></p>";
 	contentHtml +="<p style='margin:0 0 5px 0;padding:0.2em 0;font-size:13px;'>位置：" + epuLocal +"</p>" ;	
-    contentHtml+= '<p style="margin:0 0 5px 0;padding:0.2em 0;font-size:13px;color:#0000FF;" ><strong><a href="javascript:linkEquInfo()">详细信息</a></strong></p>';            
+    contentHtml+= "<p style=\"margin:0 0 5px 0;padding:0.2em 0;font-size:13px;color:#0000FF;\" ><strong><a href=\"javascript:linkEquInfo('"+id+"','"+name+"')\">详细信息</a></strong></p>";            
             var infoWindow = new BMap.InfoWindow(contentHtml);  // 创建信息窗口对象  
             marker.addEventListener("click", function () {  
                 M.openInfoWindow(infoWindow, p); //开启信息窗口  

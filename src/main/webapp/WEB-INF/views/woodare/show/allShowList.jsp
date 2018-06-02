@@ -9,7 +9,7 @@
  %> 
 
 <!DOCTYPE html>
-<!-- <html> -->
+<html>
   <head>
     <base href="<%=basePath%>">
     <title>V2-设备信息列表</title>          
@@ -22,86 +22,61 @@
 	<link href="<%=basePath%>/js/common/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet"/>
 	<link href="<%=basePath%>/css/common/base.css" rel="stylesheet"/>
 	<link rel="stylesheet" type="text/css" href="<%=basePath%>/woodare/css/comm.css" />
-		<script src="<%=basePath%>/js/common/jquery/jquery1.8.3.min.js"></script>
+		<script src="<%=basePath%>/woodare/js/jquery-1.9.1.min.js"></script>
 	<script src="<%=basePath%>/woodare/js/menu.js"></script>
 	<script  src="<%=basePath%>/js/common/layer/layer.js"></script>
 	<script  src="<%=basePath%>/js/common/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 	<script  src="<%=basePath%>/js/shiro.demo.js"></script>
-	<link rel="stylesheet" href="<%=basePath%>/css/zTreeStyle/zTreeStyle.css" type="text/css" />	
-		<script type="text/javascript" src="<%=basePath%>/woodare/js/jquery.ztree.core.min.js"></script>
-        	<style type="text/css">  
-            body{  
-                margin:0;  
-                padding:0;  
-                overflow: hidden;  
-                }  
-        </style>
-         <script type="text/javascript">         
+	<link rel="stylesheet" href="<%=basePath%>/css/zTreeStyle/zTreeStyle.css" type="text/css" />
+	<script type="text/javascript" src="<%=basePath%>/woodare/js/jquery.ztree.core.min.js"></script>
+	<script type="text/javascript">         
 	        $(function(){  
 	            changeWH();  
 	        });  
 	  
 	    function changeWH(){    
-	        $("#tab1Iframe").height($(document).height());  
-	        $("#tab1Iframe").width($(document).width());  
+	        $("#mapIframe").height($(document).height());  
+	        $("#mapIframe").width($(document).width());  
 	    } ;  
     	window.onresize=function(){ 
          changeWH();     
     		};
-      </script>   
-	<script type="text/javascript" src="<%=basePath%>/woodare/js/jquery.ztree.core.min.js"></script>
-	 <style type="text/css">  
-	 	.actions {
-    position: fixed;
-    background: rgba(0,0,0,0.5);
-    padding: 8px 20px;
-    color: #FFF;
-    border-radius: 8px;
-    top: 20%;
-    left: 23%;
-	font-size: 18px;
-	display: none;
-}
-
-.actions a {
-    color: #FFF;
-	display:block;
-	margin: 4px;
-}
-.actions a:hover {
-    color: red;
-}
-	  </style>
-  <script >
-  function addNode(event, treeId, treeNode, clickFlag) {
-    var zTree = $.fn.zTree.getZTreeObj("treeNone");
-    var type = treeNode.type;
-    if (treeNode.isParent  && typeof (treeNode.children) == "undefined")
-     {
-         var parameter = 
-         {
-            pId : treeNode.id,
-            pName:treeNode.name
-        };
-        if (type == 0) {
-            $.post("<%=basePath%>/epu/showCity.shtml", parameter, function(data) {
-                zTree.addNodes(treeNode, data);
-            });
-        }
-        if (type == 1) {
-            $.post("<%=basePath%>/epu/showCounty.shtml", parameter, function(data) {
-                zTree.addNodes(treeNode, data);
-               
-            });
-       
-        }
-         if (type == 2) {
-            $.post("<%=basePath%>/epu/showEpuInfo.shtml", parameter, function(data) {
-                zTree.addNodes(treeNode, data);
-            });       
-        }
-       
-    }
+      </script>
+	<script type="text/javascript"> 
+	  function addNode(event, treeId, treeNode, clickFlag) {
+	    var zTree = $.fn.zTree.getZTreeObj("treeNone");
+	    var type = treeNode.type;
+	    if (treeNode.isParent  && typeof (treeNode.children) == "undefined")
+	     {
+	         var parameter = 
+	         {
+	            pId : treeNode.id,
+	            pName:treeNode.name
+	        };
+	        if (type == 0) {
+	        	$(".loading").show();//显示蒙层
+	            $.post("<%=basePath%>/epu/showCity.shtml", parameter, function(data) {
+	                zTree.addNodes(treeNode, data);
+	            	$(".loading").hide();//隐藏蒙层
+	            });
+	        }
+	        if (type == 1) {
+	        	$(".loading").show();//显示蒙层
+	            $.post("<%=basePath%>/epu/showCounty.shtml", parameter, function(data) {
+	                zTree.addNodes(treeNode, data);
+	              	$(".loading").hide();//隐藏蒙层
+	            });
+	       
+	        }
+	         if (type == 2) {
+	         	$(".loading").show();//显示蒙层
+	            $.post("<%=basePath%>/epu/showEpuInfo.shtml", parameter, function(data) {
+	                zTree.addNodes(treeNode, data);
+	                $(".loading").hide();//隐藏蒙层
+	            });       
+	        }
+	       
+	    }
    /*   if (type == 1) {
            $("#cityName").val(treeNode.name);
 		   $("#epuCity").val(treeNode.id);
@@ -120,22 +95,20 @@
         }
      */
       if (type == 3) {
+      		//tab-begin
+      		addTab(treeNode.id,treeNode.name);
+			//tab-end
 		   $("#cityName").val(treeNode.cityName);
            $("#epuCity").val(treeNode.cityCode);
            $("#epuDistrict").val("");
            $("#rowId").val(treeNode.id);
-           $("#xbName").html(treeNode.name);
-           
-           var tabId = $(".tab-nav li[view='show']").attr("id");
-           var iframeID  = $("#" + tabId + "Iframe")[0];
-           if(tabId == "tab2" || tabId == "tab3"){
-        	   clickIframe();//刷新右侧箱变
-           }else{
-        	   iframeID.contentWindow.location.reload(true);    
-           }
+           if($("#tab_map").hasClass("on")){//若是选中地图，则加载信息
+             var mapID  = $("#mapIframe")[0];
+             mapID.contentWindow.location.reload(true);  
+           }  
         }
-}
-  	var menu = {
+	 }
+  	 var menu = {
 	    setting : {
 	        data : {
 	            simpleData : {
@@ -155,117 +128,215 @@
 	    },
 	 
 	    loadMenuTree : function() {
+	    	$(".loading").show();//显示蒙层
 	        $.post("<%=basePath%>/epu/showProvince.shtml", null, function(data) {
-            $.fn.zTree.init($("#treeNone"), menu.setting, data);
-        });
+	           	 $.fn.zTree.init($("#treeNone"), menu.setting, data);
+	           	 $(".loading").hide();//隐藏蒙层
+        	});
 	    }
 	};
 	
-			so.init(function(){
-	         menu.loadMenuTree();
-				
+	so.init(function(){
+        menu.loadMenuTree();
+		
+	});
+	//tab --滚动条 区域 begin
+	$(function() {
+		$(".data-bar h4").click(function(){
+			$(this).addClass("on");
+			$("ul.tab-nav li").removeClass("on");
+		});
+					
+		$(".data-bar span.left").click(function(){
+			var dom = $(".data-bar ul.tab-nav .all");
+			var marginLeft = parseInt(dom.css("margin-left"));
+			if(marginLeft+207>0){
+				dom.css("margin-left",0);
+			}else{
+				dom.css("margin-left",marginLeft+207);
+			}
+		});
+		
+		$(".data-bar span.right").click(function(){
+			var dom = $(".data-bar ul.tab-nav .all");
+			var marginLeft = parseInt(dom.css("margin-left"));
+			var maxLeft = dom.width()-dom.parent().width()
+			if(0-(marginLeft-207)>maxLeft){
+				dom.css("margin-left",0-maxLeft);
+			}else{
+				dom.css("margin-left",marginLeft-207);
+			}
+		});
+	});
+	//tab --滚动条 区域 end
+	/*
+	*动态追加TAB
+	**/
+	function addTab(rowId,name){
+		//隐藏地图iframe
+		$("#mapDivIframe").hide();
+		$(".data-bar h4").removeClass("on");
+		$("ul.tab-nav li, ul.tab-nav li font").removeClass("on");
+		if($("#tab_" + rowId).length > 0){//已存在的箱变TAB
+			$("#tab_" + rowId).addClass("on");
+			if($("#tab_" + rowId).hasClass("on")){//若是选中地图，则加载信息
+				$(".all li").each(function(){
+					var thisRowId = $(this).attr("id").replace("tab_","");
+					if($(this).hasClass("on")){//当前选中
+						$("#"+thisRowId+"tabShow").show();
+					}else{//其他禁用
+						$("#"+thisRowId+"tabShow").hide();
+					}
+				});
+			}
+		}else{//新增TAB
+			$("<li class='on' id='tab_" + rowId + "' onclick=\"addTab('"+rowId+"','"+name+"')\">" + name + "<font onclick=\"removeTab(event,'"+rowId+"')\">关闭</font></li>").appendTo($("ul.tab-nav .all")).find("font").click(function(){
+				$(this).parent().remove();
+				var wid = $(".data-bar ul.tab-nav").width(); //tab最大宽度
+				var linum = $(".data-bar ul.tab-nav li").length; //li最大个数
+				var allwid = 207 * linum; //tab实际宽度
+
+				if(wid<allwid){
+					$(".data-bar ul.tab-nav .all").width(allwid);	
+					$(".data-bar ul.tab-nav .all").css("margin-left",-(allwid-wid));
+				}else{
+					$(".data-bar span").hide();
+					$(".data-bar ul.tab-nav").removeClass("mrr");
+					$(".data-bar ul.tab-nav .all").width(wid);	
+					$(".data-bar ul.tab-nav .all").css("margin-left",0);
+				}
+			});
+			//创建拓扑图
+			$(".loading").show();//显示蒙层
+			$("#appendIframe").append("<div class=\"box\" id=\""+rowId+"tabShow\" style=\"display: none;\"></div>");
+			var iframe = document.createElement('iframe'); 
+			iframe.src="<%=basePath%>/html/topologyHtml.html";  
+			iframe.id= rowId + "Iframe";
+			iframe.scrolling= "no";
+			iframe.frameBorder= "0";
+			$("#"+rowId+"tabShow").append(iframe);
+			$(".all li").each(function(){
+				var thisRowId = $(this).attr("id").replace("tab_","");
+				if($(this).hasClass("on")){//当前选中
+					$("#"+thisRowId+"tabShow").show();
+				}else{//其他禁用
+					$("#"+thisRowId+"tabShow").hide();
+				}
+			});
+		}
+		$(function() {
+			var wid = $(".data-bar ul.tab-nav").width(); //tab最大宽度
+			var linum = $(".data-bar ul.tab-nav li").length; //li最大个数
+			var allwid = 207 * linum; //tab实际宽度
+			if(wid<allwid){
+				$(".data-bar span").show();
+				$(".data-bar ul.tab-nav .all").width(allwid);		
+				$(".data-bar ul.tab-nav").addClass("mrr");	
+				$(".data-bar ul.tab-nav .all").css("margin-left",-(allwid-wid));
+			}else{}
+			$(".data-bar ul.tab-nav li").click(function(){
+				$("ul.tab-nav li, ul.tab-nav li font").removeClass("on");
+				$(this).addClass("on");
+				$("font",this).addClass("on");
+				$(".data-bar h4").removeClass("on");
 			});
 
-		</script>
-		<script type="text/javascript">  
-            var tabClick = function(v) {  
-                var llis = $('.data-bar li');  
-                for(var i = 1; i <= llis.length; i++) {  
-                	if(i == v){
-                		$("#tab" + i ).addClass("on");
-						$("#tab" + i ).attr("view","show");
-                		$("#tab" + i + "_content").css("display","block");
-                	}else{
-                		$("#tab" + i ).attr("view","none");
-                		$("#tab" + i ).removeClass("on");
-                		$("#tab" + i + "_content").css("display","none");
-                	}
-                }
-                if(v == 2){//只有箱变和电表TAB可以执行此动作
-            		clickIframe();//刷新右侧
-            	}
-            }  
-           /**
-           *刷新右侧箱变
-           **/
-          function clickIframe(){
-        	  var rowId = $("#rowId").val();//获取箱变根ID
-              var tabId = $(".tab-nav li[view='show']").attr("id");//获取TAB的ID
-              var iframeID  = $("#" + tabId + "Iframe")[0];//获取iframe的ID
-              if(tabId == "tab2"){//只有箱变和电表TAB可以执行此动作
-           	   	  iframeID.contentWindow.showTop(rowId);
-              }else if( tabId == "tab3"){//只有电表TAB可以执行此动作
-            	  var tableBoxId = $("#tableBoxId").val();//获取箱变根ID
-            	  iframeID.showTop(rowId,tableBoxId);
-              }
-          }
+		});
+	}
+	/**
+	*移除*/
+	function removeTab(event,rowId){
+		$("#"+rowId+"tabShow").remove();
+		$("#tab_"+rowId).remove();
+		event.stopPropagation(); 
+		var count = $(".all li").each(function(){}).length;
+		if(count == 0){
+			mapClick();//重新加载地图
+		}
+	}
+	/**
+	*重新加载地图
+	**/
+	function mapClick(){
+		$("#mapDivIframe").show();
+		$("#tab_map").addClass("on");
+		var mapID  = $("#mapIframe")[0];
+        mapID.contentWindow.location.reload(true); //重新加载
+		$(".all li").each(function(){
+			var thisRowId = $(this).attr("id").replace("tab_","");
+			$("#"+thisRowId+"tabShow").hide();//除地图其他TAB全部隐藏
+		});
+	}
 </script>
   </head>
+  <input type="hidden" id="tableBoxId" name="tableBoxId"  value=""/>
   <body>
    <!--页眉开始-->
 	<%--引入头部<@_top.top 3/>--%>
 	<jsp:include page="../common/top.jsp"></jsp:include>
 	<!--页眉结束/-->
-
 	<!--左侧导航开始-->
 	<jsp:include page="../common/left.jsp"></jsp:include>
 	<!--左侧导航结束/-->
-
-<!--主体开始-->
-
-<!--主体开始-->
- <input type="hidden" id="tableBoxId" name="tableBoxId"  value=""/>
-<div class="wapp-main">
-	<h4>实时监控展现</h4>
-    <form method="post" action="" id="formId" class="form-inline">
-        <input type="hidden" id="rowId" name="rowId"  value=""/>
-         <input type="hidden" id="lastRowId" name="lastRowId"  value=""/>
-        <input type="hidden" id="epuCity" name="epuCity"  value=""/>
-        <input type="hidden" id="cityName" name="cityName"  value=""/>
-        <input type="hidden" id="epuDistrict" name="epuDistrict"  value=""/>
-    </form>
-    <!--实时监控开始-->
-    <div class="date-mode">
-        <!--树结构开始-->
-        <div class="tree-box ztree" id="treeNone">
-
-        </div>
-        <!--树结构结束/-->
-        
-        <!--动态数据开始-->
-        <div class="data-bar">
-            <ul class="tab-nav">
-                <li  id="tab1"  onclick="tabClick(1)" view="show"  class="on">地图总览</li>                
-                <li  id="tab2" onclick="tabClick(2)" view="none"><div id='xbName'>箱变名称</div></li>
-            </ul>
-            <div class="box" id="tabShow">         
-	            <div class="tab_css" id="tab1_content" style="display: block">  
-	               <iframe  id="tab1Iframe" src="<%=basePath%>/html/showMapMark.html" frameborder="0" scrolling="no"></iframe> 
-	            </div>  
-	            <div class="tab_css" id="tab2_content"  style="display: none;">  
-	                 <iframe id="tab2Iframe" src="<%=basePath%>/html/topologyHtml.html" width="10000" height="4000" frameborder="0" scrolling="no"></iframe>
-	            </div>  
-            </div>
-        </div>
-        <!--动态数据结束/-->
-    </div>
-    <!--实时监控结束/-->
-</div>
-<!--主体结束/-->
-</body>
-<!--弹层开始-->
-<div class="wapp-layer"  id="messageAmmeter" >
-	<div class="box tips mrr">
-    	<h4 style="text-indent:0%; "><label id='tableBoxName' ></label><span class="close-js" onclick="$('#messageAmmeter').hide();">关闭</span></h4>
-        <div class="edit mrr" id="tableBoxDiv">
+	<!--主体开始-->
+	<div class="wapp-main">
+		<h4>实时监控展现</h4>
+	    <form method="post" action="" id="formId" class="form-inline">
+	        <input type="hidden" id="rowId" name="rowId"  value=""/>
+	        <input type="hidden" id="epuCity" name="epuCity"  value=""/>
+	        <input type="hidden" id="cityName" name="cityName"  value=""/>
+	        <input type="hidden" id="epuDistrict" name="epuDistrict"  value=""/>
+	    </form>
+	    <!--动态信息开始-->
+	    <div class="date-mode">
+	        <!--树结构开始-->
+	        <div class="tree-box ztree" id="treeNone"></div>
+	        <!--树结构结束/-->
+	        
+	        <!--动态数据开始-->
+	        <div class="data-bar">
+	        	<div class="head">
+	                <h4 class="on" id="tab_map" onclick="mapClick();">地图总览</h4>
+	                <span class="left"></span>
+	                <ul class="tab-nav">
+	                	<div class="all"></div>
+	                </ul>
+	                <span class="right"></span>
+	            </div>
+	        	<div class="box" id="mapDivIframe" style="display: block">         
+		            <div class="tab_css" >  
+		               <iframe  id="mapIframe" src="<%=basePath%>/html/showMapMark.html" frameborder="0" scrolling="no"></iframe> 
+		            </div>  
+           		 </div>
+           		 <!--  -->
+           		 <div id="appendIframe"></div>
+           		  <!--  -->
+	        </div>
+	        <!--动态数据结束/-->
+	    </div>
+	    <!--动态信息结束/-->
+	</div>
+	<!--主体结束/-->
+	<!--弹层开始-->
+	<div class="wapp-layer"  id="messageAmmeter" >
+		<div class="box tips mrr">
+	    	<h4 style="text-indent:0%; "><label style="width:90%" ><p id='tableBoxName' style="word-wrap:break-word; word-break:break-all;"></p></label><span class="close-js" onclick="$('#messageAmmeter').hide();">关闭</span></h4>
+	       <div class="edit mrr" id="tableBoxDiv">
 			<iframe id="tab3Iframe" src="<%=basePath%>/html/ammeter.html" width="10000" height="4000" frameborder="0" scrolling="no"></iframe>
-        </div>
-        <div class="but-nav" style=" position: absolute; left:0px; bottom:30px; height:32px;">
-            <span class="but" onclick="$('#messageAmmeter').hide();">关&nbsp;&nbsp;闭</span>
-        </div>
-    </div>
-</div>
-<!--弹层结束/-->
-</html>
+	       </div>
+	       <div class="but-nav" style=" position: absolute; left:0px; bottom:30px; height:32px;">
+	           <span class="but" onclick="$('#messageAmmeter').hide();">关&nbsp;&nbsp;闭</span>
+	        </div>
+	    </div>
+	</div>
+	<!--弹层结束/-->
+	<!--loading开始-->
+	<div class="loading">
+		<div class="spinner">加载中
+			<div class="double-bounce1"></div>
+			<div class="double-bounce2"></div>
+		</div>
+	</div>
+	<!--loading结束/-->
   </body>
 </html>
