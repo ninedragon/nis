@@ -105,7 +105,6 @@ function drawSvg(svgModelData, el) {
 			this._x = tmpX;
 			this._y = 200;
 			createBox(layerSnap, this.rowId, this._x, this._y,this.epuName, cids1);
-//			setCabinetsXTable(layerSnap,this.rowId,this._x +280, this._y + 180);
 			x2 += Math.max( this.width, w3 );
 			x3 = Math.max(x2, x3);
 			x4 = Math.max(x4, x3);
@@ -135,84 +134,8 @@ function drawSvg(svgModelData, el) {
 					y2: py + 180,
 					h: h
 				});
-				if(tempCount == 1){
-					setCabinetsXTable(layerSnap,this.rowId,tempX + 300, tempY + 200);
-				}else if(tempCount == 2){
-					switch((index+1)){
-						case 1:
-							setCabinetsXTable(layerSnap,this.rowId,tempX - 300, tempY + 200);
-							break;
-						case 2:
-							setCabinetsXTable(layerSnap,this.rowId,tempX + 300, tempY + 200);
-							break;
-					}
-				}else if(tempCount == 3){
-					switch((index+1)){
-						case 1:
-							setCabinetsXTable(layerSnap,this.rowId,tempX - 300, tempY + 200);
-							break;
-						case 2:
-							setCabinetsXTable(layerSnap,this.rowId,tempX + 10, tempY + 10);
-							break;
-						case 3:
-							setCabinetsXTable(layerSnap,this.rowId,tempX + 300, tempY + 200);
-							break;
-					}
-				}else if(tempCount == 4){
-					switch((index+1)){
-						case 1:
-							setCabinetsXTable(layerSnap,this.rowId,tempX - 300, tempY + 200);
-							break;
-						case 2:
-							setCabinetsXTable(layerSnap,this.rowId,tempX - 80, tempY + 10);
-							break;
-						case 3:
-							setCabinetsXTable(layerSnap,this.rowId,tempX + 150, tempY + 10);
-							break;
-						case 4:
-							setCabinetsXTable(layerSnap,this.rowId,tempX + 300, tempY + 200);
-							break;
-					}
-				}else if(tempCount == 5){
-					switch((index+1)){
-						case 1:
-							setCabinetsXTable(layerSnap,this.rowId,tempX - 350, tempY + 200);
-							break;
-						case 2:
-							setCabinetsXTable(layerSnap,this.rowId,tempX - 190, tempY + 10);
-							break;
-						case 3:
-							setCabinetsXTable(layerSnap,this.rowId,tempX + 30, tempY + 10);
-							break;
-						case 4:
-							setCabinetsXTable(layerSnap,this.rowId,tempX + 250, tempY + 10);
-							break;
-						case 5:
-							setCabinetsXTable(layerSnap,this.rowId,tempX + 350, tempY + 200);
-							break;
-					}
-				}else if(tempCount == 6){
-					switch((index+1)){
-					case 1:
-						setCabinetsXTable(layerSnap,this.rowId,tempX - 400, tempY + 200);
-						break;
-					case 2:
-						setCabinetsXTable(layerSnap,this.rowId,tempX - 350, tempY + 10);
-						break;
-					case 3:
-						setCabinetsXTable(layerSnap,this.rowId,tempX - 140, tempY + 10);
-						break;
-					case 4:
-						setCabinetsXTable(layerSnap,this.rowId,tempX + 70, tempY + 10);
-						break;
-					case 5:
-						setCabinetsXTable(layerSnap,this.rowId,tempX + 280, tempY + 10);
-						break;
-					case 6:
-						setCabinetsXTable(layerSnap,this.rowId,tempX + 350, tempY + 200);
-						break;
-					}
-				}
+				//展示table信息
+				showTabData(layerSnap,this.rowId,tempX,tempY,tempCount,index);
 			});
 		});
 		//M0001
@@ -573,6 +496,89 @@ function createUseEl(layer, data, position) {
 	var rotateX = x + grid / 2;
 	var rotateY = y + grid / 2;
 	var useage = g.append('use').attr("width", grid).attr("height", grid).attr("transform","scale(" + position.scale + ") translate(" + transX + " " + transY + ") rotate(" + position.rotate + " " + rotateX + " " + rotateY + ")").attr("xlink:href", "#" + symbol.id ).attr("x", x).attr("y", y).attr("class", data.cls);
+}
+/*
+ *展示分支箱TABLE信息 
+ ***/
+function showTabData(layerSnap,rowId,tempX,tempY,tempCount,index){
+	if(tempCount == 1){
+		setCabinetsXTable(layerSnap,rowId,tempX + 300, tempY + 200);
+	}else if(tempCount == 2){
+		switch((index+1)){
+			case 1:
+				setCabinetsXTable(layerSnap,rowId,tempX - 300, tempY + 200);
+				break;
+			case 2:
+				setCabinetsXTable(layerSnap,rowId,tempX + 300, tempY + 200);
+				break;
+		}
+	}else if(tempCount == 3){
+		switch((index+1)){
+			case 1:
+				setCabinetsXTable(layerSnap,rowId,tempX - 300, tempY + 200);
+				break;
+			case 2:
+				setCabinetsXTable(layerSnap,rowId,tempX + 10, tempY + 10);
+				break;
+			case 3:
+				setCabinetsXTable(layerSnap,rowId,tempX + 300, tempY + 200);
+				break;
+		}
+	}else if(tempCount == 4){
+		switch((index+1)){
+			case 1:
+				setCabinetsXTable(layerSnap,rowId,tempX - 300, tempY + 200);
+				break;
+			case 2:
+				setCabinetsXTable(layerSnap,rowId,tempX - 80, tempY + 10);
+				break;
+			case 3:
+				setCabinetsXTable(layerSnap,rowId,tempX + 150, tempY + 10);
+				break;
+			case 4:
+				setCabinetsXTable(layerSnap,rowId,tempX + 300, tempY + 200);
+				break;
+		}
+	}else if(tempCount == 5){
+		switch((index+1)){
+			case 1:
+				setCabinetsXTable(layerSnap,rowId,tempX - 350, tempY + 200);
+				break;
+			case 2:
+				setCabinetsXTable(layerSnap,rowId,tempX - 190, tempY + 10);
+				break;
+			case 3:
+				setCabinetsXTable(layerSnap,rowId,tempX + 30, tempY + 10);
+				break;
+			case 4:
+				setCabinetsXTable(layerSnap,rowId,tempX + 250, tempY + 10);
+				break;
+			case 5:
+				setCabinetsXTable(layerSnap,rowId,tempX + 350, tempY + 200);
+				break;
+		}
+	}else if(tempCount == 6){
+		switch((index+1)){
+		case 1:
+			setCabinetsXTable(layerSnap,rowId,tempX - 400, tempY + 200);
+			break;
+		case 2:
+			setCabinetsXTable(layerSnap,rowId,tempX - 350, tempY + 10);
+			break;
+		case 3:
+			setCabinetsXTable(layerSnap,rowId,tempX - 140, tempY + 10);
+			break;
+		case 4:
+			setCabinetsXTable(layerSnap,rowId,tempX + 70, tempY + 10);
+			break;
+		case 5:
+			setCabinetsXTable(layerSnap,rowId,tempX + 280, tempY + 10);
+			break;
+		case 6:
+			setCabinetsXTable(layerSnap,rowId,tempX + 350, tempY + 200);
+			break;
+		}
+	}
 }
 
 return {

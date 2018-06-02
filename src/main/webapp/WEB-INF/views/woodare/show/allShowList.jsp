@@ -181,8 +181,7 @@
                 		$("#tab" + i + "_content").css("display","none");
                 	}
                 }
-                if(v == 2 || v == 3){//只有箱变和电表TAB可以执行此动作
-            		$(".actions").show();
+                if(v == 2){//只有箱变和电表TAB可以执行此动作
             		clickIframe();//刷新右侧
             	}
             }  
@@ -200,19 +199,6 @@
             	  iframeID.showTop(rowId,tableBoxId);
               }
           }
-//           $(function() {
-// 			  //绑定事件
-// 			 $("#tabShow").scroll(function(){
-// 			 	    var iframeID  = $("#tab2Iframe")[0];//获取iframe的ID
-// 	          		iframeID.contentWindow.$(".gj").css("top", ($(this).scrollTop() ));
-// 	          		iframeID.contentWindow.$(".gj").css("left", ($(this).scrollLeft() ));
-//         	 });
-//         	  $("#tableBoxDiv").scroll(function(){
-// 			 	    var iframeID  = $("#tab3Iframe")[0];//获取iframe的ID
-// 	          		iframeID.contentWindow.$(".actions").css("top", ($(this).scrollTop() ));
-// 	          		iframeID.contentWindow.$(".actions").css("left", ($(this).scrollLeft()));
-//         	 });
-// 		  });
 </script>
   </head>
   <body>
@@ -251,7 +237,6 @@
             <ul class="tab-nav">
                 <li  id="tab1"  onclick="tabClick(1)" view="show"  class="on">地图总览</li>                
                 <li  id="tab2" onclick="tabClick(2)" view="none"><div id='xbName'>箱变名称</div></li>
-<!--                 <li  id="tab3" onclick="tabClick(3)" view="none"><div id='tableBoxName'>表箱单线图</div></li> -->
             </ul>
             <div class="box" id="tabShow">         
 	            <div class="tab_css" id="tab1_content" style="display: block">  
@@ -260,9 +245,6 @@
 	            <div class="tab_css" id="tab2_content"  style="display: none;">  
 	                 <iframe id="tab2Iframe" src="<%=basePath%>/html/topologyHtml.html" width="10000" height="4000" frameborder="0" scrolling="no"></iframe>
 	            </div>  
-<!-- 	            <div class="tab_css" id="tab3_content" style="display: none;">   -->
-<%-- 	                <iframe id="tab3Iframe" src="<%=basePath%>/html/ammeter.html" width="4000" height="4000" frameborder="0" scrolling="no"></iframe> --%>
-<!-- 	            </div>                     -->
             </div>
         </div>
         <!--动态数据结束/-->
