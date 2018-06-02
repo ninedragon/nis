@@ -20,26 +20,6 @@
 	stroke:blue;
 }
 
-
-.actions {
-    position: fixed;
-    padding: 8px 20px;
-    color: #FFF;
-    border-radius: 8px;
-	font-size: 20px;
-	z-index: 9999;
-}
-
-.actions a {
-    color: #FFF;
-	display:block;
-	margin: 4px;
-}
-.actions a:hover {
-    color: red;
-}
-
-
 .gj{ width:400px; height:48px; position:absolute; left:0px; top:0px;}
 .gj font.jian{ width:40px; height:40px; float:left; background:url(../img/p04.png) no-repeat center center; text-indent:-999px; background-size:20px; overflow:hidden; cursor:pointer;}
 .gj font.jia{ width:40px; height:40px; float:left; background:url(../img/p05.png) no-repeat center center; text-indent:-999px; background-size:20px; overflow:hidden; cursor:pointer;}
