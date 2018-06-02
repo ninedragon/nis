@@ -47,10 +47,15 @@
 		</symbol>
 	  </defs>  
 	</svg>
-	<div class="actions">
-		<img alt="" src="./img/img1.png" style="width: 30px;height: 30px;" onclick="clickScale('max')"/>
-		<img alt="" src="./img/img2.png" style="width: 30px;height: 30px;" onclick="clickScale('min')"/>
-	</div>
+<!-- 	<div class="actions"> -->
+<!-- 		<img alt="" src="./img/img1.png" style="width: 30px;height: 30px;" onclick="clickScale('max')"/> -->
+<!-- 		<img alt="" src="./img/img2.png" style="width: 30px;height: 30px;" onclick="clickScale('min')"/> -->
+<!-- 	</div> -->
+		<div class="gj">
+			<font class="jian" onclick="clickScale('min')">减少</font>
+			<input type="text" name="wd" id="wd"  value="1" readonly="readonly">
+			<font class="jia"  onclick="clickScale('max')">增加</font>
+		</div>
 	<script type="text/javascript" src="./js/jquery-3.3.1.min.js"></script>
 	<script type="text/javascript" src="./js/d3.v5.min.js"></script>
 	<script type="text/javascript" src="./js/svghelper.js"></script>

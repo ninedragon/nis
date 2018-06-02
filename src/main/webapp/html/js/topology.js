@@ -41,6 +41,7 @@ function showTop(rowId){
 	        		 parent.$("#lastRowId").val(rowId);
 	        		 if(lastRowId != rowId){
 	        			 scaleZoom = 1;//每次单击菜单，缩放级别回归到1
+	        			 $("#wd").val(scaleZoom);//文本框内容缩放级别值
 	        		 }else{
 	        			 mySvg.scale(scaleZoom);
 	        		 }
@@ -84,3 +85,12 @@ function clickScale(param){
 		}
 	}
 }
+
+
+$(function() {
+	  //绑定事件
+	parent.$("#tabShow").scroll(function(){
+	 	    $(".gj").css("top", ($(this).scrollTop() ));
+    		$(".gj").css("left", ($(this).scrollLeft() ));
+	 });
+});

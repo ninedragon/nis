@@ -38,3 +38,9 @@
 .actions a:hover {
     color: red;
 }
+
+
+.gj{ width:400px; height:48px; position:absolute; left:0px; top:0px;}
+.gj font.jian{ width:40px; height:40px; float:left; background:url(../img/p04.png) no-repeat center center; text-indent:-999px; background-size:20px; overflow:hidden; cursor:pointer;}
+.gj font.jia{ width:40px; height:40px; float:left; background:url(../img/p05.png) no-repeat center center; text-indent:-999px; background-size:20px; overflow:hidden; cursor:pointer;}
+.gj input{ width:20px; height:20px; float:left; border:1px solid #00796a; border-radius:5px; margin:10px 0px 0px 0px; text-align:center; font-size:12px; background-color:#FFF;}

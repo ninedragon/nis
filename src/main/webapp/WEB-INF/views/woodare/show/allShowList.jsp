@@ -200,19 +200,19 @@
             	  iframeID.showTop(rowId,tableBoxId);
               }
           }
-          $(function() {
-			  //绑定事件
-			 $("#tabShow").scroll(function(){
-			 	    var iframeID  = $("#tab2Iframe")[0];//获取iframe的ID
-	          		iframeID.contentWindow.$(".actions").css("top", ($(this).scrollTop() ));
-	          		iframeID.contentWindow.$(".actions").css("left", ($(this).scrollLeft() ));
-        	 });
-        	  $("#tableBoxDiv").scroll(function(){
-			 	    var iframeID  = $("#tab3Iframe")[0];//获取iframe的ID
-	          		iframeID.contentWindow.$(".actions").css("top", ($(this).scrollTop() ));
-	          		iframeID.contentWindow.$(".actions").css("left", ($(this).scrollLeft()));
-        	 });
-		  });
+//           $(function() {
+// 			  //绑定事件
+// 			 $("#tabShow").scroll(function(){
+// 			 	    var iframeID  = $("#tab2Iframe")[0];//获取iframe的ID
+// 	          		iframeID.contentWindow.$(".gj").css("top", ($(this).scrollTop() ));
+// 	          		iframeID.contentWindow.$(".gj").css("left", ($(this).scrollLeft() ));
+//         	 });
+//         	  $("#tableBoxDiv").scroll(function(){
+// 			 	    var iframeID  = $("#tab3Iframe")[0];//获取iframe的ID
+// 	          		iframeID.contentWindow.$(".actions").css("top", ($(this).scrollTop() ));
+// 	          		iframeID.contentWindow.$(".actions").css("left", ($(this).scrollLeft()));
+//         	 });
+// 		  });
 </script>
   </head>
   <body>

@@ -3,6 +3,7 @@ var SVG_HELPER = (function() {
 var iv = 10;
 
 function drawSvg(svgModelData, el) {
+	$("#wd").val(1);//文本框内容缩放级别值
 	$("#Snap_Layer").remove();
 	d3.namespace("xmlns:cge","http://iec.ch/TC57/2005/SVG-schema#");
 	var svgSnap = d3.select(el || "body").append("svg");
@@ -270,6 +271,10 @@ function drawSvg(svgModelData, el) {
 			var x = 0;
 			var y = 0;
 			svgSnap.attr("transform","scale(" + zoom + " " + zoom + ") translate(" + x + " " + y + ")");
+			if(zoom < 1){
+				zoom = zoom.toFixed(1);
+			}
+			$("#wd").val(zoom);//文本框内容缩放级别值
 		},
 		boxError: function(id) {
 			updateBox(id, "error-box");
