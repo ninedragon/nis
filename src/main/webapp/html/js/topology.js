@@ -76,6 +76,8 @@ function clickScale(param){
 			scaleZoom = scaleZoom + 0.1;
 			mySvg.scale(scaleZoom);
 		}else if(scaleZoom >= 0.9){
+			scaleZoom = 1;
+			$("#wd").val(scaleZoom);//文本框内容缩放级别值
 			 mySvg = SVG_HELPER.drawSvg(dataTemp, 'body');
 		}
 	}else if(param == "min"){

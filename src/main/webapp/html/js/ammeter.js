@@ -202,8 +202,6 @@ function getRootPath_web() {
  * @param tableBoxId 表箱ID
  */
 function showTop(data,rowId,tableBoxId){
-	scaleZoom = 1;//每次单击菜单，缩放级别回归到1
-	$("#wd").val(scaleZoom);//文本框内容缩放级别值
 	svgSnap.select("g[id='ammeter_Layer']").remove();
 	var layerSnap = svgSnap.append("g").attr("id","ammeter_Layer");
 	dataTemp = data;
@@ -676,6 +674,8 @@ function clickScale(param){
 		}else if(scaleZoom >= 0.9){
 			var rowId = parent.$("#rowId").val();
 			var tableBoxId = parent.$("#tableBoxId").val();
+			scaleZoom = 1;//每次单击菜单，缩放级别回归到1
+			$("#wd").val(scaleZoom);//文本框内容缩放级别值
 			showTop(dataTemp,rowId,tableBoxId);
 		}
 	}else if(param == "min"){
@@ -693,8 +693,6 @@ function setScale(svgSnap,zoom){
 		zoom = zoom.toFixed(1);
 	}
 	$("#wd").val(zoom);//文本框内容缩放级别值
-	
-	
 	svgSnap.attr("transform","scale(" + zoom + " " + zoom + ") translate(" + x + " " + y + ")");
 }
 
