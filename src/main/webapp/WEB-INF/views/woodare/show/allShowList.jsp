@@ -190,22 +190,7 @@
 				});
 			}
 		}else{//新增TAB
-			$("<li class='on' id='tab_" + rowId + "' onclick=\"addTab('"+rowId+"','"+name+"')\">" + name + "<font onclick=\"removeTab(event,'"+rowId+"')\">关闭</font></li>").appendTo($("ul.tab-nav .all")).find("font").click(function(){
-				$(this).parent().remove();
-				var wid = $(".data-bar ul.tab-nav").width(); //tab最大宽度
-				var linum = $(".data-bar ul.tab-nav li").length; //li最大个数
-				var allwid = 207 * linum; //tab实际宽度
-
-				if(wid<allwid){
-					$(".data-bar ul.tab-nav .all").width(allwid);	
-					$(".data-bar ul.tab-nav .all").css("margin-left",-(allwid-wid));
-				}else{
-					$(".data-bar span").hide();
-					$(".data-bar ul.tab-nav").removeClass("mrr");
-					$(".data-bar ul.tab-nav .all").width(wid);	
-					$(".data-bar ul.tab-nav .all").css("margin-left",0);
-				}
-			});
+			$("<li class='on' id='tab_" + rowId + "' onclick=\"addTab('"+rowId+"','"+name+"')\">" + name + "<font onclick=\"removeTab(event,'"+rowId+"',this)\">关闭</font></li>").appendTo($("ul.tab-nav .all"));
 			//创建拓扑图
 			$(".loading").show();//显示蒙层
 			$("#appendIframe").append("<div class=\"box\" id=\""+rowId+"tabShow\" style=\"display: none;\"></div>");
@@ -245,9 +230,22 @@
 	}
 	/**
 	*移除*/
-	function removeTab(event,rowId){
+	function removeTab(event,rowId,obj){
+		$(obj).parent().remove();
+		var wid = $(".data-bar ul.tab-nav").width(); //tab最大宽度
+		var linum = $(".data-bar ul.tab-nav li").length; //li最大个数
+		var allwid = 207 * linum; //tab实际宽度
+
+		if(wid<allwid){
+			$(".data-bar ul.tab-nav .all").width(allwid);	
+			$(".data-bar ul.tab-nav .all").css("margin-left",-(allwid-wid));
+		}else{
+			$(".data-bar span").hide();
+			$(".data-bar ul.tab-nav").removeClass("mrr");
+			$(".data-bar ul.tab-nav .all").width(wid);	
+			$(".data-bar ul.tab-nav .all").css("margin-left",0);
+		}
 		$("#"+rowId+"tabShow").remove();
-		$("#tab_"+rowId).remove();
 		event.stopPropagation(); 
 		var count = $(".all li").each(function(){}).length;
 		if(count == 0){
