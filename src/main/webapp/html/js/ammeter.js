@@ -260,7 +260,7 @@ function showTop(data,rowId,tableBoxId){
 	        			 			var x_json = ammeterList[x];
 	        			 			var x_rowId = x_json["ammeterId"];//电表ID
 	        			 			var x_name = x_json["ammeterName"];//电表名称
-	        			 			//展示电表
+	        			 			//展示电表 
 	        			 			ammeterX = ammeterX + gird;
 	 	    						setCreateUseEl(layerSnap,"id" + x_rowId, "TableBox",ammeterX,ammeterY);
 	 	    						splitRemarks(layerSnap,"idTitle" + x_rowId,"电表",ammeterX + 50,ammeterY + 40,"fText",16);//电表标题
