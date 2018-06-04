@@ -27,7 +27,7 @@
 	<script  src="<%=basePath%>/js/common/layer/layer.js"></script>
 	<script  src="<%=basePath%>/js/common/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 	<script  src="<%=basePath%>/js/shiro.demo.js"></script>
-	<link rel="stylesheet" href="<%=basePath%>/css/zTreeStyle/zTreeStyle.css" type="text/css" />
+	<link rel="stylesheet" href="<%=basePath%>/woodare/css/zTreeStyle/zTreeStyle.css" type="text/css" />
 	<script type="text/javascript" src="<%=basePath%>/woodare/js/jquery.ztree.core.min.js"></script>
 	<script type="text/javascript">         
 	        $(function(){  
@@ -108,7 +108,9 @@
            $("#epuYscale").val(treeNode.epuYscale);
            if($("#tab_map").hasClass("on")){//若是选中地图，则加载信息
              var mapID  = $("#mapIframe")[0];
-             mapID.contentWindow.location.reload(true);  
+             //mapID.contentWindow.location.reload(true); 
+               //不需要重新加载地图，刷新标注信息。
+             mapID.contentWindow.addMarker(treeNode.id,treeNode.cityName,treeNode.id,treeNode.name,treeNode.epuLocal,treeNode.epuXscale,treeNode.epuYscale); 
            }  
         }
 	 }
