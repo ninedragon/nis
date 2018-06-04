@@ -382,11 +382,11 @@ function showTop(data,rowId,tableBoxId){
 	 	    		        	 }
      			   }
             	}
-//            	 alert((ammeterX-65)+"=="+layerSnap.attr("height"))
-            	 parent.$("#tab3Iframe").attr("width",(ammeterX + 350)).attr("height",(table_ammeterY + 150));
-            	 svgSnap.attr("width",(ammeterX + 350)).attr("height", (table_ammeterY + 150))
-            	 parent.$(".ammeter").css("width",(ammeterX + 370)+"px").css("height",(table_ammeterY)+ "px");
-//            }
+            	 var widthVal = (ammeterX + 350);
+            	 var heightVal = (table_ammeterY + 150);
+            	 parent.$("#tab3Iframe").attr("width", widthVal).attr("height", heightVal);
+            	 svgSnap.attr("width", widthVal).attr("height", heightVal)
+            	 parent.$(".ammeter").css("width", (widthVal + 20)+"px").css("height", (heightVal - 150)+ "px");
 //         });
 	}
 } 
