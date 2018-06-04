@@ -272,29 +272,12 @@ function showTop(data,rowId,tableBoxId){
 	    		    		         //table
 	    		    		         var table_ammeterY = textNewlineArr[1] + 180;
 	    		    		         setammeterTable(layerSnap,x_rowId,ammeterX-65,table_ammeterY);
-//	    		        			 if(x % 2 == 0){
-//	    		        				 splitRemarks(layerSnap,"idTxt" + x_rowId,x_name,ammeterTxtX,ammeterTxtY - 50,"fText",12);//电表文本
-//	    		        			 }else{
-//	    		        				 splitRemarks(layerSnap,"idTxt" + x_rowId,x_name,ammeterTxtX,ammeterTxtY+50,"fText",12);//电表文本
-//	    		        			 }
-	    		        			//电表分割备注
-	 		    		        	splitRemarks(layerSnap,"ammeterTxtID","电表",45,(ammeterY + 40),"fText",20);
-//	 		    		        	 createLineEl(layerSnap, {
-//	 	    		        			id :"idLine" + x_rowId,
-//	 	    		        			dash:"true"
-//	 	    		        		}, {
-//	 	    		        			x: svg_width,//下宽度
-//	 	    		        			y: table_ammeterY + 50,//下高
-//	 	    		        			x2: 0,//上宽度
-//	 	    		        			y2: table_ammeterY + 50,//上高
-//	 	    		        			scale: 1
-//	 	    		        		});
 	 		    		        	 //引入电表与分支箱线
 	    		        			 createLineEl(layerSnap, {
 			    		        			id :"idLine" + x_rowId,
 			    		        			type: "TableBox"
 			    		        		}, {
-			    		        			x: ammeterX + 33,//下宽度
+			    		        			x: ammeterX + 32,//下宽度
 			    		        			y: ammeterY + 13,//下高
 			    		        			x2: ammeterX + 32,//上宽度
 			    		        			y2: ammeterY - 58,//上高
@@ -303,10 +286,10 @@ function showTop(data,rowId,tableBoxId){
 	    		        			 //展示分支箱图形（正常）
 	 	    						 branchBoxX = ammeterX;
 	 	    		        		 branchBoxY = ammeterY- branchBoxDifference;
-	 	    		        		 setCreateUseEl(layerSnap,"branchBoxid" + i_epuParentId, "LoadBreakSwitch",branchBoxX,branchBoxY);
+//	 	    		        		 setCreateUseEl(layerSnap,"branchBoxid" + i_epuParentId, "LoadBreakSwitch",branchBoxX,branchBoxY);
 	 	    		        		 //合并分支箱
 	 		    		        	 branchBoxLineX = branchBoxX + 32;//下宽度
-	 		    		        	 branchBoxLineY = branchBoxY + 22;//下高
+	 		    		        	 branchBoxLineY = branchBoxY + 50;//下高
 	 		    		        	 branchBoxLineX2 = branchBoxX + 32;//上宽度
 	 		    		        	 branchBoxLineY2 = branchBoxY - 80;//上高
 	 		    		        	 if (!tempXAll) {
@@ -319,7 +302,6 @@ function showTop(data,rowId,tableBoxId){
 	  		    		        			y2: branchBoxLineY,//上高
 	  		    		        			scale: 1
 	  		    		        		};
-	// 		    	        		        			 console.log(pos);
 	     		        			 setPos(layerSnap,pos);
 	     		        			if(tempCount >x && tempCount < ( x + 1)){
 	   		        				  tempBranchBoxX = tempXAll;//下宽度
@@ -350,17 +332,7 @@ function showTop(data,rowId,tableBoxId){
 	    		         setCabinetsXTable(layerSnap,i_epuParentId,tempBranchBoxX+30,cabinetsY + 150);
 	    		        	//出线柜分割备注
 	    		        	splitRemarks(layerSnap,"cabinetsID","表箱",45,(cabinetsY+40),"fText",20);
-//	    		        	 createLineEl(layerSnap, {
-//	    		        			id :"idLine" + i_epuParentId,
-//	    		        			dash:"true"
-//	    		        		}, {
-//	    		        			x: svg_width,//下宽度
-//	    		        			y: textNewlineArr[1] + 50,//下高
-//	    		        			x2: 0,//上宽度
-//	    		        			y2: textNewlineArr[1] + 50,//上高
-//	    		        			scale: 1
-//	    		        		});
-//	    		        		出线柜往下画线
+	    		        	//出线柜往下画线
 	    		        	var lowerCabinetsLineX = tempBranchBoxX;//下宽度（出线柜下处宽度）
 	    		        	var lowerCabinetsLineY = cabinetsY + 100;//下高（分线柜下处高度）
 	    		        	var lowerCabinetsLineX1 = tempBranchBoxX ;//上宽度
@@ -410,6 +382,10 @@ function showTop(data,rowId,tableBoxId){
 	 	    		        	 }
      			   }
             	}
+//            	 alert((ammeterX-65)+"=="+layerSnap.attr("height"))
+            	 parent.$("#tab3Iframe").attr("width",(ammeterX + 350)).attr("height",(table_ammeterY + 150));
+            	 svgSnap.attr("width",(ammeterX + 350)).attr("height", (table_ammeterY + 150))
+            	 parent.$(".ammeter").css("width",(ammeterX + 370)+"px").css("height",(table_ammeterY)+ "px");
 //            }
 //         });
 	}

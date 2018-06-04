@@ -335,15 +335,15 @@
 	<!--主体结束/-->
 	<!--弹层开始-->
 	<div class="wapp-layer"  id="messageAmmeter" >
-		<div class="box tips mrr">
-	    	<h4 style="text-indent:0%; "><label style="width:90%" ><p id='tableBoxName' style="word-wrap:break-word; word-break:break-all;"></p></label><span class="close-js" onclick="$('#messageAmmeter').hide();">关闭</span></h4>
+		<div class="box tips mrr ammeter" style="left:30%;">
+	    	<h4 style="text-indent:0%; "><label style="width:90%" ><p id='tableBoxName' style="word-wrap:break-word; word-break:break-all;padding: 0px 0px 0px 10px;"></p></label><span class="close-js" onclick="$('#messageAmmeter').hide();">关闭</span></h4>
 	       <div class="edit mrr" id="tableBoxDiv">
 			<iframe id="tab3Iframe" src="<%=basePath%>/html/ammeter.html" width="10000" height="4000" frameborder="0" scrolling="no"></iframe>
 	       </div>
-	       <div class="but-nav" style=" position: absolute; left:0px; bottom:30px; height:32px;">
-	           <span class="but" onclick="$('#messageAmmeter').hide();">关&nbsp;&nbsp;闭</span>
-	        </div>
 	    </div>
+       <div class="but-nav" style=" position: absolute; left:0px; bottom:30px; height:32px;">
+           <span class="but" onclick="$('#messageAmmeter').hide();">关&nbsp;&nbsp;闭</span>
+        </div>
 	</div>
 	<!--弹层结束/-->
 	<!--loading开始-->
