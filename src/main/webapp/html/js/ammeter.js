@@ -272,6 +272,8 @@ function showTop(data,rowId,tableBoxId){
 	    		    		         //table
 	    		    		         var table_ammeterY = textNewlineArr[1] + 180;
 	    		    		         setammeterTable(layerSnap,x_rowId,ammeterX-65,table_ammeterY);
+	    		    		 		//电表分割备注
+		 		    		        	splitRemarks(layerSnap,"ammeterTxtID","电表",45,(ammeterY + 40),"fText",20);
 	 		    		        	 //引入电表与分支箱线
 	    		        			 createLineEl(layerSnap, {
 			    		        			id :"idLine" + x_rowId,
