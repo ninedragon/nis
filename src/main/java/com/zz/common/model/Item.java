@@ -10,7 +10,28 @@ public class Item implements Serializable {
 	private String id;
     private String pId;
     private String pName;
-    public String getpName() {
+    private String epuXscale;
+    private String epuYscale;
+    private String epuLocal;
+    public String getEpuXscale() {
+		return epuXscale;
+	}
+	public void setEpuXscale(String epuXscale) {
+		this.epuXscale = epuXscale;
+	}
+	public String getEpuYscale() {
+		return epuYscale;
+	}
+	public void setEpuYscale(String epuYscale) {
+		this.epuYscale = epuYscale;
+	}
+	public String getEpuLocal() {
+		return epuLocal;
+	}
+	public void setEpuLocal(String epuLocal) {
+		this.epuLocal = epuLocal;
+	}
+	public String getpName() {
 		return pName;
 	}
 	public void setpName(String pName) {

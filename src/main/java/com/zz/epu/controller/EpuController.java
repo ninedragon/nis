@@ -507,6 +507,9 @@ public class EpuController extends BaseController {
 	        item.setCityName(p.getEpuCityName());
 	        item.setEpuProvince(p.getEpuProvince());
 	        item.setEpuDistrict(p.getEpuDistrict());
+	        item.setEpuLocal(p.getEpuLocal());
+	        item.setEpuXscale(p.getEpuXscale().toString());
+	        item.setEpuYscale(p.getEpuYscale().toString());
 	        list.add(item);
 	    }
 	       return list; 

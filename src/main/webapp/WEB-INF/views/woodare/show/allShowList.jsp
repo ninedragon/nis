@@ -54,25 +54,25 @@
 	            pName:treeNode.name
 	        };
 	        if (type == 0) {
-	        	$(".loading").show();//显示蒙层
+	        	//$(".loading").show();//显示蒙层
 	            $.post("<%=basePath%>/epu/showCity.shtml", parameter, function(data) {
 	                zTree.addNodes(treeNode, data);
-	            	$(".loading").hide();//隐藏蒙层
+	            	//$(".loading").hide();//隐藏蒙层
 	            });
 	        }
 	        if (type == 1) {
-	        	$(".loading").show();//显示蒙层
+	        	//$(".loading").show();//显示蒙层
 	            $.post("<%=basePath%>/epu/showCounty.shtml", parameter, function(data) {
 	                zTree.addNodes(treeNode, data);
-	              	$(".loading").hide();//隐藏蒙层
+	              	//$(".loading").hide();//隐藏蒙层
 	            });
 	       
 	        }
 	         if (type == 2) {
-	         	$(".loading").show();//显示蒙层
+	         //	$(".loading").show();//显示蒙层
 	            $.post("<%=basePath%>/epu/showEpuInfo.shtml", parameter, function(data) {
 	                zTree.addNodes(treeNode, data);
-	                $(".loading").hide();//隐藏蒙层
+	            //    $(".loading").hide();//隐藏蒙层
 	            });       
 	        }
 	       
@@ -102,6 +102,10 @@
            $("#epuCity").val(treeNode.cityCode);
            $("#epuDistrict").val("");
            $("#rowId").val(treeNode.id);
+           $("#epuName").val(treeNode.name);
+           $("#epuLocal").val(treeNode.epuLocal);
+           $("#epuXscale").val(treeNode.epuXscale);
+           $("#epuYscale").val(treeNode.epuYscale);
            if($("#tab_map").hasClass("on")){//若是选中地图，则加载信息
              var mapID  = $("#mapIframe")[0];
              mapID.contentWindow.location.reload(true);  
@@ -259,7 +263,15 @@
 		$("#mapDivIframe").show();
 		$("#tab_map").addClass("on");
 		var mapID  = $("#mapIframe")[0];
-        mapID.contentWindow.location.reload(true); //重新加载
+        //mapID.contentWindow.location.reload(true); //重新加载
+        var  rowId= $("#rowId").val();
+        var  cityName=$("#cityName").val();
+        var  epuName= $("#epuName").val();
+        var  epuLocal=$("#epuLocal").val();
+        var epuXscale=$("#epuXscale").val();
+        var epuYscale=$("#epuYscale").val();
+        //不需要重新加载地图，刷新标注信息。
+        mapID.contentWindow.addMarker(rowId,cityName,rowId,epuName,epuLocal,epuXscale,epuYscale);
 		$(".all li").each(function(){
 			var thisRowId = $(this).attr("id").replace("tab_","");
 			$("#"+thisRowId+"tabShow").hide();//除地图其他TAB全部隐藏
@@ -281,6 +293,10 @@
 		<h4>实时监控展现</h4>
 	    <form method="post" action="" id="formId" class="form-inline">
 	        <input type="hidden" id="rowId" name="rowId"  value=""/>
+	        <input type="hidden" id="epuName" name="epuName"  value=""/>
+	        <input type="hidden" id="epuLocal" name="epuLocal"  value=""/>
+	        <input type="hidden" id="epuXscale" name="epuXscale"  value=""/>
+	        <input type="hidden" id="epuYscale" name="epuYscale"  value=""/>
 	        <input type="hidden" id="epuCity" name="epuCity"  value=""/>
 	        <input type="hidden" id="cityName" name="cityName"  value=""/>
 	        <input type="hidden" id="epuDistrict" name="epuDistrict"  value=""/>

@@ -22,9 +22,15 @@
 	    {
 	       parent.addTab(id,name);
 	    }
-        function addMarker(id, name,epuLocal, x, y) {
+	    //添加标注 没有选择城市默认会显示上海市所有的标注数据，此时 穿过来的参数 rowId 为空。
+        function addMarker(rowId,epuCityName,id, name,epuLocal, x, y) {
             var p = new BMap.Point(x, y);
             var marker = new BMap.Marker(p);//, px = map.pointToPixel(p);
+            //显示单个标注信息，先删除原有的，再添加
+            if(rowId!=null && rowId!="" && rowId!=undefined)
+            {   
+            M.clearOverlays();
+            }
             M.addOverlay(marker);
             // marker.enableDragging();
          // marker.setTitle(name);
@@ -42,8 +48,9 @@
                     } 
                     
                     // 百度地图API功能
-	
-	var contentHtml ="<h4 style='margin:0 0 5px 0;padding:0.2em 0;color:#0000FF;'>"+$("#cityName").val()+"</h4>" + "<hr />";
+	 if(epuCityName==null || epuCityName=="" || epuCityName==undefined)
+       { epuCityName=$("#cityName").val(); }
+	var contentHtml ="<h4 style='margin:0 0 5px 0;padding:0.2em 0;color:#0000FF;'>"+epuCityName+"</h4>" + "<hr />";
 	contentHtml +="<p style='margin:0 0 5px 0;padding:0.2em 0;font-size:15px;'><strong>" + name+"</strong></p>";
 	contentHtml +="<p style='margin:0 0 5px 0;padding:0.2em 0;font-size:13px;'>位置：" + epuLocal +"</p>" ;	
     contentHtml+= "<p style=\"margin:0 0 5px 0;padding:0.2em 0;font-size:13px;color:#0000FF;\" ><strong><a href=\"javascript:linkEquInfo('"+id+"','"+name+"')\">详细信息</a></strong></p>";            
@@ -61,8 +68,19 @@
          /*    markerMenu.addItem(new BMap.MenuItem('删除', function () {
                 config.marker.remove(ci);
             }, 100)); */
-            marker.addContextMenu(markerMenu);
-            config.marker.add(marker);
+            marker.addContextMenu(markerMenu);          
+              if(rowId!=null && rowId!="" && rowId!=undefined)
+            {           
+            M.centerAndZoom(new BMap.Point(x, y), 13);						   
+             $("#cityName").val(epuCityName);
+             // config.marker.list=[];
+              config.marker.add(marker);             
+             }
+             else
+             {
+               config.marker.add(marker);
+             }
+            
         }
 
         var config = {
@@ -197,9 +215,8 @@
 						success : function(data) {
 							if(data.epuInfos.length>0)
 							{
-                             addMarker(data.epuInfos[0].rowId,data.epuInfos[0].epuName, data.epuInfos[0].epuLocal, data.epuInfos[0].epuXscale,data.epuInfos[0].epuYscale);
-                             map.centerAndZoom(new BMap.Point(data.epuInfos[0].epuXscale, data.epuInfos[0].epuYscale), 13);						   
-                             $("#cityName").val(data.epuInfos[0].epuCityName);
+                             addMarker(rowId,data.epuInfos[0].epuCityName,data.epuInfos[0].rowId,data.epuInfos[0].epuName, data.epuInfos[0].epuLocal, data.epuInfos[0].epuXscale,data.epuInfos[0].epuYscale);
+                           
                            }						
 						},
 						error: function (data) 
@@ -224,7 +241,7 @@
 						var len =data.epuInfos.length;
 				         for(var i=0;i<len;i++)
 				         {					   
-                            addMarker(data.epuInfos[i].rowId,data.epuInfos[i].epuName,data.epuInfos[0].epuLocal, data.epuInfos[i].epuXscale,data.epuInfos[i].epuYscale);
+                            addMarker('','',data.epuInfos[i].rowId,data.epuInfos[i].epuName,data.epuInfos[0].epuLocal, data.epuInfos[i].epuXscale,data.epuInfos[i].epuYscale);
                           }						
 						},
 						error: function (data) 
