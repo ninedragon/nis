@@ -19,8 +19,7 @@
 .warning-box {
 	stroke:blue;
 }
-
-.gj{ width:400px; height:48px; position:absolute; left:0px; top:0px;}
-.gj font.jian{ width:40px; height:40px; float:left; background:url(../img/p04.png) no-repeat center center; text-indent:-999px; background-size:20px; overflow:hidden; cursor:pointer;}
-.gj font.jia{ width:40px; height:40px; float:left; background:url(../img/p05.png) no-repeat center center; text-indent:-999px; background-size:20px; overflow:hidden; cursor:pointer;}
-.gj input{ width:20px; height:20px; float:left; border:1px solid #00796a; border-radius:5px; margin:10px 0px 0px 0px; text-align:center; font-size:12px; background-color:#FFF;}
+.gj{position:absolute;z-index: 999;}
+.gj font.jian{ width:30px; height:30px; float:left; background:#fff url(../img/p04.png) no-repeat center center; text-indent:-999px; background-size:20px; overflow:hidden; cursor:pointer; border:1px solid #CDCDCD; margin:5px; -webkit-border-radius:50%; background-size:15px}
+.gj font.jia{ width:30px; height:30px; float:left; background:#fff url(../img/p05.png) no-repeat center center; text-indent:-999px; background-size:20px; overflow:hidden; cursor:pointer; border:1px solid #CDCDCD; margin:5px; -webkit-border-radius:50%; background-size:15px}
+.gj input{ width:30px; height:30px; float:left; border:1px solid #CDCDCD; border-radius:5px; margin:5px 0px 0px 0px; text-align:center; font-size:12px; background-color:#FFF;}

@@ -168,11 +168,17 @@ ul.left-nav ul.side-nav li:last-child{ border:0px;}
 
 /* 树结构
 ---------------------------------------- */
-.tree-box{ width:180px; position:absolute; left:0px; top:0px; bottom:0px; float:left; border-right:1px solid #EEE;}
+.tree-box{ width:207px; position:absolute; left:0px; top:0px; bottom:0px; float:left; border-right:1px solid #EEE;}
 
 /* 动态数据
 ---------------------------------------- */
-.data-bar{ position:absolute; left:206px; top:15px; right:15px; bottom:0px;}
+.data-bar {
+    position: absolute;
+    left: 206px;
+    top: -50px;
+    right: 15px;
+    bottom: 0px;
+}
 .data-bar .head{ width:100%; float:left; height:40px; border-bottom:1px solid #EEE;}
 .data-bar h4{ width:120px; height:39px; line-height:39px; float:left; border:1px solid #EEE; border-bottom:0px; -webkit-border-radius:5px 5px 0px 0px; font-size:13px; cursor:pointer; font-weight:normal; padding:0px; text-align:center;}
 .data-bar h4.on{ background-color:#00796a; color:#FFF;}
@@ -189,7 +195,15 @@ ul.left-nav ul.side-nav li:last-child{ border:0px;}
 .data-bar span.right{ float:right; background:url(../image/p02.png) no-repeat center center; margin:0px 0px 0px 5px;}
 
 
-.data-bar .box{ width:100%; position:absolute; left:0px; top:50px; bottom:15px; float:left; overflow:auto;}
+.data-bar .box {
+    width: 100%;
+    position: absolute;
+    left: 0px;
+    top: 60px;
+    bottom: 15px;
+    float: left;
+    overflow: auto;
+}
 .data-bar .gj{ width:400px; height:48px; position:absolute; left:0px; top:0px;}
 .data-bar .gj font.jian{ width:40px; height:40px; float:left; background:url(../image/p04.png) no-repeat center center; text-indent:-999px; background-size:20px; overflow:hidden; cursor:pointer;}
 .data-bar .gj font.jia{ width:40px; height:40px; float:left; background:url(../image/p05.png) no-repeat center center; text-indent:-999px; background-size:20px; overflow:hidden; cursor:pointer;}
