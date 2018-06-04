@@ -50,7 +50,7 @@ function drawSvg(svgModelData, el) {
 					w4 += this.width;
 					cIds.push(this.rowId);
 					//给表箱绑定单击事件
-		        	$("#meterbox_" + this.rowId).attr("epuName",this.epuName);
+		        	$("#meterbox_" + this.rowId).attr("epuName",this.epuName).css("cursor", "pointer");
 		        	$("#meterbox_" + this.rowId).bind("click",function(){
 						  var txtID = $(this).attr("id");//展示的文字ID
 						  parent.$("#tableBoxId").val(txtID.replace("meterbox_",""));//当前表箱ID
