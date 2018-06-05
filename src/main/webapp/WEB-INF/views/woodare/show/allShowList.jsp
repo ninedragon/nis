@@ -94,7 +94,39 @@
 	        $("#" + tabId + "Iframe")[0].contentWindow.location.reload(true);    
         }
      */
-      if (type == 3) {
+      if (type == 1) {
+           $("#cityName").val(treeNode.name);
+           $("#epuCity").val(treeNode.id);
+           $("#rowId").val("");
+             var mapID  = $("#mapIframe")[0];
+             mapID.contentWindow.$("#cityName").val(treeNode.name);
+			 mapID.contentWindow.M.centerAndZoom(treeNode.name, 13); 
+			 mapID.contentWindow.M.clearOverlays();
+			 var url="<%=basePath%>/epu/queryEpu.shtml"; 
+			  //按当前城市获取箱变       
+		     $.ajax({
+						url :url,
+						type : 'POST',
+						data :{
+						rowId:'',
+						epuCity:treeNode.id,
+						epuDistrict:''
+						},						
+						success : function(data) 
+					  {
+						var len =data.epuInfos.length;
+				         for(var i=0;i<len;i++)
+				         {					   
+                            mapID.contentWindow.addMarker('','',data.epuInfos[i].rowId,data.epuInfos[i].epuName,data.epuInfos[0].epuLocal, data.epuInfos[i].epuXscale,data.epuInfos[i].epuYscale);
+                          }						
+						},
+						error: function (data) 
+						{
+						   alert(data);
+				   	    }		
+					});	
+        }  
+        if (type == 3) {
       		//tab-begin
       		addTab(treeNode.id,treeNode.name);
 			//tab-end
@@ -106,13 +138,54 @@
            $("#epuLocal").val(treeNode.epuLocal);
            $("#epuXscale").val(treeNode.epuXscale);
            $("#epuYscale").val(treeNode.epuYscale);
-           if($("#tab_map").hasClass("on")){//若是选中地图，则加载信息
+       /*     if($("#tab_map").hasClass("on")){//若是选中地图，则加载信息 */
              var mapID  = $("#mapIframe")[0];
+              mapID.contentWindow.M.clearOverlays();
              //mapID.contentWindow.location.reload(true); 
                //不需要重新加载地图，刷新标注信息。
              mapID.contentWindow.addMarker(treeNode.id,treeNode.cityName,treeNode.id,treeNode.name,treeNode.epuLocal,treeNode.epuXscale,treeNode.epuYscale); 
-           }  
+      /*      }   */
         }
+	  
+<%-- 	 
+ 	  if (type == 3) {
+      		//tab-begin
+      		addTab(treeNode.id,treeNode.name);
+			//tab-end
+		   $("#cityName").val(treeNode.cityName);
+           $("#epuCity").val(treeNode.cityCode);
+           $("#epuDistrict").val("");
+            $("#rowId").val(""); 
+             if($("#tab_map").hasClass("on")){//若是选中地图，则加载信息        
+             var mapID  = $("#mapIframe")[0];
+             mapID.contentWindow.$("#cityName").val(treeNode.cityName);
+			 mapID.contentWindow.M.centerAndZoom(treeNode.cityName, 13); 
+			 mapID.contentWindow.M.clearOverlays();
+			 var url="<%=basePath%>/epu/queryEpu.shtml";
+			 //按当前城市获取箱变    
+		     $.ajax({
+						url :url,
+						type : 'POST',
+						data :{
+						rowId:'',
+						epuCity:treeNode.cityCode,
+						epuDistrict:''
+						},						
+						success : function(data) 
+					  {
+						var len =data.epuInfos.length;
+				         for(var i=0;i<len;i++)
+				         {					   
+                            mapID.contentWindow.addMarker('','',data.epuInfos[i].rowId,data.epuInfos[i].epuName,data.epuInfos[0].epuLocal, data.epuInfos[i].epuXscale,data.epuInfos[i].epuYscale);
+                          }						
+						},
+						error: function (data) 
+						{
+						   alert(data);
+				   	    }		
+					});
+					}            
+        }  --%>
 	 }
   	 var menu = {
 	    setting : {

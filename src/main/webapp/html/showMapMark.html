@@ -27,10 +27,10 @@
             var p = new BMap.Point(x, y);
             var marker = new BMap.Marker(p);//, px = map.pointToPixel(p);
             //显示单个标注信息，先删除原有的，再添加
-            if(rowId!=null && rowId!="" && rowId!=undefined)
+           /*  if(rowId!=null && rowId!="" && rowId!=undefined)
             {   
             M.clearOverlays();
-            }
+            } */
             M.addOverlay(marker);
             // marker.enableDragging();
          // marker.setTitle(name);
@@ -202,8 +202,10 @@
                 }
             });
               var url= basePath+"/epu/queryEpu.shtml";
+               map.clearOverlays();
             if(rowId!=null && rowId!="" && rowId!=undefined)
             {
+             
                 $.ajax({
 						url :url,
 						type : 'POST',
