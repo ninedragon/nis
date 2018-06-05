@@ -49,19 +49,22 @@ function drawSvg(svgModelData, el) {
 					x4 += this.width;
 					w4 += this.width;
 					cIds.push(this.rowId);
+					 var svgimg = document.createElementNS('http://www.w3.org/2000/svg','image');
+  		            svgimg.setAttributeNS(null,"height","100");
+  		            svgimg.setAttributeNS(null,"width","100");
+  		          svgimg.setAttributeNS(null,"cursor","pointer");
+  		            svgimg.setAttributeNS("http://www.w3.org/1999/xlink","href", "./img/boxImg.png");
+  		            svgimg.setAttributeNS(null,"x", (this._x - 4));
+  		            svgimg.setAttributeNS(null,"y", (this._y - 6));
+  		            svgimg.setAttributeNS(null,"id","meterbox_" + this.rowId);
+  		            svgimg.setAttributeNS(null, "visibility", "visible");
+	  		         $("#Snap_Layer").append(svgimg).find("image[id='meterbox_"+this.rowId+"']").attr("epuName",this.epuName).click(function(){
+		            	  showAmmeter(this,svgModelData);
+	  		         });
+  		           
 					//给表箱绑定单击事件
-		        	$("#meterbox_" + this.rowId).attr("epuName",this.epuName).css("cursor", "pointer");
-		        	$("#meterbox_" + this.rowId).bind("click",function(){
-						  var txtID = $(this).attr("id");//展示的文字ID
-						  parent.$("#tableBoxId").val(txtID.replace("meterbox_",""));//当前表箱ID
-						  var textValue = $(this).attr("epuName");//展示的文字内容
-						  parent.$("#tableBoxName").attr("title",textValue + "单线图").text(textValue + "单线图");//TAB
-						  var rowId = parent.$("#rowId").val();//获取箱变根ID
-			              var iframeID  = parent.$("#tab3Iframe")[0];//获取iframe的ID
-			              var tableBoxId = parent.$("#tableBoxId").val();//获取箱变根ID
-			              //只有电表TAB可以执行此动作
-			              parent.$("#messageAmmeter").show();
-		            	  iframeID.contentWindow.showTop(svgModelData,rowId,tableBoxId);
+		        	$("#meterbox_" + this.rowId).attr("epuName",this.epuName).css("cursor", "pointer").bind("click",function(){
+		            	  showAmmeter(this,svgModelData);
  					});
 				});
 				//M0003
@@ -227,7 +230,6 @@ function drawSvg(svgModelData, el) {
 	}
 }
 
-
 //
 function updateBox(id, cls) {
 	$("#chuxiangui_rect_" + id).attr("class",cls);
@@ -280,22 +282,33 @@ function createKaiguanxian(layer, id, x, y, height) {
 	g.append('path').attr("stroke-width", 2).attr("stroke", "#000").attr("fill","none").attr("d", "M " + (x + 8) + "," + (y + gird + 50) + " L " + (x + 8) + "," + (y + height) + "");
 }
 
-
+function showAmmeter(obj,svgModelData){
+	  var txtID = $(obj).attr("id");//展示的文字ID
+	  parent.$("#tableBoxId").val(txtID.replace("meterbox_",""));//当前表箱ID
+	  var textValue = $(obj).attr("epuName");//展示的文字内容
+	  parent.$("#tableBoxName").attr("title",textValue + "单线图").text(textValue + "单线图");//TAB
+	  var rowId = parent.$("#rowId").val();//获取箱变根ID
+      var iframeID  = parent.$("#tab3Iframe")[0];//获取iframe的ID
+      var tableBoxId = parent.$("#tableBoxId").val();//获取箱变根ID
+      //只有电表TAB可以执行此动作
+      parent.$("#messageAmmeter").show();
+	  iframeID.contentWindow.showTop(svgModelData,rowId,tableBoxId);
+}
 function createMeterBox(layer, id, x, y, name) {
 	var g = layer.append("g").attr("id", "meterbox_" + id);
-	g.append('rect').attr("stroke-width", 1).attr("stroke", "#000").attr("fill","none").attr("x", x).attr("y", y).attr("width", 90).attr("height", 90).attr("id", "meterbox_rect_" + id);
-	g.append('rect').attr("stroke-width", 1).attr("stroke", "#000").attr("fill","none").attr("x", x + 20).attr("y", y + 20).attr("width", 10).attr("height", 10);
-	g.append('rect').attr("stroke-width", 1).attr("stroke", "#000").attr("fill","none").attr("x", x + 40).attr("y", y + 20).attr("width", 10).attr("height", 10);
-	g.append('rect').attr("stroke-width", 1).attr("stroke", "#000").attr("fill","none").attr("x", x + 60).attr("y", y + 20).attr("width", 10).attr("height", 10);
-
-	g.append('rect').attr("stroke-width", 1).attr("stroke", "#000").attr("fill","none").attr("x", x + 20).attr("y", y + 40).attr("width", 10).attr("height", 10);
-	g.append('rect').attr("stroke-width", 1).attr("stroke", "#000").attr("fill","none").attr("x", x + 40).attr("y", y + 40).attr("width", 10).attr("height", 10);
-	g.append('rect').attr("stroke-width", 1).attr("stroke", "#000").attr("fill","none").attr("x", x + 60).attr("y", y + 40).attr("width", 10).attr("height", 10);
-	
-	g.append('rect').attr("stroke-width", 1).attr("stroke", "#000").attr("fill","none").attr("x", x + 20).attr("y", y + 60).attr("width", 10).attr("height", 10);
-	g.append('rect').attr("stroke-width", 1).attr("stroke", "#000").attr("fill","none").attr("x", x + 40).attr("y", y + 60).attr("width", 10).attr("height", 10);
-	g.append('rect').attr("stroke-width", 1).attr("stroke", "#000").attr("fill","none").attr("x", x + 60).attr("y", y + 60).attr("width", 10).attr("height", 10);
-	
+//	g.append('rect').attr("stroke-width", 1).attr("stroke", "#000").attr("fill","none").attr("x", x).attr("y", y).attr("width", 90).attr("height", 90).attr("id", "meterbox_rect_" + id);
+//	g.append('rect').attr("stroke-width", 1).attr("stroke", "#000").attr("fill","none").attr("x", x + 20).attr("y", y + 20).attr("width", 10).attr("height", 10);
+//	g.append('rect').attr("stroke-width", 1).attr("stroke", "#000").attr("fill","none").attr("x", x + 40).attr("y", y + 20).attr("width", 10).attr("height", 10);
+//	g.append('rect').attr("stroke-width", 1).attr("stroke", "#000").attr("fill","none").attr("x", x + 60).attr("y", y + 20).attr("width", 10).attr("height", 10);
+//
+//	g.append('rect').attr("stroke-width", 1).attr("stroke", "#000").attr("fill","none").attr("x", x + 20).attr("y", y + 40).attr("width", 10).attr("height", 10);
+//	g.append('rect').attr("stroke-width", 1).attr("stroke", "#000").attr("fill","none").attr("x", x + 40).attr("y", y + 40).attr("width", 10).attr("height", 10);
+//	g.append('rect').attr("stroke-width", 1).attr("stroke", "#000").attr("fill","none").attr("x", x + 60).attr("y", y + 40).attr("width", 10).attr("height", 10);
+//	
+//	g.append('rect').attr("stroke-width", 1).attr("stroke", "#000").attr("fill","none").attr("x", x + 20).attr("y", y + 60).attr("width", 10).attr("height", 10);
+//	g.append('rect').attr("stroke-width", 1).attr("stroke", "#000").attr("fill","none").attr("x", x + 40).attr("y", y + 60).attr("width", 10).attr("height", 10);
+//	g.append('rect').attr("stroke-width", 1).attr("stroke", "#000").attr("fill","none").attr("x", x + 60).attr("y", y + 60).attr("width", 10).attr("height", 10);
+//	
 	if (name && name.length) {
 		var size = 8;
 		for (var i = 0; i < name.length / size; i++) {

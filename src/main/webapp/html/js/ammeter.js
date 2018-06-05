@@ -320,7 +320,16 @@ function showTop(data,rowId,tableBoxId){
     			 		//没有数据的电表 -end
 	    				cabinetsX = branchBoxX;
 	    		         cabinetsY = branchBoxY - cabinetsDifference ;
-	    		         if(tempBranchBoxX == 0){return false;}
+	    		         if(tempBranchBoxX == 0){
+	    		        	 var widthVal = 600;
+	    		        	 var heightVal = 720;
+	    		        	 parent.$("#tab3Iframe").attr("width", widthVal).attr("height", heightVal);
+	    		        	 svgSnap.attr("width", widthVal).attr("height", heightVal)
+	    		        	 parent.$(".ammeter").css("width", (widthVal + 20)+"px").css("height", (heightVal)+ "px");
+	    		        	 parent.$("#tableBoxDiv").css("height", "0px");
+	    		        	 parent.$(".but-nav").css("left", "0px");
+	    		        	 return false;
+	    		        }
 	    		       //表箱
 	    		         setCreateUseEl(layerSnap,"id" + i_epuParentId, "TableBox",tempBranchBoxX -35,cabinetsY);
 	    		         //文本内容
@@ -384,13 +393,15 @@ function showTop(data,rowId,tableBoxId){
 	 	    		        	 }
      			   }
             	}
-            	 var widthVal = (ammeterX + 350);
-            	 var heightVal = (table_ammeterY + 150);
-            	 parent.$("#tab3Iframe").attr("width", widthVal).attr("height", heightVal);
-            	 svgSnap.attr("width", widthVal).attr("height", heightVal)
-            	 parent.$(".ammeter").css("width", (widthVal + 20)+"px").css("height", (heightVal - 150)+ "px");
 //         });
 	}
+	 var widthVal = (ammeterX + 350);
+	 var heightVal = (table_ammeterY + 150);
+	 parent.$("#tab3Iframe").attr("width", widthVal).attr("height", heightVal);
+	 svgSnap.attr("width", widthVal).attr("height", heightVal)
+	 parent.$("#tableBoxDiv").css("height", "auto");
+	 parent.$(".ammeter").css("width", (widthVal + 20)+"px").css("height", (heightVal - 150)+ "px");
+	 parent.$(".but-nav").css("left", (widthVal * 0.1)+"px");
 } 
 
 
