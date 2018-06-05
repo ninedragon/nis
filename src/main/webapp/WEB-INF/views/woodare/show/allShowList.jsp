@@ -138,13 +138,18 @@
            $("#epuLocal").val(treeNode.epuLocal);
            $("#epuXscale").val(treeNode.epuXscale);
            $("#epuYscale").val(treeNode.epuYscale);
-       /*     if($("#tab_map").hasClass("on")){//若是选中地图，则加载信息 */
+       /*     if($("#tab_map").hasClass("on")){//若是选中地图，则加载信息 
              var mapID  = $("#mapIframe")[0];
               mapID.contentWindow.M.clearOverlays();
              //mapID.contentWindow.location.reload(true); 
                //不需要重新加载地图，刷新标注信息。
              mapID.contentWindow.addMarker(treeNode.id,treeNode.cityName,treeNode.id,treeNode.name,treeNode.epuLocal,treeNode.epuXscale,treeNode.epuYscale); 
-      /*      }   */
+            }   */
+      
+         var mapID  = $("#mapIframe")[0];
+          mapID.contentWindow.M.clearOverlays();
+               //不需要重新加载地图，刷新标注信息。
+          mapID.contentWindow.addMarker(treeNode.id,treeNode.cityName,treeNode.id,treeNode.name,treeNode.epuLocal,treeNode.epuXscale,treeNode.epuYscale); 
         }
 	  
 <%-- 	 
@@ -155,7 +160,7 @@
 		   $("#cityName").val(treeNode.cityName);
            $("#epuCity").val(treeNode.cityCode);
            $("#epuDistrict").val("");
-            $("#rowId").val(""); 
+            $("#rowId").val(treeNode.id);
              if($("#tab_map").hasClass("on")){//若是选中地图，则加载信息        
              var mapID  = $("#mapIframe")[0];
              mapID.contentWindow.$("#cityName").val(treeNode.cityName);
