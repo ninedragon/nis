@@ -4,15 +4,16 @@
 	String path = request.getContextPath();
 	String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path;
  %> 
+ <script  src="<%=basePath%>/js/common/layer/layer.js"></script>
 <script baseUrl="<%=basePath%>" src="<%=basePath%>/js/user.login.js"></script>
 <div class="wapp-head">
 	<span class="link"></span>
 	<div class="info">消息</div>
     <div class="lay" style="left:auto;right:0px;">
-        <ul>
-            <li class="mrr">江苏省南京市雨花台区1号变箱</li>
-            <li class="mrr">江苏省南京市雨花台区2号变箱</li>
-            <li class="mrr">江苏省南京市雨花台区3号变箱</li>
+        <ul style="overflow-y: auto;height: 280px;">
+        	<c:forEach begin="1" end="20" var="i">
+            <li class="mrr">江苏省南京市雨花台区${i}号变箱</li>
+        	</c:forEach>
         </ul>
     </div>
 	<div class="user">
