@@ -398,7 +398,7 @@
            <span class="but" onclick="$('#messageAmmeter').hide();">关&nbsp;&nbsp;闭</span>
         </div>
 	    </div>
-	</div>
+	</div> 
 	<!--弹层结束/-->
 	<!--loading开始-->
 	<div class="loading">
