@@ -18,10 +18,18 @@
     </style>
     <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=Y076LYaIrrQ7HOjk4Tcn6FDMipRoDtVm"></script>
     <script>             
-	    function  linkEquInfo(id, name)
-	    {
+	    function  linkEquInfo(id, name,x,y)
+	    {	      
 	       parent.$("#rowId").val(id); 
+	       parent.$("#epuName").val(name); 
+	       parent.$("#epuXscale").val(x); 
+	       parent.$("#epuYscale").val(y); 	             
 	       parent.addTab(id,name);
+	    }
+	    //定位标注位置
+	     function  locationMark(x, y)
+	    {
+	          M.centerAndZoom(new BMap.Point(x, y), 12);		
 	    }
 	    //添加标注 没有选择城市默认会显示上海市所有的标注数据，此时 穿过来的参数 rowId 为空。
         function addMarker(rowId,epuCityName,id, name,epuLocal, x, y) {
@@ -49,12 +57,12 @@
                     } 
                     
                     // 百度地图API功能
-	 if(epuCityName==null || epuCityName=="" || epuCityName==undefined)
-       { epuCityName=$("#cityName").val(); }
+/* 	 if(epuCityName==null || epuCityName=="" || epuCityName==undefined)
+       { epuCityName=$("#cityName").val(); } */
 	var contentHtml ="<h4 style='margin:0 0 5px 0;padding:0.2em 0;color:#0000FF;'>"+epuCityName+"</h4>" + "<hr />";
 	contentHtml +="<p style='margin:0 0 5px 0;padding:0.2em 0;font-size:15px;'><strong>" + name+"</strong></p>";
 	contentHtml +="<p style='margin:0 0 5px 0;padding:0.2em 0;font-size:13px;'>位置：" + epuLocal +"</p>" ;	
-    contentHtml+= "<p style=\"margin:0 0 5px 0;padding:0.2em 0;font-size:13px;color:#0000FF;\" ><strong><a href=\"javascript:linkEquInfo('"+id+"','"+name+"')\">详细信息</a></strong></p>";            
+    contentHtml+= "<p style=\"margin:0 0 5px 0;padding:0.2em 0;font-size:13px;color:#0000FF;\" ><strong><a href=\"javascript:linkEquInfo('"+id+"','"+name+"','"+x+"','"+y+"')\">详细信息</a></strong></p>";            
             var infoWindow = new BMap.InfoWindow(contentHtml);  // 创建信息窗口对象  
             marker.addEventListener("click", function () {  
                 M.openInfoWindow(infoWindow, p); //开启信息窗口  
@@ -72,7 +80,7 @@
             marker.addContextMenu(markerMenu);          
               if(rowId!=null && rowId!="" && rowId!=undefined)
             {           
-            M.centerAndZoom(new BMap.Point(x, y), 13);						   
+            M.centerAndZoom(new BMap.Point(x, y), 12);						   
              $("#cityName").val(epuCityName);
              // config.marker.list=[];
               config.marker.add(marker);             
@@ -155,7 +163,6 @@
    		//默认城市上海
    		cityName=$("#cityName").val();
    		}
-   		$("#cityName").val(cityName);
             var w = $(window).width();
             var h = $(window).height();
           // var map = new BMap.Map("allmap"); 
@@ -196,14 +203,9 @@
                 }
             }
             map.addContextMenu(contextMenu);//设置的 */
-
-            $('#begin').click(function () {　//
-                if (!document.getElementById('begin').disabled) {              
-                    map.centerAndZoom($("#cityName").val(), 13);               
-                }
-            });
               var url= basePath+"/epu/queryEpu.shtml";
                map.clearOverlays();
+               //单个箱变获取显示
             if(rowId!=null && rowId!="" && rowId!=undefined)
             {
              
@@ -227,24 +229,25 @@
 						   alert(data);
 				   	    }			
 					});               
-           	}else
+           	}else 
+				   //显示所有箱变
 				{
 				  $("#cityName").val(cityName);
-				  map.centerAndZoom(cityName, 13);       
+				  map.centerAndZoom(cityName, 12);       
 				 $.ajax({
 						url :url,
 						type : 'POST',
 						data :{
-						rowId:rowId,
-						epuCity:epuCity,
-						epuDistrict:epuDistrict
+						rowId:'',
+						epuCity:'',
+						epuDistrict:''
 						},						
 						success : function(data) 
 					  {
 						var len =data.epuInfos.length;
 				         for(var i=0;i<len;i++)
 				         {					   
-                            addMarker('','',data.epuInfos[i].rowId,data.epuInfos[i].epuName,data.epuInfos[0].epuLocal, data.epuInfos[i].epuXscale,data.epuInfos[i].epuYscale);
+                            addMarker('',data.epuInfos[i].epuCityName,data.epuInfos[i].rowId,data.epuInfos[i].epuName,data.epuInfos[i].epuLocal, data.epuInfos[i].epuXscale,data.epuInfos[i].epuYscale);
                           }						
 						},
 						error: function (data) 

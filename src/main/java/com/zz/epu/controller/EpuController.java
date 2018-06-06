@@ -120,12 +120,13 @@ public class EpuController extends BaseController {
 	}
 	
 	@RequestMapping(value="allShowList")
-	public ModelAndView allShowList(ModelMap map){	
+	public ModelAndView allShowList(ModelMap map,String substainRowId){	
 		
 		ModelAndView modelAndView = new  ModelAndView("woodare/show/allShowList");
 		modelAndView.addObject("leftMenuview", "5");//显示左侧菜单 0 个人中心 1用户中心 2 权限管理 3用电曲线数据 4设备管理 5实时监控
 		UUser token =  userService.selectByPrimaryKey(TokenManager.getToken().getId());
 		modelAndView.addObject("token", token);//左侧上方管理员信息
+		modelAndView.addObject("substainRowId", substainRowId);//左侧上方管理员信息
 		return modelAndView;
 	}
 	
@@ -514,4 +515,75 @@ public class EpuController extends BaseController {
 	    }
 	       return list; 
 	  }
+	
+	
+	
+	@ResponseBody
+	@RequestMapping(value = "renderTree")
+	public List<Item> renderTree(String id, String type) {
+		Map<String, String> map = new HashMap<String, String>();
+		List<TSyprovincesInfoBean> allList=(List<TSyprovincesInfoBean>)epuService.getProvincesByEp(map);
+	    List<Item> list = new ArrayList<Item>(allList.size());
+	    //4层遍历城市，省份，区域，以及设备
+	    for(TSyprovincesInfoBean p : allList){
+	        Item item = new Item();
+	        item.setId(p.getProvinceId());
+	        item.setpId("0");
+	        item.setpName("");
+	        item.setName(p.getProvinceNameCn());
+	        item.setIsParent("true");
+	        item.setType(0);
+	        list.add(item);
+	        
+	        Map<String, String> map1 = new HashMap<String, String>();
+			map.put("provinceId", p.getProvinceId());
+			map.put("districtFlag", "0");
+			List<TSyCityInfoBean> allList1=(List<TSyCityInfoBean>)epuService.getCityByEp(map);
+		    for(TSyCityInfoBean p1 : allList1){
+		        Item item1 = new Item();
+		        item1.setId(p1.getCityCode());
+		        item1.setpId(p.getProvinceId());
+		        item1.setpName(p.getProvinceNameCn());
+		        item1.setName(p1.getCityNameCn());
+		        item1.setIsParent("true");
+		        item1.setType(1);
+		        list.add(item1);
+		        List<TSyCityInfoBean> allList2=(List<TSyCityInfoBean>)epuService.getCityDistrictByEp(p1.getCityCode());
+			    for(TSyCityInfoBean p2 : allList2){
+			        Item item2 = new Item();
+			        item2.setId(p2.getCityCode());
+			        item2.setpId(p1.getCityCode());
+			        item2.setpName(p1.getCityNameCn());
+			        item2.setName(p2.getCityNameCn());
+			        item2.setIsParent("true");
+			        item2.setType(2);
+			        list.add(item2);
+			        TEpuInfo tEpuInfo=new TEpuInfo();
+					 tEpuInfo.setEpuDistrict(p2.getCityCode());
+					 List <TEpuInfo> epuInfoList = epuService.selectEpuInfoByMark(tEpuInfo);
+				    for(TEpuInfo p3 : epuInfoList){
+				        Item item3 = new Item();
+				        item3.setId(p3.getRowId());
+				        item3.setpId(p2.getCityCode());
+				        item3.setName(p3.getEpuName());
+				        item3.setIsParent("false");
+				        item3.setType(3);
+				        item3.setCityCode(p3.getEpuCity());
+				        item3.setCityName(p3.getEpuCityName());
+				        item3.setEpuProvince(p3.getEpuProvince());
+				        item3.setEpuDistrict(p3.getEpuDistrict());
+				        item3.setEpuLocal(p3.getEpuLocal());
+				        item3.setEpuXscale(p3.getEpuXscale().toString());
+				        item3.setEpuYscale(p3.getEpuYscale().toString());
+				        list.add(item3);
+				    }
+			        
+			    }
+		        
+		    }
+	        
+	    }
+				
+	    return list;
+	}
 }

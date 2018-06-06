@@ -29,9 +29,27 @@
 	<script  src="<%=basePath%>/js/shiro.demo.js"></script>
 	<link rel="stylesheet" href="<%=basePath%>/woodare/css/zTreeStyle/zTreeStyle.css" type="text/css" />
 	<script type="text/javascript" src="<%=basePath%>/woodare/js/jquery.ztree.core.min.js"></script>
-	<script type="text/javascript">         
+	<script type="text/javascript">
+	        $(document).ready(function(e){
+	         var mapID  = $("#mapIframe")[0];
+	          //此处 if...else...是一种兼容ie的写法  ，注意需要等地图加载完毕后，在加载菜单和地图坐标 和箱变信息
+	         if (mapID.attachEvent) {
+	             mapID.attachEvent("onload", function() {      
+                //iframe加载完成后你需要进行的操作
+                  menu.loadMenuTree();    
+                  });    
+	           }
+	         else
+	         {
+	          mapID.onload = function() {      
+                 //iframe加载完成后你需要进行的操作    
+                  menu.loadMenuTree();
+                };
+	         }
+	            });
+     
 	        $(function(){  
-	            changeWH();  
+	            changeWH(); 
 	        });  
 	  
 	    function changeWH(){    
@@ -43,17 +61,28 @@
     		};
       </script>
 	<script type="text/javascript"> 
-	  function addNode(event, treeId, treeNode, clickFlag) {
-	    var zTree = $.fn.zTree.getZTreeObj("treeNone");
-	    var type = treeNode.type;
+	
+	//展开节点
+		function expendNode(nodeId){
+		  var zTree = $.fn.zTree.getZTreeObj("treeNone");
+		  var node = zTree.getNodeByParam("id",nodeId);
+		  zTree.cancelSelectedNode();//先取消所有的选中状态
+          zTree.selectNode(node,true);//将指定ID的节点选中
+          zTree.expandNode(node, true, false);//将指定ID节点展开
+          return node;
+		  // zTree.expandNode(node, true, true, true,true);
+		}
+	  function getEpuInfo(event, treeId, treeNode, clickFlag) {
+<%--  	    var zTree = $.fn.zTree.getZTreeObj("treeNone"); 
+	  
 	    if (treeNode.isParent  && typeof (treeNode.children) == "undefined")
 	     {
 	         var parameter = 
 	         {
 	            pId : treeNode.id,
 	            pName:treeNode.name
-	        };
-	        if (type == 0) {
+	        }; 
+	      if (type == 0) {
 	        	//$(".loading").show();//显示蒙层
 	            $.post("<%=basePath%>/epu/showCity.shtml", parameter, function(data) {
 	                zTree.addNodes(treeNode, data);
@@ -74,9 +103,8 @@
 	                zTree.addNodes(treeNode, data);
 	            //    $(".loading").hide();//隐藏蒙层
 	            });       
-	        }
-	       
-	    }
+	        }	       
+ 	    }  --%> 
    /*   if (type == 1) {
            $("#cityName").val(treeNode.name);
 		   $("#epuCity").val(treeNode.id);
@@ -94,43 +122,10 @@
 	        $("#" + tabId + "Iframe")[0].contentWindow.location.reload(true);    
         }
      */
-      if (type == 1) {
-           $("#cityName").val(treeNode.name);
-           $("#epuCity").val(treeNode.id);
-           $("#rowId").val("");
-             var mapID  = $("#mapIframe")[0];
-             mapID.contentWindow.$("#cityName").val(treeNode.name);
-			 mapID.contentWindow.M.centerAndZoom(treeNode.name, 13); 
-			 mapID.contentWindow.M.clearOverlays();
-			 var url="<%=basePath%>/epu/queryEpu.shtml"; 
-			  //按当前城市获取箱变       
-		     $.ajax({
-						url :url,
-						type : 'POST',
-						data :{
-						rowId:'',
-						epuCity:treeNode.id,
-						epuDistrict:''
-						},						
-						success : function(data) 
-					  {
-						var len =data.epuInfos.length;
-				         for(var i=0;i<len;i++)
-				         {					   
-                            mapID.contentWindow.addMarker('','',data.epuInfos[i].rowId,data.epuInfos[i].epuName,data.epuInfos[0].epuLocal, data.epuInfos[i].epuXscale,data.epuInfos[i].epuYscale);
-                          }						
-						},
-						error: function (data) 
-						{
-						   alert(data);
-				   	    }		
-					});	
-        }  
+       var type = treeNode.type;
         if (type == 3) {
       		//tab-begin
-      		addTab(treeNode.id,treeNode.name);
-			//tab-end
-		   $("#cityName").val(treeNode.cityName);
+      	   $("#cityName").val(treeNode.cityName);
            $("#epuCity").val(treeNode.cityCode);
            $("#epuDistrict").val("");
            $("#rowId").val(treeNode.id);
@@ -138,6 +133,8 @@
            $("#epuLocal").val(treeNode.epuLocal);
            $("#epuXscale").val(treeNode.epuXscale);
            $("#epuYscale").val(treeNode.epuYscale);
+      		addTab(treeNode.id,treeNode.name);
+			//tab-end
        /*     if($("#tab_map").hasClass("on")){//若是选中地图，则加载信息 
              var mapID  = $("#mapIframe")[0];
               mapID.contentWindow.M.clearOverlays();
@@ -146,51 +143,12 @@
              mapID.contentWindow.addMarker(treeNode.id,treeNode.cityName,treeNode.id,treeNode.name,treeNode.epuLocal,treeNode.epuXscale,treeNode.epuYscale); 
             }   */
       
-         var mapID  = $("#mapIframe")[0];
-          mapID.contentWindow.M.clearOverlays();
+         // var mapID  = $("#mapIframe")[0];
+        /*   mapID.contentWindow.M.clearOverlays(); */
                //不需要重新加载地图，刷新标注信息。
-          mapID.contentWindow.addMarker(treeNode.id,treeNode.cityName,treeNode.id,treeNode.name,treeNode.epuLocal,treeNode.epuXscale,treeNode.epuYscale); 
-        }
-	  
-<%-- 	 
- 	  if (type == 3) {
-      		//tab-begin
-      		addTab(treeNode.id,treeNode.name);
-			//tab-end
-		   $("#cityName").val(treeNode.cityName);
-           $("#epuCity").val(treeNode.cityCode);
-           $("#epuDistrict").val("");
-            $("#rowId").val(treeNode.id);
-             if($("#tab_map").hasClass("on")){//若是选中地图，则加载信息        
-             var mapID  = $("#mapIframe")[0];
-             mapID.contentWindow.$("#cityName").val(treeNode.cityName);
-			 mapID.contentWindow.M.centerAndZoom(treeNode.cityName, 13); 
-			 mapID.contentWindow.M.clearOverlays();
-			 var url="<%=basePath%>/epu/queryEpu.shtml";
-			 //按当前城市获取箱变    
-		     $.ajax({
-						url :url,
-						type : 'POST',
-						data :{
-						rowId:'',
-						epuCity:treeNode.cityCode,
-						epuDistrict:''
-						},						
-						success : function(data) 
-					  {
-						var len =data.epuInfos.length;
-				         for(var i=0;i<len;i++)
-				         {					   
-                            mapID.contentWindow.addMarker('','',data.epuInfos[i].rowId,data.epuInfos[i].epuName,data.epuInfos[0].epuLocal, data.epuInfos[i].epuXscale,data.epuInfos[i].epuYscale);
-                          }						
-						},
-						error: function (data) 
-						{
-						   alert(data);
-				   	    }		
-					});
-					}            
-        }  --%>
+             //   mapID.contentWindow.window.M.centerAndZoom(new BMap.Point(treeNode.epuXscale, treeNode.epuYscale), 13);	
+          // mapID.contentWindow.addMarker(treeNode.id,treeNode.cityName,treeNode.id,treeNode.name,treeNode.epuLocal,treeNode.epuXscale,treeNode.epuYscale); 
+        }	  
 	 }
   	 var menu = {
 	    setting : {
@@ -206,22 +164,39 @@
 	         * view : { dblClickExpand : false },
 	         */
 	        callback : { // 回调函数
-	            onExpand : addNode,
-	            onClick : addNode
+	          /*   onExpand : addNode, */
+	            onClick : getEpuInfo
 	        }
 	    },
-	 
+	 //考虑到从箱变的预警提示，链接到实时监控，并打开相应的箱变信息。省，市，区，箱变四级 菜单不能采用原先的 异步加载的方式，需要一次性加载完成
 	    loadMenuTree : function() {
 	    	$(".loading").show();//显示蒙层
-	        $.post("<%=basePath%>/epu/showProvince.shtml", null, function(data) {
+	        $.post("<%=basePath%>/epu/renderTree.shtml", null, function(data) {
 	           	 $.fn.zTree.init($("#treeNone"), menu.setting, data);
 	           	 $(".loading").hide();//隐藏蒙层
+	           	 var substainRowId='${substainRowId }';
+	           	 if(substainRowId!=null && substainRowId!="")
+	           	 {
+	           	 // 打开节点
+	           	  var treeNode =expendNode(substainRowId);
+	           	$("#cityName").val(treeNode.cityName);
+	           $("#epuCity").val(treeNode.cityCode);
+	           $("#epuDistrict").val("");
+	           $("#rowId").val(treeNode.id);
+	           $("#epuName").val(treeNode.name);
+	           $("#epuLocal").val(treeNode.epuLocal);
+	           $("#epuXscale").val(treeNode.epuXscale);
+	           $("#epuYscale").val(treeNode.epuYscale);
+	          //初始化箱变节点数据   	 
+	           addTab(treeNode.id,treeNode.name);			
+			
+	           	 }
         	});
 	    }
 	};
 	
 	so.init(function(){
-        menu.loadMenuTree();
+       // menu.loadMenuTree();
 		
 	});
 	//tab --滚动条 区域 begin
@@ -351,7 +326,8 @@
         var epuXscale=$("#epuXscale").val();
         var epuYscale=$("#epuYscale").val();
         //不需要重新加载地图，刷新标注信息。
-        mapID.contentWindow.addMarker(rowId,cityName,rowId,epuName,epuLocal,epuXscale,epuYscale);
+        //mapID.contentWindow.addMarker(rowId,cityName,rowId,epuName,epuLocal,epuXscale,epuYscale);
+          mapID.contentWindow.locationMark(epuXscale, epuYscale);	
 		$(".all li").each(function(){
 			var thisRowId = $(this).attr("id").replace("tab_","");
 			$("#"+thisRowId+"tabShow").hide();//除地图其他TAB全部隐藏

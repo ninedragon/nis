@@ -12,7 +12,7 @@
     <div class="lay" style="left:auto;right:0px;">
         <ul style="overflow-y: auto;height: 280px;">
         	<c:forEach begin="1" end="20" var="i">
-            <li class="mrr">江苏省南京市雨花台区${i}号变箱</li>
+            <li class="mrr"><a href="<%=basePath%>/epu/allShowList.shtml?substainRowId=ce70837b-ccb5-4e6b-b9a1-4a421829f24f">江苏省南京市雨花台区${i}号变箱</a></li>
         	</c:forEach>
         </ul>
     </div>
