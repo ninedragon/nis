@@ -327,7 +327,7 @@ function showTop(data,rowId,tableBoxId){
 	    		        	 svgSnap.attr("width", widthVal).attr("height", heightVal)
 	    		        	 parent.$(".ammeter").css("width", (widthVal + 20)+"px").css("height", (heightVal)+ "px");
 	    		        	 parent.$("#tableBoxDiv").css("height", "0px");
-	    		        	 parent.$(".but-nav").css("left", "0px");
+//	    		        	 parent.$(".but-nav").css("left", "0px");
 	    		        	 return false;
 	    		        }
 	    		       //表箱
@@ -401,7 +401,7 @@ function showTop(data,rowId,tableBoxId){
 	 svgSnap.attr("width", widthVal).attr("height", heightVal)
 	 parent.$("#tableBoxDiv").css("height", "auto");
 	 parent.$(".ammeter").css("width", (widthVal + 20)+"px").css("height", (heightVal - 150)+ "px");
-	 parent.$(".but-nav").css("left", (widthVal * 0.1)+"px");
+//	 parent.$(".but-nav").css("left", (widthVal * 0.1)+"px");
 } 
 
 

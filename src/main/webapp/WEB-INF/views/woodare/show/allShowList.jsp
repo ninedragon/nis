@@ -418,10 +418,10 @@
 	       <div class="edit mrr" id="tableBoxDiv">
 			<iframe id="tab3Iframe" src="<%=basePath%>/html/ammeter.html" width="10000" height="4000" frameborder="0" scrolling="no"></iframe>
 	       </div>
-	    </div>
        <div class="but-nav" style=" position: absolute; left:0px; bottom:30px; height:32px;">
            <span class="but" onclick="$('#messageAmmeter').hide();">关&nbsp;&nbsp;闭</span>
         </div>
+	    </div>
 	</div>
 	<!--弹层结束/-->
 	<!--loading开始-->
