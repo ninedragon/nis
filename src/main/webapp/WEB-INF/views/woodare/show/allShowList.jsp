@@ -170,7 +170,7 @@
 	    },
 	 //考虑到从箱变的预警提示，链接到实时监控，并打开相应的箱变信息。省，市，区，箱变四级 菜单不能采用原先的 异步加载的方式，需要一次性加载完成
 	    loadMenuTree : function() {
-	    	$(".loading").show();//显示蒙层
+	    	//$(".loading").show();//显示蒙层
 	        $.post("<%=basePath%>/epu/renderTree.shtml", null, function(data) {
 	           	 $.fn.zTree.init($("#treeNone"), menu.setting, data);
 	           	 $(".loading").hide();//隐藏蒙层
